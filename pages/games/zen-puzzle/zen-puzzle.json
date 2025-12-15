@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "禅意拼图",
+  "backgroundColor": "#f5f7fa",
+  "backgroundTextStyle": "light",
+  "navigationBarBackgroundColor": "#667eea",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": false,
+  "disableScroll": true,
+  "usingComponents": {}
+}

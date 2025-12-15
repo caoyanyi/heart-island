@@ -1,0 +1,315 @@
+/* 广告管理页面样式 */
+
+page {
+  background: linear-gradient(135deg, #F5F1EB 0%, #E8E2D5 100%);
+  min-height: 100vh;
+}
+
+.ad-management-container {
+  padding: 40rpx 30rpx;
+  max-width: 750rpx;
+  margin: 0 auto;
+}
+
+/* 头部样式 */
+.ad-management-header {
+  text-align: center;
+  margin-bottom: 60rpx;
+}
+
+.ad-management-title {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #2C3E50;
+  margin-bottom: 16rpx;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.ad-management-subtitle {
+  font-size: 28rpx;
+  color: #7F8C8D;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+/* 内容区域 */
+.ad-management-content {
+  margin-bottom: 40rpx;
+}
+
+/* 开关设置 */
+.ad-settings-section {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 24rpx;
+  padding: 40rpx 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10rpx);
+  animation: slideUp 0.6s ease-out;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2C3E50;
+  margin-bottom: 30rpx;
+  display: flex;
+  align-items: center;
+}
+
+.section-title::before {
+  content: '';
+  width: 8rpx;
+  height: 32rpx;
+  background: linear-gradient(135deg, #3498DB, #2980B9);
+  border-radius: 4rpx;
+  margin-right: 16rpx;
+}
+
+/* 开关项 */
+.switch-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #ECF0F1;
+}
+
+.switch-item:last-child {
+  border-bottom: none;
+}
+
+.switch-label {
+  font-size: 28rpx;
+  color: #34495E;
+  font-weight: 500;
+}
+
+.switch-control {
+  transform: scale(0.8);
+}
+
+/* 统计信息 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 20rpx;
+  background: rgba(52, 152, 219, 0.1);
+  border-radius: 16rpx;
+  border: 1rpx solid rgba(52, 152, 219, 0.2);
+}
+
+.stat-value {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #3498DB;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #7F8C8D;
+}
+
+/* 高级设置 */
+.advanced-settings {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20rpx;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #ECF0F1;
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-label {
+  font-size: 28rpx;
+  color: #34495E;
+  font-weight: 500;
+}
+
+.setting-input {
+  width: 120rpx;
+  height: 60rpx;
+  border: 2rpx solid #BDC3C7;
+  border-radius: 12rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #2C3E50;
+  background: #FFFFFF;
+}
+
+/* 测试功能 */
+.test-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.test-btn {
+  padding: 24rpx 20rpx;
+  background: linear-gradient(135deg, #3498DB, #2980B9);
+  color: #FFFFFF;
+  border-radius: 16rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.test-btn:active {
+  transform: scale(0.95);
+  opacity: 0.8;
+}
+
+/* 数据管理 */
+.data-management {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.data-btn {
+  padding: 24rpx 20rpx;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.clear-btn {
+  background: linear-gradient(135deg, #E74C3C, #C0392B);
+  color: #FFFFFF;
+}
+
+.export-btn {
+  background: linear-gradient(135deg, #27AE60, #229954);
+  color: #FFFFFF;
+}
+
+.data-btn:active {
+  transform: scale(0.95);
+  opacity: 0.8;
+}
+
+/* 批量操作 */
+.batch-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.batch-btn {
+  padding: 24rpx 20rpx;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.enable-all-btn {
+  background: linear-gradient(135deg, #27AE60, #229954);
+  color: #FFFFFF;
+}
+
+.disable-all-btn {
+  background: linear-gradient(135deg, #E74C3C, #C0392B);
+  color: #FFFFFF;
+}
+
+.batch-btn:active {
+  transform: scale(0.95);
+  opacity: 0.8;
+}
+
+/* 动画效果 */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .ad-management-container {
+    padding: 30rpx 20rpx;
+  }
+  
+  .ad-settings-section {
+    padding: 30rpx 20rpx;
+  }
+  
+  .test-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .data-management {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600rpx) {
+  .ad-management-title {
+    font-size: 40rpx;
+  }
+  
+  .ad-management-subtitle {
+    font-size: 24rpx;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .batch-actions {
+    grid-template-columns: 1fr;
+  }
+}

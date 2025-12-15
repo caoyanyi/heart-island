@@ -1,0 +1,242 @@
+<!-- 隐私设置页面 -->
+<view class="container">
+  <!-- 页面头部 -->
+  <view class="header fade-in">
+    <text class="header-title">隐私设置</text>
+    <text class="header-subtitle">保护您的个人信息安全</text>
+  </view>
+
+  <!-- 隐私概览 -->
+  <view class="privacy-overview fade-in">
+    <text class="overview-title">隐私保护状态</text>
+    <view class="privacy-score">
+      <view class="score-circle {{privacyScore >= 80 ? 'score-good' : privacyScore >= 60 ? 'score-medium' : 'score-poor'}}">
+        <text>{{privacyScore}}</text>
+      </view>
+      <text class="score-text">{{privacyStatusText}}</text>
+    </view>
+  </view>
+
+  <!-- 数据收集设置 -->
+  <view class="settings-group fade-in">
+    <view class="group-header">
+      <text class="group-title">数据收集</text>
+      <text class="group-subtitle">控制应用如何收集您的数据</text>
+    </view>
+    
+    <view class="setting-item" bindtap="preventEvent">
+      <view class="setting-info">
+        <text class="setting-label">基本数据收集</text>
+        <text class="setting-desc">收集必要的应用使用数据</text>
+      </view>
+      <view class="setting-control">
+        <switch 
+          checked="{{privacySettings.dataCollection}}" 
+          bindchange="onSettingChange"
+          data-setting="dataCollection"
+          color="#667eea"
+        />
+      </view>
+    </view>
+
+    <view class="setting-item" bindtap="preventEvent">
+      <view class="setting-info">
+        <text class="setting-label">使用分析</text>
+        <text class="setting-desc">分析应用使用模式以改善体验</text>
+      </view>
+      <view class="setting-control">
+        <switch 
+          checked="{{privacySettings.analyticsEnabled}}" 
+          bindchange="onSettingChange"
+          data-setting="analyticsEnabled"
+          color="#667eea"
+        />
+      </view>
+    </view>
+
+    <view class="setting-item" bindtap="preventEvent">
+      <view class="setting-info">
+        <text class="setting-label">广告个性化</text>
+        <text class="setting-desc">基于您的兴趣显示相关广告</text>
+      </view>
+      <view class="setting-control">
+        <switch 
+          checked="{{privacySettings.adPersonalization}}" 
+          bindchange="onSettingChange"
+          data-setting="adPersonalization"
+          color="#667eea"
+        />
+      </view>
+    </view>
+
+    <view class="setting-item" bindtap="preventEvent">
+      <view class="setting-info">
+        <text class="setting-label">第三方数据共享</text>
+        <text class="setting-desc">与合作伙伴共享匿名数据</text>
+      </view>
+      <view class="setting-control">
+        <switch 
+          checked="{{privacySettings.allowThirdParty}}" 
+          bindchange="onSettingChange"
+          data-setting="allowThirdParty"
+          color="#667eea"
+        />
+      </view>
+    </view>
+  </view>
+
+  <!-- 社交功能设置 -->
+  <view class="settings-group fade-in">
+    <view class="group-header">
+      <text class="group-title">社交功能</text>
+      <text class="group-subtitle">控制社交相关功能</text>
+    </view>
+    
+    <view class="setting-item" bindtap="preventEvent">
+      <view class="setting-info">
+        <text class="setting-label">社交功能</text>
+        <text class="setting-desc">启用好友和分享功能</text>
+      </view>
+      <view class="setting-control">
+        <switch 
+          checked="{{privacySettings.socialFeatures}}" 
+          bindchange="onSettingChange"
+          data-setting="socialFeatures"
+          color="#667eea"
+        />
+      </view>
+    </view>
+
+    <view class="setting-item" bindtap="preventEvent">
+      <view class="setting-info">
+        <text class="setting-label">位置跟踪</text>
+        <text class="setting-desc">基于位置提供个性化内容</text>
+      </view>
+      <view class="setting-control">
+        <switch 
+          checked="{{privacySettings.locationTracking}}" 
+          bindchange="onSettingChange"
+          data-setting="locationTracking"
+          color="#667eea"
+        />
+      </view>
+    </view>
+
+    <view class="setting-item" bindtap="preventEvent">
+      <view class="setting-info">
+        <text class="setting-label">联系人同步</text>
+        <text class="setting-desc">同步联系人以查找好友</text>
+      </view>
+      <view class="setting-control">
+        <switch 
+          checked="{{privacySettings.contactSync}}" 
+          bindchange="onSettingChange"
+          data-setting="contactSync"
+          color="#667eea"
+        />
+      </view>
+    </view>
+
+    <view class="setting-item" bindtap="preventEvent">
+      <view class="setting-info">
+        <text class="setting-label">营销邮件</text>
+        <text class="setting-desc">接收产品更新和促销信息</text>
+      </view>
+      <view class="setting-control">
+        <switch 
+          checked="{{privacySettings.marketingEmails}}" 
+          bindchange="onSettingChange"
+          data-setting="marketingEmails"
+          color="#667eea"
+        />
+      </view>
+    </view>
+  </view>
+
+  <!-- 高级设置 -->
+  <view class="settings-group fade-in">
+    <view class="group-header">
+      <text class="group-title">高级设置</text>
+      <text class="group-subtitle">更多隐私控制选项</text>
+    </view>
+    
+    <view class="setting-item" bindtap="preventEvent">
+      <view class="setting-info">
+        <text class="setting-label">自动清理数据</text>
+        <text class="setting-desc">定期清理过期数据</text>
+      </view>
+      <view class="setting-control">
+        <switch 
+          checked="{{privacySettings.autoCleanup}}" 
+          bindchange="onSettingChange"
+          data-setting="autoCleanup"
+          color="#667eea"
+        />
+      </view>
+    </view>
+
+    <view class="setting-item" bindtap="preventEvent">
+      <view class="setting-info">
+        <text class="setting-label">匿名模式</text>
+        <text class="setting-desc">以匿名方式使用应用</text>
+      </view>
+      <view class="setting-control">
+        <switch 
+          checked="{{privacySettings.anonymousMode}}" 
+          bindchange="onSettingChange"
+          data-setting="anonymousMode"
+          color="#667eea"
+        />
+      </view>
+    </view>
+  </view>
+
+  <!-- 数据管理 -->
+  <view class="settings-group fade-in">
+    <view class="group-header">
+      <text class="group-title">数据管理</text>
+      <text class="group-subtitle">管理您的个人数据</text>
+    </view>
+    
+    <view class="action-buttons">
+      <button class="action-btn btn-primary" bindtap="saveSettings">
+        保存设置
+      </button>
+      <button class="action-btn btn-secondary" bindtap="resetSettings">
+        重置为默认
+      </button>
+      <button class="action-btn btn-warning" bindtap="exportData">
+        导出数据
+      </button>
+      <button class="action-btn btn-danger" bindtap="deleteData">
+        删除所有数据
+      </button>
+      <button class="action-btn btn-secondary" bindtap="clearCache">
+        清除缓存
+      </button>
+    </view>
+  </view>
+
+  <!-- 法律信息 -->
+  <view class="legal-info fade-in">
+    <text class="legal-title">法律信息</text>
+    <view class="legal-links">
+      <text class="legal-link" bindtap="viewPrivacyPolicy">隐私政策</text>
+      <text class="legal-link" bindtap="viewTermsOfService">服务条款</text>
+      <text class="legal-link" bindtap="viewCookiePolicy">Cookie政策</text>
+      <text class="legal-link" bindtap="viewComplianceReport">合规报告</text>
+    </view>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="bottom-actions fade-in">
+    <button class="action-btn btn-secondary" bindtap="goBack">
+      返回
+    </button>
+  </view>
+</view>
+
+<!-- 返回按钮 -->
+<view class="back-btn" bindtap="goBack">
+  <text>←</text>
+</view>

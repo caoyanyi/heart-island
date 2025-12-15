@@ -1,0 +1,83 @@
+<!-- 结束页 -->
+<view class="finish-container">
+  <!-- 治愈语展示区 -->
+  <view class="healing-section">
+    <view class="healing-card">
+      <text class="healing-icon">{{healingIcon}}</text>
+      <text class="healing-text">{{healingMessage}}</text>
+    </view>
+  </view>
+
+  <!-- 游戏统计 -->
+  <view class="stats-section" wx:if="{{showStats}}">
+    <view class="stats-title">本次体验</view>
+    <view class="stats-grid">
+      <view class="stat-item">
+        <text class="stat-value">{{gameDuration}}</text>
+        <text class="stat-label">游戏时长</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{score}}</text>
+        <text class="stat-label">获得分数</text>
+      </view>
+      <view class="stat-item" wx:if="{{combo > 1}}">
+        <text class="stat-value">{{maxCombo}}</text>
+        <text class="stat-label">最高连击</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 情绪感受 -->
+  <view class="feeling-section">
+    <text class="feeling-question">现在的你，感觉如何？</text>
+    <view class="feeling-options">
+      <view
+        class="feeling-option {{selectedFeeling === item.key ? 'selected' : ''}}"
+        wx:for="{{feelingOptions}}"
+        wx:key="key"
+        data-feeling="{{item.key}}"
+        bindtap="selectFeeling"
+      >
+        <text class="feeling-emoji">{{item.emoji}}</text>
+        <text class="feeling-text">{{item.text}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分享鼓励 -->
+  <view class="sharing-section" wx:if="{{showSharing}}">
+    <text class="sharing-title">分享你的心情</text>
+    <view class="sharing-buttons">
+      <button class="share-btn share-to-friends" bindtap="shareToFriends">
+        <text class="share-icon">👥</text>
+        <text class="share-text">分享给朋友</text>
+      </button>
+      <button class="share-btn share-moment" bindtap="shareToMoment">
+        <text class="share-icon">📱</text>
+        <text class="share-text">分享朋友圈</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 行动按钮 -->
+  <view class="action-section">
+    <button class="action-btn primary-btn" bindtap="playAgain">
+      <text class="btn-icon">🔄</text>
+      <text class="btn-text">再玩一次</text>
+    </button>
+
+    <view class="action-buttons-row">
+      <button class="action-btn secondary-btn" bindtap="backToGames">
+        <text class="btn-text">选择其他游戏</text>
+      </button>
+      <button class="action-btn secondary-btn" bindtap="backToHome">
+        <text class="btn-text">回到首页</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 温馨提醒 -->
+  <view class="reminder-section">
+    <text class="reminder-text">💝 记住：每一次给自己的一点点关怀，都是在为自己的心灵充电</text>
+  </view>
+</view>

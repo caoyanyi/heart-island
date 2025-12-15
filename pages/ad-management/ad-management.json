@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "广告管理",
+  "navigationBarBackgroundColor": "#F5F1EB",
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#F5F1EB",
+  "enablePullDownRefresh": false
+}

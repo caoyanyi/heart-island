@@ -1,0 +1,101 @@
+<view class="bubble-pop-game">
+  <view class="game-canvas-container">
+    <canvas
+      id="bubbleCanvas"
+      canvas-id="bubbleCanvas"
+      class="game-canvas"
+      bindtouchstart="onCanvasTouch"
+      type="2d"
+      style="pointer-events: {{gameStatus === 'playing' ? 'auto' : 'none'}}"
+    ></canvas>
+
+    <view class="game-ui">
+      <view class="score-display">
+        <text class="score-label">分数</text>
+        <text class="score-value">{{score}}</text>
+      </view>
+
+      <view class="time-display">
+        <text class="time-label">时间</text>
+        <text class="time-value">{{timeLeft}}s</text>
+      </view>
+
+      <view class="combo-display" wx:if="{{combo > 1}}">
+        <text class="combo-text">连击 x{{combo}}</text>
+      </view>
+
+      <view class="level-display">
+        <text class="level-label">等级</text>
+        <text class="level-value">{{level}}</text>
+      </view>
+    </view>
+
+    <view class="game-status" wx:if="{{gameStatus !== 'playing'}}">
+      <view class="status-overlay">
+        <text class="status-title">{{statusTitle}}</text>
+        <view class="status-message-container" wx:if="{{gameStatus === 'ended'}}">
+          <text class="status-message-line">最终得分: {{score}}</text>
+          <text class="status-message-line">最高连击: {{maxCombo}}</text>
+          <text class="status-message-line">最高等级: {{level}}</text>
+        </view>
+        <text class="status-message" wx:else>{{statusMessage}}</text>
+        <button class="game-btn primary-btn" bindtap="startGame">{{gameButtonText}}</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="game-controls">
+    <button class="control-btn pause-btn" bindtap="pauseGame" wx:if="{{gameStatus === 'playing'}}">
+      <text class="btn-icon">⏸️</text>
+      暂停
+    </button>
+
+    <button class="control-btn resume-btn" bindtap="resumeGame" wx:if="{{gameStatus === 'paused'}}">
+      <text class="btn-icon">▶️</text>
+      继续
+    </button>
+
+    <button class="control-btn restart-btn" bindtap="restartGame">
+      <text class="btn-icon">🔄</text>
+      重新开始
+    </button>
+
+    <button class="control-btn settings-btn" bindtap="openSettings">
+      <text class="btn-icon">⚙️</text>
+      设置
+    </button>
+  </view>
+
+  <view class="game-settings" wx:if="{{showSettings}}">
+    <view class="settings-panel">
+      <view class="settings-header">
+        <text class="settings-title">游戏设置</text>
+        <button class="close-btn" bindtap="closeSettings">✕</button>
+      </view>
+
+      <view class="setting-group">
+        <text class="setting-label">音效</text>
+        <switch checked="{{soundEnabled}}" bindchange="toggleSound"></switch>
+      </view>
+
+      <view class="setting-group">
+        <text class="setting-label">背景音乐</text>
+        <switch checked="{{musicEnabled}}" bindchange="toggleMusic"></switch>
+      </view>
+
+      <view class="setting-group">
+        <text class="setting-label">游戏时长</text>
+        <picker bindchange="changeGameDuration" value="{{gameDurationIndex}}" range="{{durationOptions}}">
+          <view class="picker-value">{{durationOptions[gameDurationIndex]}}</view>
+        </picker>
+      </view>
+
+      <view class="setting-group">
+        <text class="setting-label">难度等级</text>
+        <picker bindchange="changeDifficulty" value="{{difficultyIndex}}" range="{{difficultyOptions}}">
+          <view class="picker-value">{{difficultyOptions[difficultyIndex]}}</view>
+        </picker>
+      </view>
+    </view>
+  </view>
+</view>

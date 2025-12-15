@@ -1,0 +1,33 @@
+<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="relaxGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D2D3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#01A3A4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 放松的波浪形状 -->
+  <path d="M 8 45 Q 16 35 24 45 T 40 45 T 56 45" stroke="url(#relaxGradient)" stroke-width="4" fill="none"/>
+  
+  <!-- 放松的人物（躺着的） -->
+  <ellipse cx="20" cy="35" rx="8" ry="3" fill="url(#relaxGradient)"/>
+  <circle cx="20" cy="30" r="4" fill="url(#relaxGradient)"/>
+  
+  <!-- 放松的手臂 -->
+  <path d="M 16 32 Q 12 35 10 38" stroke="url(#relaxGradient)" stroke-width="3" fill="none"/>
+  <path d="M 24 32 Q 28 35 30 38" stroke="url(#relaxGradient)" stroke-width="3" fill="none"/>
+  
+  <!-- 放松的腿 -->
+  <path d="M 16 38 Q 14 42 12 45" stroke="url(#relaxGradient)" stroke-width="3" fill="none"/>
+  <path d="M 24 38 Q 26 42 28 45" stroke="url(#relaxGradient)" stroke-width="3" fill="none"/>
+  
+  <!-- 放松的云朵 -->
+  <ellipse cx="45" cy="25" rx="8" ry="4" fill="url(#relaxGradient)" opacity="0.6"/>
+  <ellipse cx="52" cy="23" rx="6" ry="3" fill="url(#relaxGradient)" opacity="0.6"/>
+  <ellipse cx="40" cy="23" rx="5" ry="3" fill="url(#relaxGradient)" opacity="0.6"/>
+  
+  <!-- 放松的装饰点 -->
+  <circle cx="50" cy="35" r="1" fill="url(#relaxGradient)" opacity="0.8"/>
+  <circle cx="55" cy="30" r="1" fill="url(#relaxGradient)" opacity="0.8"/>
+  <circle cx="45" cy="38" r="1" fill="url(#relaxGradient)" opacity="0.8"/>
+</svg>

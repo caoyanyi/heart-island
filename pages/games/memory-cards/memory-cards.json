@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "记忆卡片",
+  "backgroundColor": "#667eea",
+  "backgroundTextStyle": "light",
+  "navigationBarBackgroundColor": "#667eea",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": false,
+  "disableScroll": true,
+  "usingComponents": {}
+}

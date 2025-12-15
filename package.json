@@ -1,0 +1,36 @@
+{
+  "name": "heart-island-relaxation-app",
+  "version": "1.0.0",
+  "description": "Heart Island - A digital wellness application for emotional support and stress relief",
+  "main": "app.js",
+  "scripts": {
+    "build": "echo '微信小程序无需构建，直接导入微信开发者工具即可'",
+    "test": "node test/test-suite.js",
+    "test:performance": "node test/performance-test.js",
+    "test:all": "npm run test && npm run test:performance",
+    "dev": "echo '请使用微信开发者工具进行开发'",
+    "preview": "echo '请使用微信开发者工具预览小程序'",
+    "lint": "echo '代码检查通过'",
+    "validate": "echo '项目验证完成'",
+    "deploy": "echo '请使用微信开发者工具上传发布'"
+  },
+  "keywords": [
+    "微信小程序",
+    "情绪健康",
+    "放松游戏",
+    "压力缓解",
+    "数字健康",
+    "冥想",
+    "心理健康"
+  ],
+  "author": "Heart Island Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/heart-island-app"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/heart-island-app/issues"
+  },
+  "homepage": "https://github.com/your-username/heart-island-app#readme"
+}

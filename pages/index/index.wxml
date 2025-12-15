@@ -1,0 +1,45 @@
+<view class="container">
+  <view class="welcome-section fade-in">
+    <view class="logo-container">
+      <image class="app-logo" src="/assets/images/heart-island-logo.png" mode="aspectFit"></image>
+    </view>
+    
+    <view class="welcome-text">
+      <text class="text-title">欢迎来到心岛</text>
+      <text class="text-body">让我们一起找到内心的平静与放松</text>
+    </view>
+    
+    <view class="welcome-animation">
+      <view class="floating-elements">
+        <view class="cloud cloud-1"></view>
+        <view class="cloud cloud-2"></view>
+        <view class="cloud cloud-3"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="action-section slide-up">
+    <button class="btn-primary start-btn" bindtap="startEmotionTest">
+      开始情绪测试
+    </button>
+    
+    <button class="btn-secondary explore-btn" bindtap="exploreGames">
+      探索放松游戏
+    </button>
+  </view>
+
+  <view class="features-section scale-in">
+    <view class="feature-item">
+      <image class="feature-icon" src="/assets/images/icon-meditation.png"></image>
+      <text class="feature-text">情绪评估</text>
+    </view>
+    <view class="feature-item">
+      <image class="feature-icon" src="/assets/images/icon-games.png"></image>
+      <text class="feature-text">放松游戏</text>
+    </view>
+    <view class="feature-item">
+      <image class="feature-icon" src="/assets/images/icon-relax.png"></image>
+      <text class="feature-text">心灵治愈</text>
+    </view>
+  </view>
+</view>

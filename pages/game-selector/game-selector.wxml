@@ -1,0 +1,88 @@
+<view class="game-selector-container">
+  <view class="selector-content">
+    <view class="welcome-section">
+      <view class="welcome-title">选择你的放松方式</view>
+      <view class="welcome-subtitle">每个游戏都有不同的治愈效果</view>
+    </view>
+
+    <view class="games-grid">
+      <!-- Cloud Drifting -->
+      <view class="game-card" bindtap="selectGame" data-game="cloud-drifting">
+        <view class="game-icon cloud-icon">☁️</view>
+        <view class="game-info">
+          <view class="game-title">云端漂流</view>
+          <view class="game-description">在云朵间自由漂浮，收集快乐泡泡</view>
+          <view class="game-effect">缓解焦虑 • 放松心情</view>
+        </view>
+        <view class="game-arrow">›</view>
+      </view>
+
+      <!-- Bubble Pop -->
+      <view class="game-card" bindtap="selectGame" data-game="bubble-pop">
+        <view class="game-icon bubble-icon">🫧</view>
+        <view class="game-info">
+          <view class="game-title">泡泡爆破</view>
+          <view class="game-description">点击泡泡释放压力，获得连击奖励</view>
+          <view class="game-effect">释放压力 • 获得成就感</view>
+        </view>
+        <view class="game-arrow">›</view>
+      </view>
+
+      <!-- Forest Breeze -->
+      <view class="game-card" bindtap="selectGame" data-game="forest-breeze">
+        <view class="game-icon forest-icon">🍃</view>
+        <view class="game-info">
+          <view class="game-title">森林微风</view>
+          <view class="game-description">滑动创造微风，帮助树叶飘落</view>
+          <view class="game-effect">平静内心 • 感受自然</view>
+        </view>
+        <view class="game-arrow">›</view>
+      </view>
+
+      <!-- Light Healing -->
+      <view class="game-card" bindtap="selectGame" data-game="light-healing">
+        <view class="game-icon light-icon">✨</view>
+        <view class="game-info">
+          <view class="game-title">光之治愈</view>
+          <view class="game-description">释放光能点亮星星，驱散黑暗</view>
+          <view class="game-effect">带来希望 • 点亮内心</view>
+        </view>
+        <view class="game-arrow">›</view>
+      </view>
+
+      <!-- Zen Puzzle -->
+      <view class="game-card" bindtap="selectGame" data-game="zen-puzzle">
+        <view class="game-icon puzzle-icon">🧩</view>
+        <view class="game-info">
+          <view class="game-title">禅意拼图</view>
+          <view class="game-description">静心拼图，找回内心的平静与专注</view>
+          <view class="game-effect">培养耐心 • 提升专注</view>
+        </view>
+        <view class="game-arrow">›</view>
+      </view>
+
+      <!-- Memory Cards -->
+      <view class="game-card" bindtap="selectGame" data-game="memory-cards">
+        <view class="game-icon memory-icon">🧠</view>
+        <view class="game-info">
+          <view class="game-title">记忆卡片</view>
+          <view class="game-description">翻牌配对，挑战你的记忆力极限</view>
+          <view class="game-effect">锻炼记忆 • 提升认知</view>
+        </view>
+        <view class="game-arrow">›</view>
+      </view>
+    </view>
+
+    <view class="recommendation-section" wx:if="{{recommendedGame}}">
+      <view class="recommendation-title">为你推荐</view>
+      <view class="recommendation-card" bindtap="selectGame" data-game="{{recommendedGame}}">
+        <view class="recommendation-icon">{{recommendationIcon}}</view>
+        <view class="recommendation-content">
+          <view class="recommendation-game-title">{{recommendationTitle}}</view>
+          <view class="recommendation-text">{{recommendationText}}</view>
+        </view>
+        <view class="recommendation-arrow">›</view>
+      </view>
+    </view>
+  </view>
+</view>

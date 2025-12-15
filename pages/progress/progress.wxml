@@ -1,0 +1,157 @@
+<!-- 进度跟踪页面 -->
+<view class="progress-container">
+  <!-- 页面头部 -->
+  <view class="progress-header">
+    <text class="header-title">我的进度</text>
+    <text class="header-subtitle">跟踪你的情绪舒缓之旅</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <text class="loading-text">正在加载进度数据...</text>
+  </view>
+
+  <!-- 主要内容 -->
+  <view wx:else class="progress-content">
+    <!-- 统计概览 -->
+    <view class="stats-overview">
+      <view class="stat-card">
+        <text class="stat-number">{{userProgress.totalSessions}}</text>
+        <text class="stat-label">总练习次数</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-number">{{Math.floor(userProgress.totalPlayTime / 60)}}</text>
+        <text class="stat-label">总游戏时长(分钟)</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-number">{{userProgress.weeklyProgress}}/{{userProgress.weeklyGoal}}</text>
+        <text class="stat-label">本周进度</text>
+      </view>
+    </view>
+
+    <!-- 每周目标进度条 -->
+    <view class="weekly-goal-section">
+      <view class="goal-header">
+        <text class="goal-title">本周目标</text>
+        <text class="goal-progress">{{userProgress.weeklyProgress}}/{{userProgress.weeklyGoal}}</text>
+      </view>
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{(userProgress.weeklyProgress / userProgress.weeklyGoal) * 100}}%"></view>
+      </view>
+      <text class="goal-description">每天使用应用，保持情绪健康</text>
+    </view>
+
+    <!-- 情绪趋势图表 -->
+    <view wx:if="{{emotionChartData.length > 0}}" class="chart-section">
+      <text class="section-title">情绪趋势</text>
+      <view class="emotion-chart">
+        <view class="chart-bars">
+          <view wx:for="{{emotionChartData}}" wx:key="date" class="chart-bar-item">
+            <text class="bar-date">{{item.date}}</text>
+            <view class="bar-container">
+              <view class="bar-fill" style="height: {{(item.score / 5) * 60}}px; background-color: {{getEmotionColor(item.emotion)}}"></view>
+            </view>
+            <text class="bar-score">{{item.score}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 游戏使用统计 -->
+    <view wx:if="{{gameUsageData.length > 0}}" class="game-usage-section">
+      <text class="section-title">游戏偏好</text>
+      <view class="game-usage-list">
+        <view wx:for="{{gameUsageData}}" wx:key="game" class="game-usage-item">
+          <text class="game-name">{{item.game}}</text>
+          <text class="game-count">{{item.count}}次</text>
+          <view class="usage-bar">
+            <view class="usage-fill" style="width: {{(item.count / getMaxGameCount()) * 100}}%"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 成就系统 -->
+    <view class="achievements-section">
+      <text class="section-title">成就</text>
+      <view class="achievements-grid">
+        <view wx:for="{{achievements}}" wx:key="id" class="achievement-item {{item.unlocked ? 'unlocked' : 'locked'}}">
+          <text class="achievement-icon">{{item.icon}}</text>
+          <text class="achievement-name">{{item.name}}</text>
+          <text class="achievement-desc">{{item.description}}</text>
+          <view wx:if="{{!item.unlocked}}" class="achievement-lock">🔒</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 个性化推荐 -->
+    <view wx:if="{{recommendations.length > 0}}" class="recommendations-section">
+      <text class="section-title">个性化建议</text>
+      <view class="recommendations-list">
+        <view wx:for="{{recommendations}}" wx:key="type" class="recommendation-item">
+          <view class="recommendation-header">
+            <text class="recommendation-type">{{item.title}}</text>
+          </view>
+          <text class="recommendation-content">{{item.content}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button class="share-btn" open-type="share">
+        <text class="btn-text">分享进度</text>
+      </button>
+      <button class="export-btn" bindtap="exportData">
+        <text class="btn-text">导出数据</text>
+      </button>
+      <button class="reset-btn" bindtap="resetProgress">
+        <text class="btn-text">重置进度</text>
+      </button>
+    </view>
+
+    <!-- 测试历史查看按钮 -->
+    <view class="history-toggle-section">
+      <button class="history-toggle-btn" bindtap="toggleTestHistory">
+        <text class="btn-text">{{showTestHistory ? '隐藏' : '查看'}}测试历史</text>
+        <text class="toggle-icon">{{showTestHistory ? '▼' : '▶'}}</text>
+      </button>
+    </view>
+
+    <!-- 测试历史记录列表 -->
+    <view wx:if="{{showTestHistory}}" class="test-history-section">
+      <text class="section-title">测试历史</text>
+
+      <!-- 测试统计 -->
+      <view wx:if="{{testStats.totalTests > 0}}" class="test-stats">
+        <text class="stat-text">总测试次数: {{testStats.totalTests}}</text>
+        <text wx:if="{{testStats.earlySubmitCount > 0}}" class="stat-text">提前交卷: {{testStats.earlySubmitCount}}次</text>
+        <text class="stat-text">最近一次: {{testStats.lastTestDate}}</text>
+      </view>
+
+      <!-- 历史记录列表 -->
+      <view wx:if="{{testHistory.length > 0}}" class="history-list">
+        <view wx:for="{{testHistory}}" wx:key="testId" class="history-item" bindtap="viewTestDetail" data-testid="{{item.testId}}">
+          <view class="history-main">
+            <text class="history-date">{{item.testDate}}</text>
+            <text class="history-emotion">{{item.primaryEmotionLabel}}</text>
+            <view wx:if="{{item.isEarlySubmit}}" class="early-submit-tag">提前交卷</view>
+          </view>
+          <view class="history-scores">
+            <text class="history-score calm">平静: {{item.calm}}</text>
+            <text class="history-score anxiety">焦虑: {{item.anxiety}}</text>
+            <text class="history-score low">低落: {{item.low}}</text>
+            <text class="history-score depression">抑郁: {{item.depression}}</text>
+          </view>
+          <text class="history-arrow">></text>
+        </view>
+      </view>
+
+      <!-- 空状态 -->
+      <view wx:else class="empty-history">
+        <text class="empty-text">暂无测试历史记录</text>
+        <text class="empty-desc">完成一次情绪测试后，历史记录将显示在这里</text>
+      </view>
+    </view>
+  </view>
+</view>

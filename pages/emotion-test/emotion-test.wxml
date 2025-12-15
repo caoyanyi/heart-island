@@ -1,0 +1,94 @@
+<view class="emotion-test">
+  <view class="test-header">
+    <text class="test-title">情绪评估测试</text>
+    <text class="test-subtitle">回答几个简单问题，了解你的情绪状态</text>
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{progress}}%;"></view>
+    </view>
+    <text class="progress-text">{{currentQuestion}}/{{totalQuestions}}</text>
+  </view>
+
+  <view class="question-container" wx:if="{{!showResults}}">
+    <view class="question-card">
+      <text class="question-number">问题 {{currentQuestion}}</text>
+      <text class="question-text">{{questions[currentQuestion-1].text}}</text>
+
+      <view class="options-grid">
+        <view
+          class="option-item {{selectedOption === index ? 'selected' : ''}}"
+          wx:for="{{questions[currentQuestion-1].options}}"
+          wx:key="index"
+          data-index="{{index}}"
+          bindtap="selectOption"
+        >
+          <text class="option-text">{{item.text}}</text>
+          <view class="option-indicator"></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="navigation-buttons">
+      <button
+        class="nav-btn prev-btn {{currentQuestion === 1 ? 'disabled' : ''}}"
+        bindtap="previousQuestion"
+        disabled="{{currentQuestion === 1}}"
+      >
+        上一题
+      </button>
+
+      <button
+        class="nav-btn next-btn {{!selectedOption ? 'disabled' : ''}}"
+        bindtap="nextQuestion"
+        disabled="{{!selectedOption}}"
+      >
+        {{currentQuestion === totalQuestions ? '完成测试' : '下一题'}}
+      </button>
+
+      <button
+        class="nav-btn early-submit-btn"
+        bindtap="showEarlySubmitModal"
+      >
+        提前交卷
+      </button>
+    </view>
+  </view>
+
+  <view class="results-container" wx:if="{{showResults}}">
+    <view class="result-card">
+      <text class="result-title">测试完成！</text>
+      <view class="emotion-result">
+        <text class="emotion-type {{primaryEmotion}}">{{emotionLabels[primaryEmotion]}}</text>
+        <text class="emotion-description">{{emotionDescription}}</text>
+      </view>
+
+      <view class="score-breakdown">
+        <text class="breakdown-title">详细评分</text>
+        <view class="score-item" wx:for="{{emotionScores}}" wx:key="emotion">
+          <text class="score-label">{{emotionLabels[item.emotion]}}</text>
+          <view class="score-bar">
+            <view class="score-fill {{item.emotion}}" style="width: {{item.score}}%;"></view>
+          </view>
+          <text class="score-value">{{item.score}}</text>
+        </view>
+      </view>
+
+      <view class="recommendations">
+        <text class="recommendations-title">为你推荐</text>
+        <view class="recommendation-list">
+          <text class="recommendation-item" wx:for="{{recommendations}}" wx:key="index">
+            • {{item}}
+          </text>
+        </view>
+      </view>
+    </view>
+
+    <view class="action-buttons">
+      <button class="action-btn view-games-btn" bindtap="viewRecommendedGames">
+        查看推荐游戏
+      </button>
+      <button class="action-btn retake-btn" bindtap="retakeTest">
+        重新测试
+      </button>
+    </view>
+  </view>
+</view>

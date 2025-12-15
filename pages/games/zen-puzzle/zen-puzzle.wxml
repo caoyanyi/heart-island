@@ -1,0 +1,170 @@
+<!-- 禅意拼图游戏页面 -->
+<view class="zen-puzzle-container">
+  <!-- 游戏头部 -->
+  <view class="game-header">
+    <view class="header-left">
+      <text class="game-title">禅意拼图</text>
+      <text class="game-subtitle">静心拼图，找回内心的平静</text>
+    </view>
+    <view class="header-right">
+    </view>
+  </view>
+
+  <!-- 游戏状态栏 -->
+  <view class="game-status-bar">
+    <view class="status-item">
+      <text class="status-label">时间</text>
+      <text class="status-value">{{formatTime(timeLeft)}}</text>
+    </view>
+    <view class="status-item">
+      <text class="status-label">步数</text>
+      <text class="status-value">{{moves}}</text>
+    </view>
+    <view class="status-item">
+      <text class="status-label">得分</text>
+      <text class="status-value">{{score}}</text>
+    </view>
+  </view>
+
+  <!-- 游戏区域 -->
+  <view class="game-area" wx:if="{{gameStatus !== 'ready'}}">
+    <!-- 图片加载状态 -->
+    <view wx:if="{{!imageLoaded && !imageError}}" class="loading-overlay">
+      <text class="loading-text">图片加载中...</text>
+    </view>
+
+    <!-- 图片加载错误 -->
+    <view wx:if="{{imageError}}" class="error-overlay">
+      <text class="error-text">图片加载失败</text>
+      <button class="retry-btn" bindtap="checkImage">重试</button>
+    </view>
+
+    <!-- 拼图网格 -->
+    <view class="puzzle-grid" style="--grid-size: {{puzzleSize}};" wx:if="{{imageLoaded}}">
+      <block wx:for="{{tiles}}" wx:for-item="row" wx:for-index="rowIndex" wx:key="rowIndex">
+        <view wx:for="{{row}}" wx:for-item="tile" wx:for-index="colIndex" wx:key="colIndex"
+              class="puzzle-tile {{tile.number === -1 ? 'empty' : ''}} {{animatingTiles.includes(rowIndex + '-' + colIndex) ? 'animating' : ''}}"
+              style="grid-row: {{rowIndex + 1}}; grid-column: {{colIndex + 1}};"
+              bindtap="onTileTap"
+              data-row="{{rowIndex}}"
+              data-col="{{colIndex}}">
+
+          <!-- 拼图块内容 -->
+          <view wx:if="{{tile.number !== -1}}" class="tile-content">
+            <!-- 图片部分 -->
+            <view class="tile-image"
+                  style="background-image: url('{{originalImage}}'); background-position: {{(tile.correctPosition.col * 100) / (puzzleSize - 1)}}% {{(tile.correctPosition.row * 100) / (puzzleSize - 1)}}%;">
+            </view>
+
+            <!-- 数字标签 -->
+            <text wx:if="{{showNumbers}}" class="tile-number">{{tile.number}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 无图片模式 -->
+    <view class="puzzle-grid" style="--grid-size: {{puzzleSize}};" wx:if="{{imageError}}">
+      <block wx:for="{{tiles}}" wx:for-item="row" wx:for-index="rowIndex" wx:key="rowIndex">
+        <view wx:for="{{row}}" wx:for-item="tile" wx:for-index="colIndex" wx:key="colIndex"
+              class="puzzle-tile {{tile.number === -1 ? 'empty' : 'no-image'}} {{animatingTiles.includes(rowIndex + '-' + colIndex) ? 'animating' : ''}}"
+              style="grid-row: {{rowIndex + 1}}; grid-column: {{colIndex + 1}};"
+              bindtap="onTileTap"
+              data-row="{{rowIndex}}"
+              data-col="{{colIndex}}">
+
+          <view wx:if="{{tile.number !== -1}}" class="tile-content-no-image">
+            <text class="tile-number-large">{{tile.number}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 开始界面 -->
+  <view class="start-screen" wx:if="{{gameStatus === 'ready'}}">
+    <view class="start-content">
+      <image class="start-image" src="{{originalImage}}" mode="aspectFill"></image>
+      <text class="start-title">禅意拼图</text>
+      <text class="start-description">将打乱的图片重新拼合，体验专注与宁静</text>
+
+      <!-- 最佳成绩 -->
+      <view class="best-scores" wx:if="{{bestTime || bestMoves}}">
+        <text class="best-title">最佳成绩</text>
+        <view class="best-item" wx:if="{{bestTime}}">
+          <text class="best-label">最快时间：</text>
+          <text class="best-value">{{formatTime(bestTime)}}</text>
+        </view>
+        <view class="best-item" wx:if="{{bestMoves}}">
+          <text class="best-label">最少步数：</text>
+          <text class="best-value">{{bestMoves}}</text>
+        </view>
+      </view>
+
+      <button class="start-btn" bindtap="startGame">开始游戏</button>
+    </view>
+  </view>
+
+  <!-- 完成界面 -->
+  <view class="completion-screen" wx:if="{{gameStatus === 'completed'}}">
+    <view class="completion-content">
+      <image class="completion-image" src="{{originalImage}}" mode="aspectFill"></image>
+      <text class="completion-title">恭喜完成！</text>
+      <view class="completion-stats">
+        <view class="stat-item">
+          <text class="stat-label">用时</text>
+          <text class="stat-value">{{formatTime(completionTime)}}</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-label">步数</text>
+          <text class="stat-value">{{moves}}</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-label">得分</text>
+          <text class="stat-value">{{score}}</text>
+        </view>
+      </view>
+      <view class="completion-actions">
+        <button class="restart-btn" bindtap="restartGame">再玩一次</button>
+        <button class="share-btn" open-type="share">分享成绩</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 游戏控制按钮 -->
+  <view class="game-controls" wx:if="{{gameStatus === 'playing' || gameStatus === 'paused'}}">
+    <button class="control-btn pause-btn" wx:if="{{gameStatus === 'playing'}}" bindtap="pauseGame">
+      暂停
+    </button>
+    <button class="control-btn resume-btn" wx:if="{{gameStatus === 'paused'}}" bindtap="resumeGame">
+      继续
+    </button>
+    <button class="control-btn restart-btn" bindtap="restartGame">
+      重开
+    </button>
+    <button class="control-btn hint-btn" bindtap="getHint">
+      提示
+    </button>
+  </view>
+
+  <!-- 设置面板 -->
+  <view class="settings-panel">
+    <view class="settings-title">游戏设置</view>
+    <view class="settings-item">
+      <text class="settings-label">显示数字</text>
+      <switch class="settings-switch" checked="{{showNumbers}}" bindchange="toggleNumbers"></switch>
+    </view>
+    <view class="settings-item">
+      <text class="settings-label">音效</text>
+      <switch class="settings-switch" checked="{{soundEnabled}}" bindchange="toggleSound"></switch>
+    </view>
+  </view>
+
+  <!-- 暂停遮罩 -->
+  <view class="pause-overlay" wx:if="{{gameStatus === 'paused'}}">
+    <view class="pause-content">
+      <text class="pause-title">游戏已暂停</text>
+      <text class="pause-subtitle">点击继续按钮恢复游戏</text>
+    </view>
+  </view>
+</view>

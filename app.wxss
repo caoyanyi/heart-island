@@ -1,0 +1,261 @@
+/* Morandi Color Palette - Gentle and Calming */
+:root {
+  --primary-beige: #E8D5C4;
+  --secondary-gray: #A8A29E;
+  --accent-blue: #94A3B8;
+  --soft-pink: #D1C0B8;
+  --warm-white: #F5F0E6;
+  --deep-gray: #78716C;
+  --light-blue: #CBD5E1;
+  --muted-green: #A7C4A0;
+}
+
+/* Global Styles */
+page {
+  background-color: var(--warm-white);
+  color: var(--deep-gray);
+  font-family: 'Source Han Sans', 'Harmony Sans', -apple-system-font, sans-serif;
+}
+
+/* Common Container Styles */
+.container {
+  padding: 40rpx;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--warm-white) 0%, var(--light-blue) 100%);
+}
+
+/* Card Styles */
+.card {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin: 24rpx 0;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10rpx);
+}
+
+/* Button Styles - Enhanced for Light Background Visibility */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-beige) 0%, var(--soft-pink) 100%);
+  color: var(--deep-gray);
+  border: 3rpx solid var(--deep-gray);
+  border-radius: 50rpx;
+  padding: 24rpx 48rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  box-shadow: 0 8rpx 24rpx rgba(120, 113, 108, 0.4);
+  transition: all 0.3s ease;
+  text-shadow: 0 1rpx 2rpx rgba(255, 255, 255, 0.8);
+}
+
+.btn-primary:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 4rpx 16rpx rgba(120, 113, 108, 0.3);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--deep-gray);
+  border: 3rpx solid var(--deep-gray);
+  border-radius: 50rpx;
+  padding: 24rpx 48rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  box-shadow: 0 6rpx 20rpx rgba(120, 113, 108, 0.3);
+  transition: all 0.3s ease;
+  text-shadow: 0 1rpx 2rpx rgba(255, 255, 255, 0.8);
+}
+
+.btn-secondary:active {
+  background: var(--deep-gray);
+  color: white;
+  text-shadow: none;
+}
+
+/* Text Styles */
+.text-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--deep-gray);
+  margin-bottom: 16rpx;
+}
+
+.text-subtitle {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: var(--secondary-gray);
+  margin-bottom: 12rpx;
+}
+
+.text-body {
+  font-size: 28rpx;
+  line-height: 1.6;
+  color: var(--secondary-gray);
+  margin-bottom: 24rpx;
+}
+
+.text-caption {
+  font-size: 24rpx;
+  color: var(--secondary-gray);
+  opacity: 0.8;
+}
+
+/* Animation Classes */
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+.scale-in {
+  animation: scaleIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50rpx);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Gentle Hover Effects */
+.hover-gentle {
+  transition: all 0.3s ease;
+}
+
+.hover-gentle:hover {
+  transform: translateY(-4rpx);
+  box-shadow: 0 12rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+/* Progress Indicators */
+.progress-bar {
+  height: 8rpx;
+  background: var(--light-blue);
+  border-radius: 4rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-beige) 0%, var(--muted-green) 100%);
+  border-radius: 4rpx;
+  transition: width 0.5s ease;
+}
+
+/* Enhanced Button Variants for Better Visibility */
+.btn-accent {
+  background: linear-gradient(135deg, var(--accent-blue) 0%, var(--muted-green) 100%);
+  color: white;
+  border: 3rpx solid var(--deep-gray);
+  border-radius: 50rpx;
+  padding: 24rpx 48rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  box-shadow: 0 8rpx 24rpx rgba(120, 113, 108, 0.4);
+  transition: all 0.3s ease;
+  text-shadow: 0 1rpx 2rpx rgba(0, 0, 0, 0.3);
+}
+
+.btn-accent:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 4rpx 16rpx rgba(120, 113, 108, 0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--deep-gray);
+  border: 3rpx solid var(--deep-gray);
+  border-radius: 50rpx;
+  padding: 24rpx 48rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  box-shadow: 0 4rpx 16rpx rgba(120, 113, 108, 0.2);
+  transition: all 0.3s ease;
+  text-shadow: 0 1rpx 2rpx rgba(255, 255, 255, 0.8);
+}
+
+.btn-outline:active {
+  background: var(--deep-gray);
+  color: white;
+  text-shadow: none;
+}
+
+.game-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Game-Specific Styles */
+.game-container {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  background: var(--warm-white);
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.1);
+}
+
+.game-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 750rpx) {
+  .container {
+    padding: 32rpx;
+  }
+  
+  .card {
+    padding: 24rpx;
+    margin: 16rpx 0;
+  }
+  
+  .text-title {
+    font-size: 32rpx;
+  }
+  
+  .text-body {
+    font-size: 26rpx;
+  }
+  
+  /* 移动端按钮样式调整 */
+  .btn-primary,
+  .btn-secondary,
+  .btn-accent,
+  .btn-outline {
+    padding: 28rpx 56rpx;
+    font-size: 30rpx;
+    border-width: 4rpx;
+  }
+}

@@ -1,0 +1,127 @@
+<view class="admin-dashboard">
+  <view class="dashboard-header">
+    <text class="dashboard-title">心岛游戏管理后台</text>
+    <view class="header-actions">
+      <button class="refresh-btn" bindtap="refreshData">
+        <text class="refresh-icon">🔄</text>
+        刷新数据
+      </button>
+    </view>
+  </view>
+  
+  <view class="stats-overview">
+    <view class="stat-card">
+      <text class="stat-number">{{totalUsers}}</text>
+      <text class="stat-label">总用户数</text>
+      <text class="stat-change {{userChange >= 0 ? 'positive' : 'negative'}}">
+        {{userChange >= 0 ? '+' : ''}}{{userChange}}%
+      </text>
+    </view>
+    
+    <view class="stat-card">
+      <text class="stat-number">{{activeUsers}}</text>
+      <text class="stat-label">活跃用户</text>
+      <text class="stat-change {{activeChange >= 0 ? 'positive' : 'negative'}}">
+        {{activeChange >= 0 ? '+' : ''}}{{activeChange}}%
+      </text>
+    </view>
+    
+    <view class="stat-card">
+      <text class="stat-number">{{totalTests}}</text>
+      <text class="stat-label">测试完成数</text>
+      <text class="stat-change {{testChange >= 0 ? 'positive' : 'negative'}}">
+        {{testChange >= 0 ? '+' : ''}}{{testChange}}%
+      </text>
+    </view>
+    
+    <view class="stat-card">
+      <text class="stat-number">{{avgSessionTime}}</text>
+      <text class="stat-label">平均使用时长</text>
+      <text class="stat-change {{timeChange >= 0 ? 'positive' : 'negative'}}">
+        {{timeChange >= 0 ? '+' : ''}}{{timeChange}}%
+      </text>
+    </view>
+  </view>
+  
+  <view class="charts-section">
+    <view class="chart-container">
+      <text class="chart-title">情绪分布统计</text>
+      <view class="emotion-chart">
+        <view 
+          class="emotion-bar {{item.emotion}}"
+          wx:for="{{emotionDistribution}}"
+          wx:key="emotion"
+          style="width: {{item.percentage}}%;"
+        >
+          <text class="emotion-label">{{item.label}}</text>
+          <text class="emotion-count">{{item.count}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <view class="chart-container">
+      <text class="chart-title">游戏偏好分析</text>
+      <view class="game-preferences">
+        <view 
+          class="preference-item"
+          wx:for="{{gamePreferences}}"
+          wx:key="game"
+        >
+          <text class="game-icon">{{item.icon}}</text>
+          <text class="game-name">{{item.name}}</text>
+          <text class="preference-percentage">{{item.percentage}}%</text>
+          <view class="preference-bar">
+            <view class="preference-fill" style="width: {{item.percentage}}%;"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <view class="users-section">
+    <view class="section-header">
+      <text class="section-title">用户管理</text>
+      <view class="search-bar">
+        <input 
+          class="search-input" 
+          placeholder="搜索用户..."
+          value="{{searchKeyword}}"
+          bindinput="onSearchInput"
+        />
+        <button class="search-btn" bindtap="searchUsers">🔍</button>
+      </view>
+    </view>
+    
+    <scroll-view class="users-list" scroll-y>
+      <view 
+        class="user-item"
+        wx:for="{{filteredUsers}}"
+        wx:key="id"
+        data-user="{{item}}"
+        bindtap="viewUserDetail"
+      >
+        <image class="user-avatar" src="{{item.avatar}}" />
+        <view class="user-info">
+          <text class="user-name">{{item.nickname}}</text>
+          <text class="user-email">{{item.email}}</text>
+        </view>
+        <view class="user-stats">
+          <text class="user-tests">测试{{item.testCount}}次</text>
+          <text class="user-games">游戏{{item.gameCount}}次</text>
+        </view>
+        <text class="user-arrow">→</text>
+      </view>
+    </scroll-view>
+  </view>
+  
+  <view class="actions-section">
+    <button class="action-btn export-btn" bindtap="exportData">
+      <text class="btn-icon">📊</text>
+      导出数据
+    </button>
+    <button class="action-btn settings-btn" bindtap="openSettings">
+      <text class="btn-icon">⚙️</text>
+      系统设置
+    </button>
+  </view>
+</view>

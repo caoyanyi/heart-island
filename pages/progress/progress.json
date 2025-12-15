@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "我的进度",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#F5F0E6",
+  "backgroundTextStyle": "dark"
+}

@@ -1,0 +1,382 @@
+/* 隐私设置页面样式 */
+page {
+  background-color: #f5f5f5;
+  font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
+}
+
+.container {
+  padding: 20rpx;
+  min-height: 100vh;
+}
+
+/* 页面头部 */
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40rpx 30rpx;
+  border-radius: 20rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(102, 126, 234, 0.3);
+}
+
+.header-title {
+  color: white;
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.header-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 28rpx;
+}
+
+/* 隐私概览 */
+.privacy-overview {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.overview-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.privacy-score {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.score-circle {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: white;
+  position: relative;
+}
+
+.score-good {
+  background: linear-gradient(135deg, #4CAF50, #8BC34A);
+}
+
+.score-medium {
+  background: linear-gradient(135deg, #FF9800, #FFC107);
+}
+
+.score-poor {
+  background: linear-gradient(135deg, #f44336, #ff5722);
+}
+
+.score-text {
+  font-size: 24rpx;
+  color: #666;
+  margin-left: 20rpx;
+  flex: 1;
+}
+
+/* 设置分组 */
+.settings-group {
+  background: white;
+  border-radius: 20rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.group-header {
+  background: #f8f9fa;
+  padding: 20rpx 30rpx;
+  border-bottom: 1rpx solid #e9ecef;
+}
+
+.group-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #495057;
+}
+
+.group-subtitle {
+  font-size: 24rpx;
+  color: #6c757d;
+  margin-top: 5rpx;
+}
+
+/* 设置项 */
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  transition: background-color 0.2s;
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-item:active {
+  background-color: #f8f9fa;
+}
+
+.setting-info {
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.setting-label {
+  font-size: 30rpx;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.setting-desc {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.setting-control {
+  display: flex;
+  align-items: center;
+}
+
+/* 开关样式 */
+.switch {
+  width: 100rpx;
+  height: 60rpx;
+  background: #ccc;
+  border-radius: 30rpx;
+  position: relative;
+  transition: background-color 0.3s;
+}
+
+.switch.checked {
+  background: #4CAF50;
+}
+
+.switch-handle {
+  width: 52rpx;
+  height: 52rpx;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 4rpx;
+  left: 4rpx;
+  transition: transform 0.3s;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
+}
+
+.switch.checked .switch-handle {
+  transform: translateX(40rpx);
+}
+
+/* 操作按钮 */
+.action-buttons {
+  padding: 0 30rpx 30rpx;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 30rpx;
+  border-radius: 15rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  margin-bottom: 20rpx;
+  transition: all 0.3s;
+  border: none;
+}
+
+.action-btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-secondary {
+  background: #f8f9fa;
+  color: #495057;
+  border: 2rpx solid #dee2e6;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  color: white;
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  color: white;
+}
+
+/* 法律信息 */
+.legal-info {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.legal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.legal-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.legal-link {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+  font-size: 30rpx;
+  color: #667eea;
+  transition: color 0.2s;
+}
+
+.legal-link:last-child {
+  border-bottom: none;
+}
+
+.legal-link:active {
+  color: #764ba2;
+}
+
+/* 底部操作 */
+.bottom-actions {
+  padding: 30rpx;
+  background: white;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  margin-bottom: 30rpx;
+}
+
+/* 返回按钮 */
+.back-btn {
+  position: fixed;
+  bottom: 40rpx;
+  right: 40rpx;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 32rpx rgba(102, 126, 234, 0.4);
+  font-size: 40rpx;
+  transition: all 0.3s;
+  z-index: 1000;
+}
+
+.back-btn:active {
+  transform: scale(0.9);
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* 响应式设计 */
+@media (max-width: 375rpx) {
+  .container {
+    padding: 15rpx;
+  }
+  
+  .header {
+    padding: 30rpx 20rpx;
+  }
+  
+  .header-title {
+    font-size: 32rpx;
+  }
+  
+  .setting-item {
+    padding: 25rpx 20rpx;
+  }
+  
+  .setting-label {
+    font-size: 28rpx;
+  }
+  
+  .action-btn {
+    padding: 25rpx;
+    font-size: 30rpx;
+  }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  page {
+    background-color: #1a1a1a;
+  }
+  
+  .settings-group,
+  .privacy-overview,
+  .legal-info,
+  .bottom-actions {
+    background: #2d2d2d;
+    color: #ffffff;
+  }
+  
+  .group-header {
+    background: #3d3d3d;
+  }
+  
+  .overview-title,
+  .group-title,
+  .setting-label,
+  .legal-title {
+    color: #ffffff;
+  }
+  
+  .group-subtitle,
+  .setting-desc,
+  .score-text {
+    color: #cccccc;
+  }
+  
+  .setting-item {
+    border-bottom-color: #404040;
+  }
+  
+  .setting-item:active {
+    background-color: #3d3d3d;
+  }
+  
+  .btn-secondary {
+    background: #3d3d3d;
+    color: #ffffff;
+    border-color: #555;
+  }
+}

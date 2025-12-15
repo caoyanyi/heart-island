@@ -1,0 +1,315 @@
+.light-game-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(circle at center, #1a1a2e, #0f0f1e);
+  overflow: hidden;
+}
+
+.game-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.game-ui {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx;
+  z-index: 10;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.game-timer {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  color: var(--primary-blue);
+  font-weight: bold;
+}
+
+.game-score {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  color: var(--warm-pink);
+  font-weight: bold;
+}
+
+.light-indicator {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15rpx 20rpx;
+  border-radius: 20rpx;
+  margin-top: 10rpx;
+}
+
+.light-text {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  margin-bottom: 10rpx;
+  text-align: center;
+}
+
+.light-bar {
+  width: 200rpx;
+  height: 8rpx;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4rpx;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.light-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--warm-pink), var(--primary-blue));
+  border-radius: 4rpx;
+  transition: width 0.3s ease;
+}
+
+/* Healing words display */
+.healing-word-display {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  pointer-events: none;
+}
+
+.healing-word {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20rpx 40rpx;
+  border-radius: 30rpx;
+  font-size: 32rpx;
+  color: var(--primary-blue);
+  font-weight: 500;
+  text-align: center;
+  max-width: 500rpx;
+  box-shadow: 0 8rpx 25rpx rgba(0, 0, 0, 0.15);
+  animation: healingWordFadeIn 0.5s ease-out, healingWordFloat 3s ease-in-out infinite;
+  border: 2rpx solid rgba(138, 43, 226, 0.2);
+}
+
+@keyframes healingWordFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20rpx) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes healingWordFloat {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-5rpx);
+  }
+}
+
+.instructions {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40rpx;
+  border-radius: 20rpx;
+  text-align: center;
+  max-width: 80%;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+.instructions-title {
+  font-size: 36rpx;
+  color: var(--primary-blue);
+  margin-bottom: 20rpx;
+  font-weight: bold;
+}
+
+.instructions-text {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 30rpx;
+}
+
+.start-btn {
+  background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+  padding: 20rpx 40rpx;
+  border-radius: 30rpx;
+  font-size: 32rpx;
+  border: none;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.start-btn:hover {
+  transform: translateY(-2rpx);
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.25);
+}
+
+.game-over {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40rpx;
+  border-radius: 20rpx;
+  text-align: center;
+  max-width: 80%;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+.game-over-title {
+  font-size: 36rpx;
+  color: var(--primary-blue);
+  margin-bottom: 20rpx;
+  font-weight: bold;
+}
+
+.completion-message {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 20rpx;
+}
+
+.final-score {
+  font-size: 48rpx;
+  color: var(--warm-pink);
+  font-weight: bold;
+  margin-bottom: 30rpx;
+}
+
+.game-over-buttons {
+  display: flex;
+  gap: 20rpx;
+  justify-content: center;
+}
+
+.btn-secondary {
+  background: var(--light-gray);
+  color: var(--text-primary);
+  padding: 20rpx 30rpx;
+  border-radius: 25rpx;
+  font-size: 28rpx;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--medium-gray);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+  padding: 20rpx 30rpx;
+  border-radius: 25rpx;
+  font-size: 28rpx;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2rpx);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.2);
+}
+
+/* Touch controls */
+.touch-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+}
+
+/* Light animations */
+@keyframes light-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+.light-pulse {
+  animation: light-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes star-twinkle {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.1);
+    filter: brightness(1.5);
+  }
+}
+
+.star-twinkle {
+  animation: star-twinkle 2s ease-in-out infinite;
+}
+
+/* Responsive design */
+@media (max-width: 750rpx) {
+  .instructions,
+  .game-over {
+    max-width: 90%;
+    padding: 30rpx;
+  }
+
+  .instructions-title,
+  .game-over-title {
+    font-size: 32rpx;
+  }
+
+  .instructions-text,
+  .completion-message {
+    font-size: 26rpx;
+  }
+
+  .final-score {
+    font-size: 42rpx;
+  }
+
+  .game-over-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-secondary,
+  .btn-primary {
+    width: 100%;
+    max-width: 300rpx;
+  }
+
+  .light-indicator {
+    max-width: 300rpx;
+    margin: 10rpx auto 0;
+  }
+
+  .light-bar {
+    width: 150rpx;
+  }
+}

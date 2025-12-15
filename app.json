@@ -1,0 +1,59 @@
+{
+  "pages": [
+    "pages/welcome/welcome",
+    "pages/emotion-test/emotion-test",
+    "pages/results/results",
+    "pages/finish/finish",
+    "pages/test-finish/test-finish",
+    "pages/game-selector/game-selector",
+    "pages/games/cloud-drifting/cloud-drifting",
+    "pages/games/bubble-pop/bubble-pop",
+    "pages/games/forest-breeze/forest-breeze",
+    "pages/games/light-healing/light-healing",
+    "pages/games/zen-puzzle/zen-puzzle",
+    "pages/games/memory-cards/memory-cards",
+    "pages/index/index",
+    "pages/admin/dashboard/dashboard",
+    "pages/admin/user-detail/user-detail",
+    "pages/privacy-settings/privacy-settings",
+    "pages/social-sharing/social-sharing",
+    "pages/ad-management/ad-management",
+    "pages/progress/progress"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#E8D5C4",
+    "navigationBarTitleText": "Heart Island",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F5F0E6"
+  },
+  "tabBar": {
+    "color": "#A8A29E",
+    "selectedColor": "#78716C",
+    "backgroundColor": "#F5F0E6",
+    "borderStyle": "white",
+    "list": [
+      {
+      "pagePath": "pages/welcome/welcome",
+      "text": "首页",
+      "iconPath": "assets/images/home.png",
+      "selectedIconPath": "assets/images/home-active.png"
+    },
+      {
+        "pagePath": "pages/emotion-test/emotion-test",
+        "text": "情绪测试",
+        "iconPath": "assets/images/test.png",
+        "selectedIconPath": "assets/images/test-active.png"
+      },
+      {
+        "pagePath": "pages/game-selector/game-selector",
+        "text": "放松游戏",
+        "iconPath": "assets/images/games.png",
+        "selectedIconPath": "assets/images/games-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

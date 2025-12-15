@@ -1,0 +1,561 @@
+/* 进度跟踪页面样式 */
+.progress-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F5F0E6 0%, #E8D5C4 100%);
+  padding: 20rpx;
+}
+
+/* 页面头部 */
+.progress-header {
+  text-align: center;
+  margin-bottom: 40rpx;
+  padding-top: 40rpx;
+}
+
+.header-title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #78716C;
+  margin-bottom: 10rpx;
+}
+
+.header-subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: #A8A29E;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400rpx;
+}
+
+.loading-text {
+  font-size: 32rpx;
+  color: #A8A29E;
+}
+
+/* 统计概览 */
+.stats-overview {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40rpx;
+}
+
+.stat-card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin: 0 10rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.stat-number {
+  display: block;
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #78716C;
+  margin-bottom: 10rpx;
+}
+
+.stat-label {
+  display: block;
+  font-size: 24rpx;
+  color: #A8A29E;
+}
+
+/* 每周目标 */
+.weekly-goal-section {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.goal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #78716C;
+}
+
+.goal-progress {
+  font-size: 28rpx;
+  color: #A8A29E;
+}
+
+.progress-bar {
+  height: 20rpx;
+  background: #E5E7EB;
+  border-radius: 10rpx;
+  overflow: hidden;
+  margin-bottom: 15rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #87CEEB 0%, #4ECDC4 100%);
+  border-radius: 10rpx;
+  transition: width 0.3s ease;
+}
+
+.goal-description {
+  font-size: 24rpx;
+  color: #A8A29E;
+  text-align: center;
+}
+
+/* 图表部分 */
+.chart-section {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #78716C;
+  margin-bottom: 30rpx;
+}
+
+.emotion-chart {
+  padding: 20rpx 0;
+}
+
+.chart-bars {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 120rpx;
+}
+
+.chart-bar-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 5rpx;
+}
+
+.bar-date {
+  font-size: 20rpx;
+  color: #A8A29E;
+  margin-bottom: 10rpx;
+}
+
+.bar-container {
+  height: 60rpx;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.bar-fill {
+  width: 20rpx;
+  border-radius: 10rpx 10rpx 0 0;
+  transition: height 0.3s ease;
+}
+
+.bar-score {
+  font-size: 20rpx;
+  color: #A8A29E;
+  margin-top: 10rpx;
+}
+
+/* 游戏使用统计 */
+.game-usage-section {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.game-usage-list {
+  padding: 20rpx 0;
+}
+
+.game-usage-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.game-name {
+  flex: 1;
+  font-size: 28rpx;
+  color: #78716C;
+  margin-right: 20rpx;
+}
+
+.game-count {
+  font-size: 24rpx;
+  color: #A8A29E;
+  margin-right: 20rpx;
+}
+
+.usage-bar {
+  flex: 2;
+  height: 16rpx;
+  background: #E5E7EB;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.usage-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #98D8C8 0%, #87CEEB 100%);
+  border-radius: 8rpx;
+  transition: width 0.3s ease;
+}
+
+/* 成就系统 */
+.achievements-section {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+  padding: 20rpx 0;
+}
+
+.achievement-item {
+  background: #F9FAFB;
+  border-radius: 15rpx;
+  padding: 20rpx;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.achievement-item.unlocked {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  box-shadow: 0 4rpx 20rpx rgba(255, 215, 0, 0.3);
+}
+
+.achievement-item.locked {
+  opacity: 0.6;
+}
+
+.achievement-icon {
+  display: block;
+  font-size: 48rpx;
+  margin-bottom: 10rpx;
+}
+
+.achievement-name {
+  display: block;
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #78716C;
+  margin-bottom: 5rpx;
+}
+
+.achievement-desc {
+  display: block;
+  font-size: 20rpx;
+  color: #A8A29E;
+}
+
+.achievement-lock {
+  position: absolute;
+  top: 10rpx;
+  right: 10rpx;
+  font-size: 24rpx;
+}
+
+/* 推荐建议 */
+.recommendations-section {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.recommendations-list {
+  padding: 20rpx 0;
+}
+
+.recommendation-item {
+  background: #F9FAFB;
+  border-radius: 15rpx;
+  padding: 20rpx;
+  margin-bottom: 15rpx;
+}
+
+.recommendation-header {
+  margin-bottom: 10rpx;
+}
+
+.recommendation-type {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #78716C;
+}
+
+.recommendation-content {
+  font-size: 24rpx;
+  color: #A8A29E;
+  line-height: 1.5;
+}
+
+/* 操作按钮 */
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 20rpx;
+  padding: 20rpx 0;
+}
+
+.share-btn, .export-btn, .reset-btn {
+  flex: 1;
+  padding: 25rpx;
+  border-radius: 15rpx;
+  border: none;
+  font-size: 28rpx;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.share-btn {
+  background: linear-gradient(135deg, #4ECDC4 0%, #87CEEB 100%);
+  color: white;
+}
+
+.export-btn {
+  background: linear-gradient(135deg, #98D8C8 0%, #4ECDC4 100%);
+  color: white;
+}
+
+.reset-btn {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
+  color: white;
+}
+
+.share-btn:hover, .export-btn:hover, .reset-btn:hover {
+  transform: translateY(-2rpx);
+  box-shadow: 0 8rpx 25rpx rgba(0, 0, 0, 0.2);
+}
+
+.btn-text {
+  color: inherit;
+}
+
+/* 测试历史切换按钮 */
+.history-toggle-section {
+  margin: 20rpx 0;
+}
+
+.history-toggle-btn {
+  width: 100%;
+  padding: 20rpx;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15rpx;
+  border: 2rpx solid #E5E7EB;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 28rpx;
+  color: #78716C;
+  transition: all 0.3s ease;
+}
+
+.history-toggle-btn:active {
+  background: #F3F4F6;
+  transform: scale(0.98);
+}
+
+.toggle-icon {
+  font-size: 24rpx;
+  color: #A8A29E;
+  transition: transform 0.3s ease;
+}
+
+/* 测试历史部分 */
+.test-history-section {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 测试统计 */
+.test-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  padding: 20rpx;
+  background: #F9FAFB;
+  border-radius: 15rpx;
+  margin-bottom: 30rpx;
+}
+
+.stat-text {
+  font-size: 24rpx;
+  color: #78716C;
+  line-height: 1.4;
+}
+
+/* 历史记录列表 */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  background: #F9FAFB;
+  border-radius: 15rpx;
+  padding: 20rpx;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.history-item:active {
+  background: #E5E7EB;
+  transform: scale(0.98);
+}
+
+.history-main {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+}
+
+.history-date {
+  font-size: 24rpx;
+  color: #78716C;
+  font-weight: 500;
+}
+
+.history-emotion {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #78716C;
+  background: rgba(120, 113, 108, 0.1);
+  padding: 8rpx 15rpx;
+  border-radius: 20rpx;
+}
+
+.early-submit-tag {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  font-size: 20rpx;
+  padding: 4rpx 10rpx;
+  border-radius: 12rpx;
+  font-weight: bold;
+}
+
+.history-scores {
+  flex: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  justify-content: flex-end;
+}
+
+.history-score {
+  font-size: 20rpx;
+  padding: 6rpx 10rpx;
+  border-radius: 10rpx;
+  background: rgba(0, 0, 0, 0.05);
+  font-weight: 500;
+}
+
+.history-score.calm {
+  color: #3B82F6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.history-score.anxiety {
+  color: #F59E0B;
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.history-score.low {
+  color: #6B7280;
+  background: rgba(107, 114, 128, 0.1);
+}
+
+.history-score.depression {
+  color: #EF4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.history-arrow {
+  font-size: 24rpx;
+  color: #A8A29E;
+  margin-left: 15rpx;
+  font-weight: bold;
+}
+
+/* 空状态 */
+.empty-history {
+  text-align: center;
+  padding: 60rpx 20rpx;
+}
+
+.empty-text {
+  display: block;
+  font-size: 28rpx;
+  color: #A8A29E;
+  margin-bottom: 15rpx;
+  font-weight: 500;
+}
+
+.empty-desc {
+  display: block;
+  font-size: 24rpx;
+  color: #D1D5DB;
+  line-height: 1.5;
+}
+
+/* 情绪标签颜色 */
+.history-emotion.calm {
+  color: #3B82F6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.history-emotion.anxiety {
+  color: #F59E0B;
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.history-emotion.low {
+  color: #6B7280;
+  background: rgba(107, 114, 128, 0.1);
+}
+
+.history-emotion.depression {
+  color: #EF4444;
+  background: rgba(239, 68, 68, 0.1);
+}

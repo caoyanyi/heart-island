@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "气泡爆破",
+  "navigationBarBackgroundColor": "#4ECDC4",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#E0F6FF",
+  "enablePullDownRefresh": false,
+  "disableScroll": true
+}

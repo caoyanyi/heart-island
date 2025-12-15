@@ -1,0 +1,76 @@
+/* 测试页面样式 */
+.test-container {
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #f5f0e6 0%, #e8d5c4 100%);
+  box-sizing: border-box;
+}
+
+.test-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #5a4a42;
+  text-align: center;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.test-desc {
+  font-size: 16px;
+  color: #8d7b68;
+  text-align: center;
+  display: block;
+  margin-bottom: 30px;
+}
+
+.test-buttons {
+  margin-bottom: 30px;
+}
+
+.test-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #d4a574 0%, #b8956a 100%);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 16px rgba(212, 165, 116, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.test-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
+}
+
+.current-params {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 20px;
+  border: 2px solid #d4a574;
+}
+
+.params-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #5a4a42;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.params-content {
+  font-size: 14px;
+  color: #8d7b68;
+  word-break: break-all;
+  font-family: 'Courier New', monospace;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 8px;
+  border-radius: 6px;
+  display: block;
+}

@@ -1,0 +1,38 @@
+<!-- 欢迎页面 -->
+<view class="welcome-container">
+  <view class="welcome-header">
+    <text class="welcome-title">情绪舒缓小游戏</text>
+    <text class="welcome-subtitle">让心灵回归平静</text>
+  </view>
+  
+  <view class="welcome-content">
+    <view class="feature-cards">
+      <view class="feature-card" bindtap="navigateToAssessment">
+        <view class="card-icon assessment-icon">🧠</view>
+        <text class="card-title">情绪评估</text>
+        <text class="card-description">了解你的情绪状态</text>
+      </view>
+      
+      <view class="feature-card" bindtap="navigateToGames">
+        <view class="card-icon games-icon">🎮</view>
+        <text class="card-title">舒缓游戏</text>
+        <text class="card-description">通过游戏释放压力</text>
+      </view>
+      
+      <view class="feature-card" bindtap="navigateToProgress">
+        <view class="card-icon progress-icon">📊</view>
+        <text class="card-title">进度跟踪</text>
+        <text class="card-description">查看你的改善历程</text>
+      </view>
+    </view>
+    
+    <view class="welcome-message">
+      <text class="message-text">选择一个功能开始你的情绪舒缓之旅</text>
+    </view>
+  </view>
+  
+  <view class="welcome-footer">
+    <button class="start-button" bindtap="navigateToAssessment">开始评估</button>
+    <text class="footer-note">专业建议：如有严重情绪问题，请寻求专业帮助</text>
+  </view>
+</view>

@@ -1,0 +1,303 @@
+/* 结束页样式 */
+.finish-container {
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #f5f0e6 0%, #e8d5c4 100%);
+  box-sizing: border-box;
+}
+
+/* 治愈语展示区 */
+.healing-section {
+  margin-bottom: 30px;
+}
+
+.healing-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 30px 25px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.healing-icon {
+  font-size: 60px;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.healing-text {
+  font-size: 20px;
+  line-height: 1.6;
+  color: #5a4a42;
+  font-weight: 500;
+}
+
+/* 游戏统计 */
+.stats-section {
+  margin-bottom: 30px;
+}
+
+.stats-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #5a4a42;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.stats-grid {
+  display: flex;
+  justify-content: space-around;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #8b6f47;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #8d7b68;
+}
+
+/* 情绪感受 */
+.feeling-section {
+  margin-bottom: 30px;
+}
+
+.feeling-question {
+  font-size: 18px;
+  font-weight: 600;
+  color: #5a4a42;
+  display: block;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.feeling-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.feeling-option {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.feeling-option.selected {
+  border-color: #d4a574;
+  background: rgba(212, 165, 116, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(212, 165, 116, 0.2);
+}
+
+.feeling-emoji {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.feeling-text {
+  font-size: 14px;
+  color: #5a4a42;
+  font-weight: 500;
+}
+
+/* 分享鼓励 */
+.sharing-section {
+  margin-bottom: 30px;
+}
+
+.sharing-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #5a4a42;
+  display: block;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sharing-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.share-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.share-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.share-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.share-text {
+  font-size: 14px;
+  color: #5a4a42;
+  font-weight: 500;
+}
+
+/* 行动按钮 */
+.action-section {
+  margin-bottom: 25px;
+}
+
+.action-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #d4a574 0%, #b8956a 100%);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 16px rgba(212, 165, 116, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.action-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
+}
+
+.btn-icon {
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.btn-text {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.action-buttons-row {
+  display: flex;
+  gap: 10px;
+}
+
+.action-buttons-row .action-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.8);
+  color: #5a4a42;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0;
+}
+
+.action-buttons-row .action-btn:active {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* 温馨提醒 */
+.reminder-section {
+  text-align: center;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  border-left: 4px solid #d4a574;
+}
+
+.reminder-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #8d7b68;
+  font-style: italic;
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.healing-card,
+.stats-section,
+.feeling-section,
+.sharing-section,
+.action-section {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.healing-card {
+  animation-delay: 0.1s;
+}
+
+.stats-section {
+  animation-delay: 0.2s;
+}
+
+.feeling-section {
+  animation-delay: 0.3s;
+}
+
+.sharing-section {
+  animation-delay: 0.4s;
+}
+
+.action-section {
+  animation-delay: 0.5s;
+}
+
+/* 响应式设计 */
+@media (max-width: 375px) {
+  .finish-container {
+    padding: 15px;
+  }
+  
+  .healing-card {
+    padding: 25px 20px;
+  }
+  
+  .healing-text {
+    font-size: 18px;
+  }
+  
+  .feeling-options {
+    grid-template-columns: 1fr;
+  }
+  
+  .sharing-buttons {
+    flex-direction: column;
+  }
+}

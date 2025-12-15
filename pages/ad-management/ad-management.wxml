@@ -1,0 +1,179 @@
+<!-- 广告管理页面 -->
+<view class="ad-management">
+  <!-- 页面头部 -->
+  <view class="header">
+    <text class="title">广告管理</text>
+    <text class="subtitle">管理应用内广告设置和查看统计</text>
+  </view>
+
+  <!-- 主要内容 -->
+  <scroll-view class="content" scroll-y>
+    <!-- 广告开关 -->
+    <view class="section">
+      <view class="section-title">广告设置</view>
+      
+      <view class="ad-controls">
+        <view class="control-item">
+          <view class="control-info">
+            <text class="control-title">横幅广告</text>
+            <text class="control-desc">页面顶部/底部显示的小型广告</text>
+          </view>
+          <switch 
+            checked="{{bannerEnabled}}" 
+            bindchange="onBannerToggle"
+            color="#8B7355"
+          />
+        </view>
+
+        <view class="control-item">
+          <view class="control-info">
+            <text class="control-title">插屏广告</text>
+            <text class="control-desc">全屏显示的插屏广告</text>
+          </view>
+          <switch 
+            checked="{{interstitialEnabled}}" 
+            bindchange="onInterstitialToggle"
+            color="#8B7355"
+          />
+        </view>
+
+        <view class="control-item">
+          <view class="control-info">
+            <text class="control-title">激励视频广告</text>
+            <text class="control-desc">观看视频获得奖励的广告</text>
+          </view>
+          <switch 
+            checked="{{rewardedEnabled}}" 
+            bindchange="onRewardedToggle"
+            color="#8B7355"
+          />
+        </view>
+      </view>
+
+      <view class="bulk-controls">
+        <button class="bulk-btn enable-all" bindtap="enableAllAds">
+          <text class="btn-icon">✅</text>
+          <text class="btn-text">全部启用</text>
+        </button>
+        <button class="bulk-btn disable-all" bindtap="disableAllAds">
+          <text class="btn-icon">❌</text>
+          <text class="btn-text">全部禁用</text>
+        </button>
+      </view>
+    </view>
+
+    <!-- 广告统计 -->
+    <view class="section">
+      <view class="section-title">今日统计</view>
+      
+      <view class="stats-grid">
+        <view class="stat-item">
+          <text class="stat-label">横幅广告</text>
+          <text class="stat-value">{{dailyStats.banner}}</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-label">插屏广告</text>
+          <text class="stat-value">{{dailyStats.interstitial}}</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-label">激励广告</text>
+          <text class="stat-value">{{dailyStats.rewarded}}</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-label">用户行为</text>
+          <text class="stat-value">{{userActions}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 高级设置 -->
+    <view class="section">
+      <view class="section-title">高级设置</view>
+      
+      <view class="advanced-settings">
+        <view class="setting-item">
+          <text class="setting-label">横幅广告刷新间隔（秒）</text>
+          <input 
+            type="number" 
+            value="{{bannerRefreshInterval}}" 
+            bindblur="onBannerRefreshChange"
+            class="setting-input"
+            placeholder="30"
+          />
+        </view>
+
+        <view class="setting-item">
+          <text class="setting-label">插屏广告显示间隔（秒）</text>
+          <input 
+            type="number" 
+            value="{{interstitialInterval}}" 
+            bindblur="onInterstitialIntervalChange"
+            class="setting-input"
+            placeholder="180"
+          />
+        </view>
+
+        <view class="setting-item">
+          <text class="setting-label">激励广告每日限制</text>
+          <input 
+            type="number" 
+            value="{{rewardedDailyLimit}}" 
+            bindblur="onRewardedLimitChange"
+            class="setting-input"
+            placeholder="5"
+          />
+        </view>
+
+        <view class="setting-item">
+          <text class="setting-label">激励广告奖励积分</text>
+          <input 
+            type="number" 
+            value="{{rewardedRewardAmount}}" 
+            bindblur="onRewardedAmountChange"
+            class="setting-input"
+            placeholder="100"
+          />
+        </view>
+      </view>
+    </view>
+
+    <!-- 测试功能 -->
+    <view class="section">
+      <view class="section-title">测试功能</view>
+      
+      <view class="test-controls">
+        <button class="test-btn" bindtap="testBannerAd">
+          <text class="btn-icon">📱</text>
+          <text class="btn-text">测试横幅广告</text>
+        </button>
+        
+        <button class="test-btn" bindtap="testInterstitialAd">
+          <text class="btn-icon">🖥️</text>
+          <text class="btn-text">测试插屏广告</text>
+        </button>
+        
+        <button class="test-btn" bindtap="testRewardedAd">
+          <text class="btn-icon">🎁</text>
+          <text class="btn-text">测试激励广告</text>
+        </button>
+      </view>
+    </view>
+
+    <!-- 数据管理 -->
+    <view class="section">
+      <view class="section-title">数据管理</view>
+      
+      <view class="data-controls">
+        <button class="data-btn clear-tracking" bindtap="clearTrackingData">
+          <text class="btn-icon">🧹</text>
+          <text class="btn-text">清除跟踪数据</text>
+        </button>
+        
+        <button class="data-btn export-report" bindtap="exportTrackingReport">
+          <text class="btn-icon">📊</text>
+          <text class="btn-text">导出报告</text>
+        </button>
+      </view>
+    </view>
+  </scroll-view>
+</view>

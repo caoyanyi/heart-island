@@ -1,0 +1,182 @@
+/* 用户详情页面样式 */
+.user-detail-container {
+  padding: 20rpx;
+  background-color: #F5F0E6;
+  min-height: 100vh;
+}
+
+/* 页面头部 */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  margin-bottom: 30rpx;
+}
+
+.back-btn {
+  background-color: #E8D5C4;
+  color: #78716C;
+  border: none;
+  padding: 10rpx 20rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+.page-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #78716C;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10rpx;
+}
+
+.action-btn {
+  background-color: #D6C2A6;
+  color: #78716C;
+  border: none;
+  padding: 10rpx 20rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200rpx;
+}
+
+/* 区块标题 */
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #78716C;
+  margin-bottom: 20rpx;
+  padding-left: 20rpx;
+}
+
+/* 信息卡片 */
+.info-card, .settings-card {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #E8D5C4;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-size: 28rpx;
+  color: #A8A29E;
+  min-width: 160rpx;
+}
+
+.value {
+  font-size: 28rpx;
+  color: #78716C;
+  text-align: right;
+  flex: 1;
+}
+
+.value.note {
+  color: #D6C2A6;
+  font-style: italic;
+}
+
+/* 统计网格 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.stat-item {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.stat-number {
+  display: block;
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #D6C2A6;
+  margin-bottom: 10rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #A8A29E;
+}
+
+/* 设置项 */
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #E8D5C4;
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-label {
+  font-size: 28rpx;
+  color: #78716C;
+}
+
+/* 操作按钮区域 */
+.actions-section {
+  margin-top: 40rpx;
+  padding: 20rpx;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 25rpx;
+  margin-bottom: 20rpx;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  border: none;
+}
+
+.action-btn.primary {
+  background-color: #D6C2A6;
+  color: white;
+}
+
+.action-btn.warning {
+  background-color: #F59E0B;
+  color: white;
+}
+
+.action-btn.danger {
+  background-color: #EF4444;
+  color: white;
+}
+
+.action-btn:active {
+  opacity: 0.8;
+}

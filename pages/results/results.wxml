@@ -1,0 +1,58 @@
+<view class="results-container">
+  <view class="results-header">
+    <text class="results-title">测试结果</text>
+    <text class="results-subtitle">了解你的情绪状态</text>
+  </view>
+  
+  <view class="emotion-result">
+    <view class="emotion-visual">
+      <text class="emotion-icon">{{emotionIcon}}</text>
+      <text class="emotion-type">{{emotionType}}</text>
+    </view>
+    
+    <view class="emotion-description">
+      <text class="description-title">你的情绪状态</text>
+      <text class="description-text">{{emotionDescription}}</text>
+    </view>
+  </view>
+  
+  <view class="recommendation-section">
+    <text class="section-title">为你推荐</text>
+    <view class="recommended-game" bindtap="startRecommendedGame">
+      <text class="game-icon">{{recommendedGameIcon}}</text>
+      <view class="game-info">
+        <text class="game-title">{{recommendedGameTitle}}</text>
+        <text class="game-reason">{{recommendationReason}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <view class="all-games-section">
+    <text class="section-title">或者选择其他游戏</text>
+    <view class="games-grid">
+      <view 
+        class="game-option {{item.id === recommendedGame ? 'recommended' : ''}}"
+        wx:for="{{allGames}}"
+        wx:key="id"
+        data-game="{{item.id}}"
+        bindtap="selectGame"
+      >
+        <text class="option-icon">{{item.icon}}</text>
+        <text class="option-title">{{item.title}}</text>
+        <text class="option-desc">{{item.description}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <view class="results-actions">
+    <button class="primary-btn" bindtap="startRecommendedGame" wx:if="{{recommendedGameTitle}}">
+      开始{{recommendedGameTitle}}
+    </button>
+    <button class="primary-btn" bindtap="startRecommendedGame" wx:else>
+      开始推荐游戏
+    </button>
+    <button class="secondary-btn" bindtap="retakeTest">
+      重新测试
+    </button>
+  </view>
+</view>

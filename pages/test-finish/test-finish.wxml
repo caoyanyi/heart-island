@@ -1,0 +1,24 @@
+<!-- 测试页面，用于验证finish页面 -->
+<view class="test-container">
+  <text class="test-title">测试页面</text>
+  <text class="test-desc">用于测试finish页面是否正常显示</text>
+  
+  <view class="test-buttons">
+    <button class="test-btn" bindtap="goToFinishWithData">
+      <text>测试finish页面(带游戏数据)</text>
+    </button>
+    
+    <button class="test-btn" bindtap="goToFinishEmpty">
+      <text>测试finish页面(空数据)</text>
+    </button>
+    
+    <button class="test-btn" bindtap="goToFinishSimple">
+      <text>测试finish页面(简单参数)</text>
+    </button>
+  </view>
+  
+  <view class="current-params" wx:if="{{currentParams}}">
+    <text class="params-title">当前传递的参数:</text>
+    <text class="params-content">{{currentParams}}</text>
+  </view>
+</view>

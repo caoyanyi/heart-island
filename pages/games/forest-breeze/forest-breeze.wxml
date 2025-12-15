@@ -1,0 +1,45 @@
+<view class="forest-game-container">
+  <canvas 
+    id="forestGameCanvas" 
+    canvas-id="forestGameCanvas" 
+    type="2d"
+    class="game-canvas"
+    bindtouchstart="onTouchStart"
+    bindtouchmove="onTouchMove"
+    bindtouchend="onTouchEnd"
+  ></canvas>
+
+  <!-- Game UI -->
+  <view class="game-ui">
+    <view class="game-header">
+      <view class="game-timer">时间: {{remainingTime}}s</view>
+      <view class="game-score">分数: {{score}}</view>
+    </view>
+    <view class="wind-indicator">
+      <view class="wind-text">风力: {{windPower}}x</view>
+      <view class="wind-bar">
+        <view class="wind-fill" style="width: {{windPower * 20}}%"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Instructions -->
+  <view class="instructions" wx:if="{{showInstructions}}">
+    <view class="instructions-title">森林微风</view>
+    <view class="instructions-text">
+      滑动屏幕创造微风，帮助树叶飘落
+    </view>
+    <button class="start-btn" bindtap="startGame">开始游戏</button>
+  </view>
+
+  <!-- Game Over -->
+  <view class="game-over" wx:if="{{gameOver}}">
+    <view class="game-over-title">游戏结束</view>
+    <view class="completion-message">{{completionMessage}}</view>
+    <view class="final-score">{{score}} 分</view>
+    <view class="game-over-buttons">
+      <button class="btn-secondary" bindtap="backToSelector">返回</button>
+      <button class="btn-primary" bindtap="playAgain">再玩一次</button>
+    </view>
+  </view>
+</view>

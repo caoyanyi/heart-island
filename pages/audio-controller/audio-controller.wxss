@@ -1,0 +1,274 @@
+.audio-controller {
+  position: fixed;
+  top: 100rpx;
+  right: 20rpx;
+  z-index: 1000;
+}
+
+.audio-toggle {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.audio-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.2);
+}
+
+.audio-icon {
+  font-size: 40rpx;
+  color: var(--primary-blue);
+}
+
+.audio-panel {
+  position: absolute;
+  top: 100rpx;
+  right: 0;
+  width: 400rpx;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.2);
+  padding: 30rpx;
+  backdrop-filter: blur(10rpx);
+  z-index: 1001;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx solid rgba(0, 0, 0, 0.1);
+}
+
+.panel-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.close-btn {
+  font-size: 36rpx;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: var(--text-primary);
+}
+
+.control-label {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 15rpx;
+}
+
+.volume-control {
+  margin-bottom: 30rpx;
+}
+
+.volume-slider {
+  width: 100%;
+  margin: 15rpx 0;
+}
+
+.volume-text {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  text-align: center;
+  display: block;
+}
+
+.mute-control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx solid rgba(0, 0, 0, 0.1);
+}
+
+.mute-switch {
+  transform: scale(0.8);
+}
+
+.track-selection {
+  margin-bottom: 30rpx;
+}
+
+.track-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15rpx;
+}
+
+.track-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 15rpx;
+  border-radius: 15rpx;
+  background: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.track-item:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: translateY(-2rpx);
+}
+
+.track-item.active {
+  background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+  color: white;
+}
+
+.track-icon {
+  font-size: 36rpx;
+  margin-bottom: 10rpx;
+}
+
+.track-name {
+  font-size: 22rpx;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.playback-controls {
+  display: flex;
+  gap: 20rpx;
+  justify-content: center;
+}
+
+.control-btn {
+  flex: 1;
+  padding: 20rpx 15rpx;
+  border: none;
+  border-radius: 15rpx;
+  background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+  color: white;
+  font-size: 24rpx;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+  transform: translateY(-2rpx);
+  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.2);
+}
+
+.audio-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
+
+/* Responsive design */
+@media (max-width: 750rpx) {
+  .audio-controller {
+    top: 80rpx;
+    right: 15rpx;
+  }
+  
+  .audio-toggle {
+    width: 70rpx;
+    height: 70rpx;
+  }
+  
+  .audio-icon {
+    font-size: 36rpx;
+  }
+  
+  .audio-panel {
+    width: 350rpx;
+    padding: 25rpx;
+  }
+  
+  .panel-title {
+    font-size: 30rpx;
+  }
+  
+  .control-label {
+    font-size: 26rpx;
+  }
+  
+  .track-icon {
+    font-size: 32rpx;
+  }
+  
+  .track-name {
+    font-size: 20rpx;
+  }
+  
+  .control-btn {
+    font-size: 22rpx;
+    padding: 18rpx 12rpx;
+  }
+}
+
+@media (max-width: 600rpx) {
+  .audio-controller {
+    top: 60rpx;
+    right: 10rpx;
+  }
+  
+  .audio-toggle {
+    width: 60rpx;
+    height: 60rpx;
+  }
+  
+  .audio-icon {
+    font-size: 32rpx;
+  }
+  
+  .audio-panel {
+    width: 300rpx;
+    padding: 20rpx;
+  }
+  
+  .panel-title {
+    font-size: 28rpx;
+  }
+  
+  .control-label {
+    font-size: 24rpx;
+  }
+  
+  .track-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .track-icon {
+    font-size: 30rpx;
+  }
+  
+  .track-name {
+    font-size: 18rpx;
+  }
+  
+  .playback-controls {
+    flex-direction: column;
+  }
+  
+  .control-btn {
+    font-size: 20rpx;
+    padding: 15rpx 10rpx;
+  }
+}
