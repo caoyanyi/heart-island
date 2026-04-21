@@ -3,7 +3,8 @@ Page({
     recommendedGame: '',
     recommendationIcon: '',
     recommendationTitle: '',
-    recommendationText: ''
+    recommendationText: '',
+    navigatingGame: ''
   },
 
   onLoad() {
@@ -98,10 +99,34 @@ Page({
 
   selectGame(e) {
     const game = e.currentTarget.dataset.game
+    if (!game || this.data.navigatingGame) {
+      return
+    }
+
+    this.setData({ navigatingGame: game })
+
+    if (wx.vibrateShort) {
+      wx.vibrateShort({ type: 'light' })
+    }
+
+    wx.showLoading({
+      title: '进入游戏',
+      mask: true
+    })
     
     // Navigate to selected game
     wx.navigateTo({
-      url: `/pages/games/${game}/${game}`
+      url: `/pages/games/${game}/${game}`,
+      fail: () => {
+        wx.showToast({
+          title: '游戏暂时无法打开',
+          icon: 'none'
+        })
+      },
+      complete: () => {
+        wx.hideLoading()
+        this.setData({ navigatingGame: '' })
+      }
     })
   },
 

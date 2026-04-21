@@ -1,6 +1,15 @@
 .results-container {
+  --primary-beige: #E8D5C4;
+  --light-beige: #F7EFE4;
+  --text-primary: #4F4638;
+  --text-secondary: #8A7B69;
+  --primary-blue: #8DB7C7;
+  --light-blue: #D8EEF2;
+  --warm-pink: #D7A6A0;
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--primary-beige), var(--light-beige));
+  background:
+    radial-gradient(circle at top right, rgba(215, 166, 160, 0.24), transparent 36%),
+    linear-gradient(135deg, var(--primary-beige), var(--light-beige));
   padding: 40rpx 30rpx;
   box-sizing: border-box;
 }
@@ -31,6 +40,7 @@
   margin-bottom: 50rpx;
   box-shadow: 0 8rpx 25rpx rgba(0, 0, 0, 0.1);
   text-align: center;
+  animation: resultEnter 0.45s ease-out;
 }
 
 .emotion-visual {
@@ -77,6 +87,7 @@
   padding: 40rpx;
   margin-bottom: 50rpx;
   box-shadow: 0 8rpx 25rpx rgba(0, 0, 0, 0.15);
+  animation: resultEnter 0.5s ease-out 0.08s both;
 }
 
 .section-title {
@@ -96,6 +107,18 @@
   backdrop-filter: blur(10rpx);
   border: 2rpx solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 8rpx 25rpx rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.recommended-game:active {
+  transform: scale(0.985);
+}
+
+.recommended-game.is-loading,
+.game-option.is-loading,
+.primary-btn.is-loading {
+  opacity: 0.72;
 }
 
 .game-icon {
@@ -107,6 +130,16 @@
 
 .game-info {
   flex: 1;
+}
+
+.recommendation-label {
+  display: inline-flex;
+  padding: 5rpx 16rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.26);
+  font-size: 22rpx;
+  font-weight: 700;
+  margin-bottom: 12rpx;
 }
 
 .game-title {
@@ -123,6 +156,16 @@
   font-size: 30rpx;
   line-height: 1.5;
   text-shadow: 0 1rpx 2rpx rgba(0, 0, 0, 0.2);
+}
+
+.game-enter {
+  min-width: 72rpx;
+  padding: 10rpx 18rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.28);
+  font-size: 24rpx;
+  font-weight: 700;
+  text-align: center;
 }
 
 .all-games-section {
@@ -148,13 +191,22 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.1);
+  -webkit-tap-highlight-color: transparent;
+  animation: optionEnter 0.42s ease-out both;
 }
 
-.game-option:hover {
+.game-option:hover,
+.game-option:active {
   transform: translateY(-5rpx);
   box-shadow: 0 8rpx 25rpx rgba(0, 0, 0, 0.15);
   background: rgba(255, 255, 255, 0.95);
 }
+
+.game-option:nth-child(2) { animation-delay: 0.04s; }
+.game-option:nth-child(3) { animation-delay: 0.08s; }
+.game-option:nth-child(4) { animation-delay: 0.12s; }
+.game-option:nth-child(5) { animation-delay: 0.16s; }
+.game-option:nth-child(6) { animation-delay: 0.2s; }
 
 .game-option.recommended {
   background: linear-gradient(135deg, var(--warm-pink), var(--primary-blue));
@@ -262,6 +314,28 @@
   box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.15);
 }
 
+@keyframes resultEnter {
+  from {
+    opacity: 0;
+    transform: translateY(24rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes optionEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18rpx) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @keyframes pulse {
   0%, 100% {
     transform: scale(1);
@@ -313,6 +387,10 @@
     padding: 30rpx;
   }
 
+  .recommended-game {
+    align-items: flex-start;
+  }
+
   .section-title {
     font-size: 36rpx;
   }
@@ -327,6 +405,10 @@
 
   .game-reason {
     font-size: 26rpx;
+  }
+
+  .game-enter {
+    margin-top: 8rpx;
   }
 
   .games-grid {

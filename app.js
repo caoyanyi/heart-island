@@ -4,6 +4,7 @@ App({
   globalData: {
     userInfo: null,
     emotionTestResults: null,
+    emotionTestHistory: [],
     gameProgress: {},
     audioSettings: {
       isMuted: false,
@@ -25,10 +26,18 @@ App({
   loadUserData() {
     try {
       // Load emotion test results
+      const currentEmotionResult = wx.getStorageSync('currentEmotionTestResult')
       const emotionResults = wx.getStorageSync('emotionTestResults')
-      if (emotionResults && emotionResults.length > 0) {
+      const emotionHistory = this.normalizeEmotionResults(emotionResults)
+      if (currentEmotionResult || emotionHistory.length > 0) {
+        this.globalData.emotionTestHistory = emotionHistory
         // 使用最新的测试结果
-        this.globalData.emotionTestResults = emotionResults[emotionResults.length - 1]
+        this.globalData.emotionTestResults = currentEmotionResult || emotionHistory[emotionHistory.length - 1]
+
+        // 兼容旧版本曾经写入对象的情况，统一迁移为历史数组
+        if (!Array.isArray(emotionResults)) {
+          wx.setStorageSync('emotionTestResults', emotionHistory)
+        }
       }
 
       // Load game progress
@@ -51,7 +60,27 @@ App({
     try {
       // Save emotion test results
       if (this.globalData.emotionTestResults) {
-        wx.setStorageSync('emotionTestResults', this.globalData.emotionTestResults)
+        const storedResults = wx.getStorageSync('emotionTestResults')
+        const emotionHistory = this.normalizeEmotionResults(storedResults)
+        const currentResult = this.globalData.emotionTestResults
+        const resultIndex = emotionHistory.findIndex(item => (
+          (currentResult.testId && item.testId === currentResult.testId) ||
+          (currentResult.timestamp && item.timestamp === currentResult.timestamp)
+        ))
+
+        if (resultIndex >= 0) {
+          emotionHistory[resultIndex] = { ...emotionHistory[resultIndex], ...currentResult }
+        } else {
+          emotionHistory.push(currentResult)
+        }
+
+        if (emotionHistory.length > 50) {
+          emotionHistory.splice(0, emotionHistory.length - 50)
+        }
+
+        this.globalData.emotionTestHistory = emotionHistory
+        wx.setStorageSync('emotionTestResults', emotionHistory)
+        wx.setStorageSync('currentEmotionTestResult', currentResult)
       }
 
       // Save game progress
@@ -62,6 +91,22 @@ App({
     } catch (error) {
 
     }
+  },
+
+  normalizeEmotionResults(results) {
+    if (!results) {
+      return []
+    }
+
+    if (Array.isArray(results)) {
+      return results.filter(Boolean)
+    }
+
+    if (typeof results === 'object') {
+      return [results]
+    }
+
+    return []
   },
 
   async initAudioSystem() {

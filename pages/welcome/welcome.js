@@ -1,6 +1,6 @@
 Page({
   data: {
-    
+    hasShownContinueModal: false
   },
 
   onLoad() {
@@ -11,8 +11,9 @@ Page({
   onShow() {
     // Check if user has completed emotion test before
     const app = getApp()
-    if (app.globalData.emotionTestResults) {
+    if (app.globalData.emotionTestResults && !this.data.hasShownContinueModal) {
       // User has completed test, offer to go directly to games
+      this.setData({ hasShownContinueModal: true })
       this.showContinueOption()
     }
   },
@@ -39,7 +40,7 @@ Page({
       success: (res) => {
         if (res.confirm) {
           // Go to game selector
-          wx.navigateTo({
+          wx.switchTab({
             url: '/pages/game-selector/game-selector'
           })
         } else if (res.cancel) {
@@ -56,14 +57,18 @@ Page({
     app.globalData.emotionTestResults = null
     
     try {
-      wx.removeStorageSync('emotionTestResults')
+      wx.setStorageSync('shouldResetEmotionTest', true)
     } catch (error) {
     }
+
+    wx.switchTab({
+      url: '/pages/emotion-test/emotion-test'
+    })
   },
 
   startEmotionTest() {
     // Navigate to emotion test
-    wx.navigateTo({
+    wx.switchTab({
       url: '/pages/emotion-test/emotion-test'
     })
   },
@@ -94,7 +99,7 @@ Page({
     return {
       title: '心岛游戏 - 治愈你的内心世界',
       path: '/pages/welcome/welcome',
-      imageUrl: '/assets/share-image.jpg'
+      imageUrl: '/assets/images/share-default.jpg'
     }
   }
 })

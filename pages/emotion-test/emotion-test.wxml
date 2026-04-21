@@ -10,7 +10,10 @@
 
   <view class="question-container" wx:if="{{!showResults}}">
     <view class="question-card">
-      <text class="question-number">问题 {{currentQuestion}}</text>
+      <view class="question-meta">
+        <text class="question-number">问题 {{currentQuestion}}</text>
+        <text class="question-tip">选择最接近当前感受的一项</text>
+      </view>
       <text class="question-text">{{questions[currentQuestion-1].text}}</text>
 
       <view class="options-grid">
@@ -21,7 +24,10 @@
           data-index="{{index}}"
           bindtap="selectOption"
         >
-          <text class="option-text">{{item.text}}</text>
+          <view class="option-copy">
+            <text class="option-index">{{index + 1}}</text>
+            <text class="option-text">{{item.text}}</text>
+          </view>
           <view class="option-indicator"></view>
         </view>
       </view>
@@ -37,9 +43,9 @@
       </button>
 
       <button
-        class="nav-btn next-btn {{!selectedOption ? 'disabled' : ''}}"
+        class="nav-btn next-btn {{selectedOption === null ? 'disabled' : ''}}"
         bindtap="nextQuestion"
-        disabled="{{!selectedOption}}"
+        disabled="{{selectedOption === null}}"
       >
         {{currentQuestion === totalQuestions ? '完成测试' : '下一题'}}
       </button>
@@ -48,7 +54,7 @@
         class="nav-btn early-submit-btn"
         bindtap="showEarlySubmitModal"
       >
-        提前交卷
+        稍后再答
       </button>
     </view>
   </view>

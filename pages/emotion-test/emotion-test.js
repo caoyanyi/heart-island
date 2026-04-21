@@ -127,8 +127,19 @@ Page({
   },
 
   onLoad() {
-    this.updateProgress()
-    this.initTest() // 初始化测试
+    this.resetTestState()
+  },
+
+  onShow() {
+    try {
+      const shouldReset = wx.getStorageSync('shouldResetEmotionTest')
+      if (shouldReset) {
+        wx.removeStorageSync('shouldResetEmotionTest')
+        this.resetTestState()
+      }
+    } catch (error) {
+
+    }
   },
 
   // 格式化情绪分数，保留指定小数位
@@ -158,19 +169,40 @@ Page({
     })
   },
 
+  resetTestState() {
+    this.setData({
+      currentQuestion: 1,
+      progress: 0,
+      selectedOption: null,
+      showResults: false,
+      showEarlySubmit: false,
+      answers: [],
+      primaryEmotion: '',
+      emotionDescription: '',
+      emotionScores: [],
+      recommendations: []
+    })
+    this.initTest()
+    this.updateProgress()
+  },
+
   // 选择答案
   selectOption(e) {
     const optionIndex = e.currentTarget.dataset.index
-    console.log('Selected option:', optionIndex) // 调试日志
     this.setData({
       selectedOption: optionIndex
     })
-    console.log('Updated selectedOption:', this.data.selectedOption) // 调试日志
+
+    if (wx.vibrateShort) {
+      wx.vibrateShort({ type: 'light' })
+    }
   },
 
   // 显示提前交卷确认
   showEarlySubmitModal() {
-    const completedQuestions = this.data.answers.length + (this.data.selectedOption ? 1 : 0)
+    const hasCurrentAnswer = this.data.selectedOption !== null && this.data.selectedOption !== undefined
+    const currentQuestionAnswered = this.data.answers.some(answer => answer.questionId === this.data.currentQuestion)
+    const completedQuestions = this.data.answers.length + (hasCurrentAnswer && !currentQuestionAnswered ? 1 : 0)
     const remainingQuestions = this.data.totalQuestions - completedQuestions
 
     wx.showModal({
@@ -191,12 +223,13 @@ Page({
     let currentAnswers = [...this.data.answers]
 
     // 如果当前题目已选择答案，也包含在内
-    if (this.data.selectedOption !== null) {
+    if (this.data.selectedOption !== null && this.data.selectedOption !== undefined) {
       const currentAnswer = {
         questionId: this.data.currentQuestion,
         optionIndex: this.data.selectedOption,
         scores: this.data.questions[this.data.currentQuestion - 1].options[this.data.selectedOption].score
       }
+      currentAnswers = currentAnswers.filter(answer => answer.questionId !== this.data.currentQuestion)
       currentAnswers.push(currentAnswer)
     }
 
@@ -222,13 +255,16 @@ Page({
   },
 
   nextQuestion() {
-    console.log('Current selectedOption:', this.data.selectedOption) // 调试日志
     if (this.data.selectedOption === null || this.data.selectedOption === undefined) {
       wx.showToast({
         title: '请选择一个答案',
         icon: 'none'
       })
       return
+    }
+
+    if (wx.vibrateShort) {
+      wx.vibrateShort({ type: 'light' })
     }
 
     // Save current answer
@@ -238,19 +274,29 @@ Page({
       scores: this.data.questions[this.data.currentQuestion - 1].options[this.data.selectedOption].score
     }
 
-    const answers = [...this.data.answers, currentAnswer]
+    const answers = this.data.answers
+      .filter(answer => answer.questionId !== this.data.currentQuestion)
+      .concat(currentAnswer)
+      .sort((a, b) => a.questionId - b.questionId)
 
     if (this.data.currentQuestion < this.data.totalQuestions) {
+      const nextQuestion = this.data.currentQuestion + 1
+      const nextAnswer = answers.find(answer => answer.questionId === nextQuestion)
       // Next question
       this.setData({
-        currentQuestion: this.data.currentQuestion + 1,
-        selectedOption: null,
+        currentQuestion: nextQuestion,
+        selectedOption: nextAnswer ? nextAnswer.optionIndex : null,
         answers: answers
       })
       this.updateProgress()
     } else {
       // Complete test
+      wx.showLoading({
+        title: '生成结果中',
+        mask: true
+      })
       this.completeTest(answers)
+      wx.hideLoading()
     }
   },
 
@@ -390,8 +436,17 @@ Page({
       app.globalData.emotionTestResults = testResult
 
       // Save to storage (enhanced history)
-      const existingResults = wx.getStorageSync('emotionTestResults') || []
-      existingResults.push(testResult)
+      const storedResults = wx.getStorageSync('emotionTestResults')
+      const existingResults = Array.isArray(storedResults)
+        ? storedResults.filter(Boolean)
+        : (storedResults ? [storedResults] : [])
+      const existingIndex = existingResults.findIndex(item => item.testId === testResult.testId)
+
+      if (existingIndex >= 0) {
+        existingResults[existingIndex] = { ...existingResults[existingIndex], ...testResult }
+      } else {
+        existingResults.push(testResult)
+      }
 
       // 只保留最近50次测试结果
       if (existingResults.length > 50) {
@@ -399,6 +454,7 @@ Page({
       }
 
       wx.setStorageSync('emotionTestResults', existingResults)
+      wx.setStorageSync('currentEmotionTestResult', testResult)
 
       // Update analytics
       this.updateAnalytics(testResult)
@@ -462,18 +518,7 @@ Page({
   },
 
   retakeTest() {
-    this.setData({
-      currentQuestion: 1,
-      selectedOption: null,
-      showResults: false,
-      answers: [],
-      progress: 0,
-      primaryEmotion: '',
-      emotionDescription: '',
-      emotionScores: [],
-      recommendations: []
-    })
-    this.updateProgress()
+    this.resetTestState()
   },
 
   onShareAppMessage() {

@@ -74,14 +74,32 @@
   border-radius: 30rpx;
   padding: 40rpx;
   box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.1);
+  animation: cardEnter 0.35s ease-out;
+}
+
+.question-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
 }
 
 .question-number {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  min-height: 48rpx;
+  padding: 0 22rpx;
+  border-radius: 999rpx;
+  background: rgba(139, 125, 107, 0.12);
   font-size: 24rpx;
   color: var(--primary-color);
-  margin-bottom: 20rpx;
   font-weight: bold;
+}
+
+.question-tip {
+  font-size: 24rpx;
+  color: var(--text-secondary);
 }
 
 .question-text {
@@ -109,16 +127,46 @@
   transition: all 0.3s ease;
   cursor: pointer;
   box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  -webkit-tap-highlight-color: transparent;
 }
 
-.option-item:hover {
+.option-item:hover,
+.option-item:active {
   background-color: rgba(139, 125, 107, 0.1);
+  transform: translateY(-2rpx);
 }
 
 .option-item.selected {
   border-color: var(--primary-color);
-  background-color: rgba(139, 125, 107, 0.1);
+  background: linear-gradient(135deg, rgba(139, 125, 107, 0.16), rgba(255, 255, 255, 0.94));
   transform: scale(1.02);
+  box-shadow: 0 10rpx 28rpx rgba(139, 125, 107, 0.18);
+}
+
+.option-copy {
+  display: flex;
+  align-items: center;
+  gap: 22rpx;
+  flex: 1;
+}
+
+.option-index {
+  width: 42rpx;
+  height: 42rpx;
+  border-radius: 50%;
+  background: rgba(139, 125, 107, 0.1);
+  color: var(--primary-color);
+  font-size: 24rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.option-item.selected .option-index {
+  background: var(--primary-color);
+  color: #fff;
 }
 
 .option-text {
@@ -178,9 +226,10 @@
 }
 
 .early-submit-btn {
-  background: linear-gradient(135deg, #ebe9e9ff 0%, #f1efefff 100%);
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--accent-color);
   border-color: var(--accent-color);
-  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.4);
+  text-shadow: none;
 }
 
 .nav-btn.disabled {
@@ -401,6 +450,17 @@
   box-shadow: 0 6rpx 20rpx rgba(120, 113, 108, 0.4);
 }
 
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(24rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* 响应式设计 */
 @media (min-width: 768px) {
   .emotion-test {
@@ -431,6 +491,12 @@
 
   .question-card {
     padding: 30rpx;
+  }
+
+  .question-meta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12rpx;
   }
 
   .option-item {

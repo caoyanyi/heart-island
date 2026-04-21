@@ -18,12 +18,14 @@
   
   <view class="recommendation-section">
     <text class="section-title">为你推荐</text>
-    <view class="recommended-game" bindtap="startRecommendedGame">
+    <view class="recommended-game {{navigatingGame === recommendedGame ? 'is-loading' : ''}}" bindtap="startRecommendedGame">
       <text class="game-icon">{{recommendedGameIcon}}</text>
       <view class="game-info">
+        <text class="recommendation-label">最适合现在的你</text>
         <text class="game-title">{{recommendedGameTitle}}</text>
         <text class="game-reason">{{recommendationReason}}</text>
       </view>
+      <text class="game-enter">{{navigatingGame === recommendedGame ? '...' : '开始'}}</text>
     </view>
   </view>
   
@@ -31,7 +33,7 @@
     <text class="section-title">或者选择其他游戏</text>
     <view class="games-grid">
       <view 
-        class="game-option {{item.id === recommendedGame ? 'recommended' : ''}}"
+        class="game-option {{item.id === recommendedGame ? 'recommended' : ''}} {{navigatingGame === item.id ? 'is-loading' : ''}}"
         wx:for="{{allGames}}"
         wx:key="id"
         data-game="{{item.id}}"
@@ -45,11 +47,12 @@
   </view>
   
   <view class="results-actions">
-    <button class="primary-btn" bindtap="startRecommendedGame" wx:if="{{recommendedGameTitle}}">
-      开始{{recommendedGameTitle}}
+    <button class="primary-btn {{navigatingGame ? 'is-loading' : ''}}" bindtap="startRecommendedGame" disabled="{{navigatingGame !== ''}}" wx:if="{{recommendedGameTitle}}">
+      <text wx:if="{{navigatingGame}}">正在进入...</text>
+      <text wx:else>开始{{recommendedGameTitle}}</text>
     </button>
-    <button class="primary-btn" bindtap="startRecommendedGame" wx:else>
-      开始推荐游戏
+    <button class="primary-btn {{navigatingGame ? 'is-loading' : ''}}" bindtap="startRecommendedGame" disabled="{{navigatingGame !== ''}}" wx:else>
+      {{navigatingGame ? '正在进入...' : '开始推荐游戏'}}
     </button>
     <button class="secondary-btn" bindtap="retakeTest">
       重新测试

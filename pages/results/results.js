@@ -7,6 +7,7 @@ Page({
     recommendedGameTitle: '',
     recommendationReason: '',
     recommendedGame: '',
+    navigatingGame: '',
     allGames: [
       {
         id: 'cloud-drifting',
@@ -61,7 +62,7 @@ Page({
         content: '请先完成情绪测试',
         showCancel: false,
         success: () => {
-          wx.redirectTo({
+          wx.switchTab({
             url: '/pages/emotion-test/emotion-test'
           })
         }
@@ -191,10 +192,31 @@ Page({
 
   saveResultsToStorage(results) {
     try {
-      wx.setStorageSync('emotionTestResults', {
+      const storedResults = wx.getStorageSync('emotionTestResults')
+      const resultHistory = Array.isArray(storedResults)
+        ? storedResults.filter(Boolean)
+        : (storedResults ? [storedResults] : [])
+      const resultToSave = {
         ...results,
-        timestamp: new Date().toISOString()
-      })
+        timestamp: results.timestamp || new Date().toISOString()
+      }
+      const resultIndex = resultHistory.findIndex(item => (
+        (resultToSave.testId && item.testId === resultToSave.testId) ||
+        (resultToSave.timestamp && item.timestamp === resultToSave.timestamp)
+      ))
+
+      if (resultIndex >= 0) {
+        resultHistory[resultIndex] = { ...resultHistory[resultIndex], ...resultToSave }
+      } else {
+        resultHistory.push(resultToSave)
+      }
+
+      if (resultHistory.length > 50) {
+        resultHistory.splice(0, resultHistory.length - 50)
+      }
+
+      wx.setStorageSync('emotionTestResults', resultHistory)
+      wx.setStorageSync('currentEmotionTestResult', resultToSave)
     } catch (error) {
 
     }
@@ -210,9 +232,42 @@ Page({
   },
 
   navigateToGame(gameId) {
+    if (!gameId || this.data.navigatingGame) {
+      if (this.data.navigatingGame) {
+        return
+      }
+
+      wx.showToast({
+        title: '请选择一个游戏',
+        icon: 'none'
+      })
+      return
+    }
+
+    this.setData({ navigatingGame: gameId })
+
+    if (wx.vibrateShort) {
+      wx.vibrateShort({ type: 'light' })
+    }
+
+    wx.showLoading({
+      title: '准备游戏',
+      mask: true
+    })
+
     // Navigate to the selected game
     wx.navigateTo({
-      url: `/pages/games/${gameId}/${gameId}`
+      url: `/pages/games/${gameId}/${gameId}`,
+      fail: () => {
+        wx.showToast({
+          title: '游戏暂时无法打开',
+          icon: 'none'
+        })
+      },
+      complete: () => {
+        wx.hideLoading()
+        this.setData({ navigatingGame: '' })
+      }
     })
   },
 
@@ -222,12 +277,13 @@ Page({
     app.globalData.emotionTestResults = null
     
     try {
-      wx.removeStorageSync('emotionTestResults')
+      wx.setStorageSync('shouldResetEmotionTest', true)
+      wx.removeStorageSync('currentEmotionTestResult')
     } catch (error) {
 
     }
     
-    wx.redirectTo({
+    wx.switchTab({
       url: '/pages/emotion-test/emotion-test'
     })
   },
@@ -236,7 +292,7 @@ Page({
     return {
       title: '我刚完成了心岛游戏的情绪测试',
       path: '/pages/welcome/welcome',
-      imageUrl: '/assets/results-share.jpg'
+      imageUrl: '/assets/images/share-emotion-assessment.jpg'
     }
   }
 })

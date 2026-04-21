@@ -1,6 +1,15 @@
 .game-selector-container {
+  --primary-beige: #E8D5C4;
+  --light-beige: #F7EFE4;
+  --text-primary: #4F4638;
+  --text-secondary: #8A7B69;
+  --primary-blue: #8DB7C7;
+  --light-blue: #D8EEF2;
+  --warm-pink: #D7A6A0;
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--primary-beige), var(--light-beige));
+  background:
+    radial-gradient(circle at top left, rgba(216, 238, 242, 0.95), transparent 42%),
+    linear-gradient(135deg, var(--primary-beige), var(--light-beige));
   padding: 20rpx;
 }
 
@@ -51,7 +60,9 @@
 
 .welcome-section {
   text-align: center;
-  margin-bottom: 50rpx;
+  margin-bottom: 34rpx;
+  padding: 30rpx 10rpx 10rpx;
+  animation: sectionEnter 0.45s ease-out;
 }
 
 .welcome-title {
@@ -65,6 +76,17 @@
   font-size: 28rpx;
   color: var(--text-secondary);
   line-height: 1.5;
+}
+
+.welcome-prompt {
+  display: inline-flex;
+  margin-top: 22rpx;
+  padding: 12rpx 24rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--text-secondary);
+  font-size: 24rpx;
+  box-shadow: 0 6rpx 20rpx rgba(79, 70, 56, 0.08);
 }
 
 .games-grid {
@@ -82,12 +104,34 @@
   box-shadow: 0 8rpx 25rpx rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  animation: cardRise 0.45s ease-out both;
 }
 
-.game-card:hover {
+.game-card:hover,
+.game-card:active {
   transform: translateY(-5rpx);
   box-shadow: 0 12rpx 35rpx rgba(0, 0, 0, 0.15);
   background: rgba(255, 255, 255, 0.95);
+}
+
+.game-card:nth-child(2) { animation-delay: 0.04s; }
+.game-card:nth-child(3) { animation-delay: 0.08s; }
+.game-card:nth-child(4) { animation-delay: 0.12s; }
+.game-card:nth-child(5) { animation-delay: 0.16s; }
+.game-card:nth-child(6) { animation-delay: 0.2s; }
+
+.game-card.recommended-game {
+  border: 2rpx solid rgba(141, 183, 199, 0.75);
+  box-shadow: 0 12rpx 36rpx rgba(141, 183, 199, 0.22);
+}
+
+.game-card.is-loading,
+.recommendation-card.is-loading {
+  opacity: 0.72;
+  transform: scale(0.99);
 }
 
 .game-icon {
@@ -123,6 +167,17 @@
   flex: 1;
 }
 
+.game-badge {
+  display: inline-flex;
+  margin-bottom: 10rpx;
+  padding: 4rpx 14rpx;
+  border-radius: 999rpx;
+  background: rgba(141, 183, 199, 0.16);
+  color: #5F8B9D;
+  font-size: 20rpx;
+  font-weight: 700;
+}
+
 .game-title {
   font-size: 32rpx;
   font-weight: bold;
@@ -147,20 +202,26 @@
   font-size: 40rpx;
   color: var(--text-secondary);
   margin-left: 20rpx;
+  min-width: 34rpx;
+  text-align: right;
+  transition: transform 0.25s ease;
+}
+
+.game-card:active .game-arrow,
+.recommendation-card:active .recommendation-arrow {
+  transform: translateX(6rpx);
 }
 
 .recommendation-section {
-  margin-top: 60rpx;
-  padding-top: 40rpx;
-  border-top: 2rpx solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 42rpx;
+  animation: sectionEnter 0.45s ease-out;
 }
 
 .recommendation-title {
-  font-size: 36rpx;
+  font-size: 30rpx;
   font-weight: bold;
   color: var(--text-primary);
-  text-align: center;
-  margin-bottom: 30rpx;
+  margin-bottom: 18rpx;
 }
 
 .recommendation-card {
@@ -172,9 +233,11 @@
   box-shadow: 0 8rpx 25rpx rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.recommendation-card:hover {
+.recommendation-card:hover,
+.recommendation-card:active {
   transform: translateY(-5rpx);
   box-shadow: 0 12rpx 35rpx rgba(0, 0, 0, 0.2);
 }
@@ -213,6 +276,31 @@
   font-size: 40rpx;
   color: white;
   margin-left: 20rpx;
+  min-width: 34rpx;
+  text-align: right;
+  transition: transform 0.25s ease;
+}
+
+@keyframes sectionEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardRise {
+  from {
+    opacity: 0;
+    transform: translateY(24rpx) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* Responsive design */

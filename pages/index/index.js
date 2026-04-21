@@ -10,23 +10,44 @@ Page({
     this.startWelcomeAnimation()
 
     // Play gentle background sound if audio is enabled
-    if (getApp().globalData.audioEnabled) {
+    const audioSettings = getApp().globalData.audioSettings || {}
+    if (!audioSettings.isMuted) {
       this.playWelcomeSound()
     }
   },
 
   onShow() {
+    this.startWelcomeAnimation()
+
     // Check if user has previous emotion test results
     const app = getApp()
-    if (app.globalData.emotionTestResults.length > 0) {
+    const emotionResults = app.globalData.emotionTestResults
+    const latestResult = Array.isArray(emotionResults)
+      ? emotionResults[emotionResults.length - 1]
+      : emotionResults
+
+    if (latestResult) {
       this.setData({
         hasPreviousResults: true,
-        lastEmotion: app.globalData.emotionTestResults[app.globalData.emotionTestResults.length - 1].emotionType
+        lastEmotion: latestResult.emotionType || latestResult.primaryEmotion
       })
     }
   },
 
   startWelcomeAnimation() {
+    this.runWelcomeAnimation()
+
+    if (this.welcomeAnimationTimer) {
+      clearInterval(this.welcomeAnimationTimer)
+    }
+
+    // Continue animation loop without creating nested timers
+    this.welcomeAnimationTimer = setInterval(() => {
+      this.runWelcomeAnimation()
+    }, 4000)
+  },
+
+  runWelcomeAnimation() {
     const animation = wx.createAnimation({
       duration: 2000,
       timingFunction: 'ease-in-out',
@@ -40,11 +61,6 @@ Page({
     this.setData({
       animationData: animation.export()
     })
-
-    // Continue animation loop
-    setInterval(() => {
-      this.startWelcomeAnimation()
-    }, 4000)
   },
 
   async playWelcomeSound() {
@@ -66,7 +82,7 @@ Page({
 
   startEmotionTest() {
     // Navigate to emotion test page
-    wx.navigateTo({
+    wx.switchTab({
       url: '/pages/emotion-test/emotion-test',
       success: () => {
         // Stop welcome sound
@@ -79,7 +95,7 @@ Page({
 
   exploreGames() {
     // Navigate to game selector page
-    wx.navigateTo({
+    wx.switchTab({
       url: '/pages/game-selector/game-selector',
       success: () => {
         // Stop welcome sound
@@ -91,10 +107,22 @@ Page({
   },
 
   onUnload() {
+    if (this.welcomeAnimationTimer) {
+      clearInterval(this.welcomeAnimationTimer)
+      this.welcomeAnimationTimer = null
+    }
+
     // Clean up audio using audio manager
     if (this.innerAudioContext) {
       audioManager.stopAndDestroy(this.innerAudioContext)
       this.innerAudioContext = null
+    }
+  },
+
+  onHide() {
+    if (this.welcomeAnimationTimer) {
+      clearInterval(this.welcomeAnimationTimer)
+      this.welcomeAnimationTimer = null
     }
   }
 })
