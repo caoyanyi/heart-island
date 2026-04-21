@@ -206,10 +206,10 @@ Page({
     const remainingQuestions = this.data.totalQuestions - completedQuestions
 
     wx.showModal({
-      title: '提前交卷',
-      content: `您已完成 ${completedQuestions} 题，还有 ${remainingQuestions} 题未完成。确定要提前提交吗？`,
-      confirmText: '确定提交',
-      cancelText: '继续答题',
+      title: '查看当前结果',
+      content: `你已完成 ${completedQuestions} 题，还有 ${remainingQuestions} 题未回答。可以先基于当前答案生成结果，也可以继续完成全部题目。`,
+      confirmText: '查看结果',
+      cancelText: '继续完成',
       success: (res) => {
         if (res.confirm) {
           this.earlySubmitTest()

@@ -2,19 +2,25 @@
   <view class="test-header">
     <text class="test-title">情绪评估测试</text>
     <text class="test-subtitle">回答几个简单问题，了解你的情绪状态</text>
-    <view class="progress-bar">
-      <view class="progress-fill" style="width: {{progress}}%;"></view>
+    <view class="progress-panel">
+      <view class="progress-copy">
+        <text class="progress-label">当前进度</text>
+        <text class="progress-text">第 {{currentQuestion}} 题 / 共 {{totalQuestions}} 题</text>
+      </view>
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{progress}}%;"></view>
+      </view>
     </view>
-    <text class="progress-text">{{currentQuestion}}/{{totalQuestions}}</text>
   </view>
 
   <view class="question-container" wx:if="{{!showResults}}">
     <view class="question-card">
       <view class="question-meta">
         <text class="question-number">问题 {{currentQuestion}}</text>
-        <text class="question-tip">选择最接近当前感受的一项</text>
+        <text class="question-tip">没有标准答案</text>
       </view>
       <text class="question-text">{{questions[currentQuestion-1].text}}</text>
+      <text class="question-helper">选择最接近你最近一周真实感受的一项即可。</text>
 
       <view class="options-grid">
         <view
@@ -28,7 +34,9 @@
             <text class="option-index">{{index + 1}}</text>
             <text class="option-text">{{item.text}}</text>
           </view>
-          <view class="option-indicator"></view>
+          <view class="option-indicator">
+            <text class="option-check">✓</text>
+          </view>
         </view>
       </view>
     </view>
@@ -49,12 +57,14 @@
       >
         {{currentQuestion === totalQuestions ? '完成测试' : '下一题'}}
       </button>
+    </view>
 
+    <view class="secondary-actions">
       <button
-        class="nav-btn early-submit-btn"
+        class="early-submit-btn"
         bindtap="showEarlySubmitModal"
       >
-        稍后再答
+        先看当前结果
       </button>
     </view>
   </view>
