@@ -189,15 +189,10 @@ Page({
   // 选择答案
   selectOption(e) {
     const optionIndex = e.currentTarget.dataset.index
-    const hasChangedSelection = this.data.selectedOption !== optionIndex
 
     this.setData({
       selectedOption: optionIndex
     })
-
-    if (hasChangedSelection && wx.vibrateShort) {
-      wx.vibrateShort({ type: 'light' })
-    }
   },
 
   // 显示提前交卷确认
@@ -263,10 +258,6 @@ Page({
         icon: 'none'
       })
       return
-    }
-
-    if (wx.vibrateShort) {
-      wx.vibrateShort({ type: 'light' })
     }
 
     // Save current answer
