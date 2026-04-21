@@ -30,6 +30,10 @@
       </view>
     </view>
 
+    <view class="play-hint" wx:if="{{gameStatus === 'playing' && score === 0}}">
+      点击亮色泡泡，避开黑色泡泡
+    </view>
+
     <view class="game-status" wx:if="{{gameStatus !== 'playing'}}">
       <view class="status-overlay">
         <text class="status-title">{{statusTitle}}</text>
@@ -39,6 +43,11 @@
           <text class="status-message-line">最高等级: {{level}}</text>
         </view>
         <text class="status-message" wx:else>{{statusMessage}}</text>
+        <view class="status-tips" wx:if="{{gameStatus === 'ready' || gameStatus === 'paused'}}">
+          <view class="tip-item">彩色泡泡：获得分数</view>
+          <view class="tip-item">连续命中：提升连击奖励</view>
+          <view class="tip-item">黑色泡泡：尽量避开</view>
+        </view>
         <button class="game-btn primary-btn" bindtap="startGame">{{gameButtonText}}</button>
       </view>
     </view>

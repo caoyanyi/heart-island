@@ -14,7 +14,7 @@
   <view class="game-status-bar">
     <view class="status-item">
       <text class="status-label">时间</text>
-      <text class="status-value">{{formatTime(timeLeft)}}</text>
+      <text class="status-value">{{timeLeftText}}</text>
     </view>
     <view class="status-item">
       <text class="status-label">步数</text>
@@ -43,7 +43,7 @@
     <view class="puzzle-grid" style="--grid-size: {{puzzleSize}};" wx:if="{{imageLoaded}}">
       <block wx:for="{{tiles}}" wx:for-item="row" wx:for-index="rowIndex" wx:key="rowIndex">
         <view wx:for="{{row}}" wx:for-item="tile" wx:for-index="colIndex" wx:key="colIndex"
-              class="puzzle-tile {{tile.number === -1 ? 'empty' : ''}} {{animatingTiles.includes(rowIndex + '-' + colIndex) ? 'animating' : ''}}"
+              class="puzzle-tile {{tile.number === -1 ? 'empty' : ''}} {{tile.isAnimating ? 'animating' : ''}}"
               style="grid-row: {{rowIndex + 1}}; grid-column: {{colIndex + 1}};"
               bindtap="onTileTap"
               data-row="{{rowIndex}}"
@@ -53,7 +53,7 @@
           <view wx:if="{{tile.number !== -1}}" class="tile-content">
             <!-- 图片部分 -->
             <view class="tile-image"
-                  style="background-image: url('{{originalImage}}'); background-position: {{(tile.correctPosition.col * 100) / (puzzleSize - 1)}}% {{(tile.correctPosition.row * 100) / (puzzleSize - 1)}}%;">
+                  style="background-image: url('{{originalImage}}'); background-position: {{tile.backgroundPosition}};">
             </view>
 
             <!-- 数字标签 -->
@@ -67,7 +67,7 @@
     <view class="puzzle-grid" style="--grid-size: {{puzzleSize}};" wx:if="{{imageError}}">
       <block wx:for="{{tiles}}" wx:for-item="row" wx:for-index="rowIndex" wx:key="rowIndex">
         <view wx:for="{{row}}" wx:for-item="tile" wx:for-index="colIndex" wx:key="colIndex"
-              class="puzzle-tile {{tile.number === -1 ? 'empty' : 'no-image'}} {{animatingTiles.includes(rowIndex + '-' + colIndex) ? 'animating' : ''}}"
+              class="puzzle-tile {{tile.number === -1 ? 'empty' : 'no-image'}} {{tile.isAnimating ? 'animating' : ''}}"
               style="grid-row: {{rowIndex + 1}}; grid-column: {{colIndex + 1}};"
               bindtap="onTileTap"
               data-row="{{rowIndex}}"
@@ -93,7 +93,7 @@
         <text class="best-title">最佳成绩</text>
         <view class="best-item" wx:if="{{bestTime}}">
           <text class="best-label">最快时间：</text>
-          <text class="best-value">{{formatTime(bestTime)}}</text>
+          <text class="best-value">{{bestTimeText}}</text>
         </view>
         <view class="best-item" wx:if="{{bestMoves}}">
           <text class="best-label">最少步数：</text>
@@ -113,7 +113,7 @@
       <view class="completion-stats">
         <view class="stat-item">
           <text class="stat-label">用时</text>
-          <text class="stat-value">{{formatTime(completionTime)}}</text>
+          <text class="stat-value">{{completionTimeText}}</text>
         </view>
         <view class="stat-item">
           <text class="stat-label">步数</text>
@@ -127,6 +127,18 @@
       <view class="completion-actions">
         <button class="restart-btn" bindtap="restartGame">再玩一次</button>
         <button class="share-btn" open-type="share">分享成绩</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 时间到界面 -->
+  <view class="completion-screen timeout-screen" wx:if="{{gameStatus === 'ended'}}">
+    <view class="completion-content">
+      <text class="completion-title">时间到</text>
+      <text class="start-description">这次移动了 {{moves}} 步，得分 {{score}}。稍作休息，再来一局保持专注。</text>
+      <view class="completion-actions">
+        <button class="restart-btn" bindtap="restartGame">再试一次</button>
+        <button class="share-btn" bindtap="goBack">返回</button>
       </view>
     </view>
   </view>

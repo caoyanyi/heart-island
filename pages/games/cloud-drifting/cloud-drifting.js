@@ -130,6 +130,12 @@ Page({
     this.ctx = null;
   },
 
+  onHide: function () {
+    if (this.data.gameStatus === 'playing') {
+      this.pauseGame();
+    }
+  },
+
   // 初始化游戏
   initGame: function () {
     try {

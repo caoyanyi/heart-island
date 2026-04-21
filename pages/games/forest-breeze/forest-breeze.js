@@ -10,6 +10,7 @@ Page({
     remainingTime: 60,
     gameStarted: false,
     gameOver: false,
+    paused: false,
     showInstructions: true,
     completionMessage: '',
     animationId: null,
@@ -72,6 +73,12 @@ Page({
     // 清理其他引用
     this.ctx = null
     this.canvas = null
+  },
+
+  onHide() {
+    if (this.data.gameStarted && !this.data.gameOver && !this.data.paused) {
+      this.pauseGame()
+    }
   },
 
   initCanvas() {
@@ -207,7 +214,7 @@ Page({
   },
 
   onTouchStart(e) {
-    if (!this.data.gameStarted || this.data.gameOver) return
+    if (!this.data.gameStarted || this.data.gameOver || this.data.paused) return
 
     // 阻止默认行为，防止页面拖拽
     if (e.preventDefault) {
@@ -223,7 +230,7 @@ Page({
   },
 
   onTouchMove(e) {
-    if (!this.data.gameStarted || this.data.gameOver || !this.data.isSwiping) return
+    if (!this.data.gameStarted || this.data.gameOver || this.data.paused || !this.data.isSwiping) return
 
     // 阻止默认行为，防止页面拖拽
     if (e.preventDefault) {
@@ -245,7 +252,7 @@ Page({
   },
 
   onTouchEnd() {
-    if (!this.data.gameStarted || this.data.gameOver) return
+    if (!this.data.gameStarted || this.data.gameOver || this.data.paused) return
 
     this.setData({
       isSwiping: false
@@ -387,7 +394,9 @@ Page({
     this.setData({
       showInstructions: false,
       gameStarted: true,
+      paused: false,
       score: 0,
+      remainingTime: 60,
       windPower: 1
     })
 
@@ -417,7 +426,7 @@ Page({
   },
 
   gameLoop() {
-    if (this.data.gameOver) return
+    if (this.data.gameOver || this.data.paused) return
 
     this.updateGame()
     this.render()
@@ -425,6 +434,61 @@ Page({
     // 使用setTimeout替代requestAnimationFrame，16ms间隔约60fps
     const animationId = setTimeout(() => this.gameLoop(), 16)
     this.setData({ animationId })
+  },
+
+  pauseGame() {
+    if (!this.data.gameStarted || this.data.gameOver || this.data.paused) return
+
+    if (this.gameTimer) {
+      clearInterval(this.gameTimer)
+      this.gameTimer = null
+    }
+    if (this.data.animationId) {
+      clearTimeout(this.data.animationId)
+    }
+    if (this.backgroundMusic) {
+      this.backgroundMusic.pause()
+    }
+
+    this.setData({ paused: true })
+  },
+
+  resumeGame() {
+    if (!this.data.gameStarted || this.data.gameOver || !this.data.paused) return
+
+    this.setData({ paused: false })
+    if (this.backgroundMusic) {
+      this.backgroundMusic.play()
+    }
+    this.startGameTimer()
+    this.gameLoop()
+  },
+
+  restartGame() {
+    if (this.gameTimer) {
+      clearInterval(this.gameTimer)
+      this.gameTimer = null
+    }
+    if (this.data.animationId) {
+      clearTimeout(this.data.animationId)
+    }
+
+    this.setData({
+      score: 0,
+      remainingTime: 60,
+      gameOver: false,
+      paused: false,
+      showInstructions: false,
+      gameStarted: true,
+      leaves: [],
+      windLines: [],
+      windPower: 1,
+      lastWindTime: 0
+    })
+
+    this.generateLeaves()
+    this.startGameTimer()
+    this.gameLoop()
   },
 
   updateGame() {
@@ -715,6 +779,7 @@ Page({
       score: 0,
       remainingTime: 60,
       gameOver: false,
+      paused: false,
       showInstructions: true,
       gameStarted: false,
       leaves: [],

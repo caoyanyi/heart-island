@@ -23,6 +23,20 @@
     </view>
   </view>
 
+  <view class="quick-controls" wx:if="{{gameStarted && !gameOver}}">
+    <button class="quick-btn" wx:if="{{!paused}}" bindtap="pauseGame">暂停</button>
+    <button class="quick-btn primary" wx:if="{{paused}}" bindtap="resumeGame">继续</button>
+    <button class="quick-btn" bindtap="restartGame">重开</button>
+  </view>
+
+  <view class="pause-overlay" wx:if="{{paused}}">
+    <view class="pause-card">
+      <view class="pause-title">光芒暂时停留</view>
+      <view class="pause-text">保持呼吸，准备好后继续点亮星星。</view>
+      <button class="start-btn" bindtap="resumeGame">继续游戏</button>
+    </view>
+  </view>
+
   <!-- Healing Words Display -->
   <view class="healing-word-display" wx:if="{{showHealingWord}}">
     <view class="healing-word">{{currentHealingWord}}</view>
@@ -32,7 +46,7 @@
   <view class="instructions" wx:if="{{showInstructions}}">
     <view class="instructions-title">光之治愈</view>
     <view class="instructions-text">
-      点击屏幕释放光能，点亮黑暗中的星星
+      点击或滑动释放光能，点亮星星；收集光球可以补充能量
     </view>
     <button class="start-btn" bindtap="startGame">开始游戏</button>
   </view>
@@ -44,6 +58,7 @@
     <view class="final-score">{{score}} 分</view>
     <view class="game-over-buttons">
       <button class="btn-primary" bindtap="playAgain">再玩一次</button>
+      <button class="btn-secondary" bindtap="backToSelector">返回</button>
     </view>
   </view>
 </view>

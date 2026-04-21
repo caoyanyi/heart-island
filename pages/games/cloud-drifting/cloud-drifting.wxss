@@ -8,6 +8,7 @@
   --accent-mint: #98D8C8;
   --text-dark: #2C3E50;
   --text-medium: #7F8C8D;
+  --deep-gray: #2C3E50;
   --shadow-light: rgba(0, 0, 0, 0.1);
   --shadow-medium: rgba(0, 0, 0, 0.2);
 }
@@ -122,6 +123,23 @@
   text-shadow: 0 2rpx 4rpx var(--shadow-medium);
 }
 
+.play-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 34rpx;
+  transform: translateX(-50%);
+  z-index: 11;
+  padding: 14rpx 24rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.86);
+  color: #3f7890;
+  font-size: 24rpx;
+  font-weight: 700;
+  box-shadow: 0 10rpx 28rpx rgba(44, 62, 80, 0.16);
+  pointer-events: none;
+  animation: hintFloat 2s ease-in-out infinite;
+}
+
 @keyframes comboPulse {
   0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
   50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
@@ -172,6 +190,23 @@
   font-weight: 500;
 }
 
+.status-tips {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  margin: -24rpx 0 38rpx;
+  text-align: left;
+}
+
+.tip-item {
+  padding: 14rpx 18rpx;
+  border-radius: 18rpx;
+  background: rgba(135, 206, 235, 0.14);
+  color: #486a78;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
 /* 加载状态样式 */
 .game-btn[disabled] {
   opacity: 0.7;
@@ -198,6 +233,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.game-btn::after,
+.control-btn::after,
+.close-btn::after {
+  border: none;
+}
+
+@keyframes hintFloat {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-6rpx);
+  }
 }
 
 .primary-btn {

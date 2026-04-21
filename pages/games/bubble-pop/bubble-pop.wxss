@@ -151,6 +151,23 @@ page {
   gap: 20rpx;
 }
 
+.play-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 34rpx;
+  transform: translateX(-50%);
+  z-index: 6;
+  padding: 14rpx 24rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.82);
+  color: #27666a;
+  font-size: 24rpx;
+  font-weight: 700;
+  box-shadow: 0 10rpx 28rpx rgba(39, 102, 106, 0.16);
+  pointer-events: none;
+  animation: hintFloat 2s ease-in-out infinite;
+}
+
 /* 游戏状态覆盖层 */
 .game-overlay {
   position: absolute;
@@ -308,6 +325,23 @@ page {
   padding: 10rpx 0;
 }
 
+.status-tips {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  margin: -18rpx 0 34rpx;
+  text-align: left;
+}
+
+.tip-item {
+  padding: 14rpx 18rpx;
+  border-radius: 18rpx;
+  background: rgba(78, 205, 196, 0.1);
+  color: #3f6f75;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
 .game-btn {
   background: linear-gradient(135deg, #4ECDC4 0%, #45B7D1 100%);
   color: white;
@@ -321,6 +355,21 @@ page {
   pointer-events: auto;
   min-width: 250rpx;
   margin-top: 20rpx;
+}
+
+.game-btn::after,
+.control-btn::after,
+.close-btn::after {
+  border: none;
+}
+
+@keyframes hintFloat {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-6rpx);
+  }
 }
 
 .game-btn:hover {

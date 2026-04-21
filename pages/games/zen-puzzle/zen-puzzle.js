@@ -5,6 +5,7 @@ Page({
     score: 0,
     moves: 0,
     timeLeft: 300, // 5分钟
+    timeLeftText: '5分0秒',
 
     // 拼图数据
     puzzleSize: 3, // 3x3 拼图
@@ -15,6 +16,7 @@ Page({
     originalImage: '/assets/images/zen-landscape.png',
     imageLoaded: false,
     imageError: false,
+    pendingStart: false,
 
     // 游戏设置
     difficulty: 'medium', // easy, medium, hard
@@ -30,7 +32,9 @@ Page({
     // 完成状态
     isCompleted: false,
     completionTime: 0,
+    completionTimeText: '0分0秒',
     bestTime: null,
+    bestTimeText: '',
     bestMoves: null
   },
 
@@ -58,6 +62,12 @@ Page({
     }
   },
 
+  onHide: function () {
+    if (this.data.gameStatus === 'playing') {
+      this.pauseGame();
+    }
+  },
+
   // 检查图片是否存在
   checkImage: function () {
     wx.getImageInfo({
@@ -67,10 +77,10 @@ Page({
           imageLoaded: true,
           imageError: false
         });
-        // 图片加载成功后初始化拼图
         this.initPuzzle();
-        // 初始化完成后开始游戏
-        this.startGameAfterImageCheck();
+        if (this.data.pendingStart) {
+          this.startGameAfterImageCheck();
+        }
       },
       fail: (error) => {
         this.setData({
@@ -94,10 +104,10 @@ Page({
           imageLoaded: true,
           imageError: false
         });
-        // 备用图片加载成功后初始化拼图
         this.initPuzzle();
-        // 初始化完成后开始游戏
-        this.startGameAfterImageCheck();
+        if (this.data.pendingStart) {
+          this.startGameAfterImageCheck();
+        }
       },
       fail: (error) => {
         // 使用纯色背景作为最后手段
@@ -106,10 +116,10 @@ Page({
           imageLoaded: false,
           imageError: true
         });
-        // 所有图片都失败，初始化无图片模式
         this.initPuzzle();
-        // 初始化完成后开始游戏
-        this.startGameAfterImageCheck();
+        if (this.data.pendingStart) {
+          this.startGameAfterImageCheck();
+        }
       }
     });
   },
@@ -120,6 +130,8 @@ Page({
       gameStatus: 'playing',
       moves: 0,
       timeLeft: 300,
+      timeLeftText: this.formatTime(300),
+      pendingStart: false,
       isCompleted: false
     });
 
@@ -144,7 +156,9 @@ Page({
             id: number,
             number: number,
             position: { row, col },
-            correctPosition: { row, col }
+            correctPosition: { row, col },
+            backgroundPosition: `${(col * 100) / (size - 1)}% ${(row * 100) / (size - 1)}%`,
+            isAnimating: false
           };
         }
       }
@@ -194,6 +208,7 @@ Page({
   // 开始游戏
   startGame: function () {
     // 开始游戏前先检查图片
+    this.setData({ pendingStart: true });
     this.checkImage();
   },
 
@@ -217,9 +232,11 @@ Page({
       score: 0,
       moves: 0,
       timeLeft: 300,
+      timeLeftText: this.formatTime(300),
       isCompleted: false,
       imageLoaded: false,
-      imageError: false
+      imageError: false,
+      pendingStart: true
     });
     // 重新开始时重新检查图片
     this.checkImage();
@@ -276,13 +293,21 @@ Page({
     const key = `${row}-${col}`;
 
     if (!animatingTiles.includes(key)) {
+      const tiles = this.data.tiles;
+      if (tiles[row] && tiles[row][col]) {
+        tiles[row][col].isAnimating = true;
+      }
       animatingTiles.push(key);
-      this.setData({ animatingTiles });
+      this.setData({ animatingTiles, tiles });
 
       // 移除动画类
       setTimeout(() => {
         const newAnimatingTiles = this.data.animatingTiles.filter(item => item !== key);
-        this.setData({ animatingTiles: newAnimatingTiles });
+        const latestTiles = this.data.tiles;
+        if (latestTiles[row] && latestTiles[row][col]) {
+          latestTiles[row][col].isAnimating = false;
+        }
+        this.setData({ animatingTiles: newAnimatingTiles, tiles: latestTiles });
       }, 300);
     }
   },
@@ -322,6 +347,7 @@ Page({
       gameStatus: 'completed',
       isCompleted: true,
       completionTime,
+      completionTimeText: this.formatTime(completionTime),
       score
     });
 
@@ -331,8 +357,10 @@ Page({
     // 播放完成音效
     this.playCompleteSound();
 
-    // 显示完成提示
-    this.showCompletionMessage();
+    wx.showToast({
+      title: '完成拼图',
+      icon: 'success'
+    });
   },
 
   // 显示完成消息
@@ -359,8 +387,10 @@ Page({
   startTimer: function () {
     const timerId = setInterval(() => {
       if (this.data.timeLeft > 0) {
+        const nextTime = this.data.timeLeft - 1;
         this.setData({
-          timeLeft: this.data.timeLeft - 1
+          timeLeft: nextTime,
+          timeLeftText: this.formatTime(nextTime)
         });
       } else {
         this.timeUp();
@@ -380,18 +410,9 @@ Page({
     this.stopTimer();
     this.setData({ gameStatus: 'ended' });
 
-    wx.showModal({
-      title: '时间到！',
-      content: '很遗憾，时间用完了。要再试一次吗？',
-      confirmText: '重新开始',
-      cancelText: '返回',
-      success: (res) => {
-        if (res.confirm) {
-          this.restartGame();
-        } else {
-          wx.navigateBack();
-        }
-      }
+    wx.showToast({
+      title: '时间到',
+      icon: 'none'
     });
   },
 
@@ -410,6 +431,7 @@ Page({
 
       this.setData({
         bestTime: bestTime || null,
+        bestTimeText: bestTime ? this.formatTime(bestTime) : '',
         bestMoves: bestMoves || null
       });
     } catch (error) {
@@ -421,7 +443,10 @@ Page({
     let updated = false;
 
     if (!this.data.bestTime || time < this.data.bestTime) {
-      this.setData({ bestTime: time });
+      this.setData({
+        bestTime: time,
+        bestTimeText: this.formatTime(time)
+      });
       wx.setStorageSync('zenPuzzleBestTime', time);
       updated = true;
     }
@@ -529,13 +554,22 @@ Page({
   // 高亮拼图块
   highlightTile: function (row, col) {
     const key = `${row}-${col}`;
+    const tiles = this.data.tiles;
+    if (tiles[row] && tiles[row][col]) {
+      tiles[row][col].isAnimating = true;
+    }
     this.setData({
-      animatingTiles: [...this.data.animatingTiles, key]
+      animatingTiles: [...this.data.animatingTiles, key],
+      tiles
     });
 
     setTimeout(() => {
       const newAnimatingTiles = this.data.animatingTiles.filter(item => item !== key);
-      this.setData({ animatingTiles: newAnimatingTiles });
+      const latestTiles = this.data.tiles;
+      if (latestTiles[row] && latestTiles[row][col]) {
+        latestTiles[row][col].isAnimating = false;
+      }
+      this.setData({ animatingTiles: newAnimatingTiles, tiles: latestTiles });
     }, 1000);
   },
 

@@ -82,6 +82,12 @@ Page({
     }
   },
 
+  onHide: function () {
+    if (this.data.gameStatus === 'playing') {
+      this.pauseGame();
+    }
+  },
+
   // 显示画布错误
   showCanvasError: function (message) {
     console.error('画布错误:', message);

@@ -10,6 +10,7 @@ Page({
     lightEnergy: 100,
     gameStarted: false,
     gameOver: false,
+    paused: false,
     showInstructions: true,
     completionMessage: '',
     healingWords: [],
@@ -70,6 +71,12 @@ Page({
     if (this.starSound) {
       this.starSound.destroy()
       this.starSound = null
+    }
+  },
+
+  onHide() {
+    if (this.data.gameStarted && !this.data.gameOver && !this.data.paused) {
+      this.pauseGame()
     }
   },
 
@@ -272,7 +279,7 @@ Page({
   },
 
   onTouchStart(e) {
-    if (!this.data.gameStarted || this.data.gameOver) return
+    if (!this.data.gameStarted || this.data.gameOver || this.data.paused) return
 
     // 阻止默认行为，防止页面拖拽
     if (e.preventDefault) {
@@ -284,7 +291,7 @@ Page({
   },
 
   onTouchMove(e) {
-    if (!this.data.gameStarted || this.data.gameOver) return
+    if (!this.data.gameStarted || this.data.gameOver || this.data.paused) return
 
     // 阻止默认行为，防止页面拖拽
     if (e.preventDefault) {
@@ -464,7 +471,9 @@ Page({
     this.setData({
       showInstructions: false,
       gameStarted: true,
+      paused: false,
       score: 0,
+      remainingTime: 60,
       lightEnergy: 100
     })
 
@@ -494,7 +503,7 @@ Page({
   },
 
   gameLoop() {
-    if (this.data.gameOver) return
+    if (this.data.gameOver || this.data.paused) return
 
     this.updateGame()
     this.render()
@@ -504,6 +513,63 @@ Page({
       this.gameLoop()
     }, 16) // 约60fps
     this.setData({ animationId })
+  },
+
+  pauseGame() {
+    if (!this.data.gameStarted || this.data.gameOver || this.data.paused) return
+
+    if (this.gameTimer) {
+      clearInterval(this.gameTimer)
+      this.gameTimer = null
+    }
+    if (this.data.animationId) {
+      clearTimeout(this.data.animationId)
+    }
+    if (this.backgroundMusic) {
+      this.backgroundMusic.pause()
+    }
+
+    this.setData({ paused: true })
+  },
+
+  resumeGame() {
+    if (!this.data.gameStarted || this.data.gameOver || !this.data.paused) return
+
+    this.setData({ paused: false })
+    if (this.backgroundMusic) {
+      this.backgroundMusic.play()
+    }
+    this.startGameTimer()
+    this.gameLoop()
+  },
+
+  restartGame() {
+    if (this.gameTimer) {
+      clearInterval(this.gameTimer)
+      this.gameTimer = null
+    }
+    if (this.data.animationId) {
+      clearTimeout(this.data.animationId)
+    }
+
+    this.setData({
+      score: 0,
+      remainingTime: 60,
+      gameOver: false,
+      paused: false,
+      showInstructions: false,
+      gameStarted: true,
+      stars: [],
+      lightOrbs: [],
+      particles: [],
+      lightEnergy: 100,
+      lastLightTime: 0
+    })
+
+    this.generateStars()
+    this.generateLightOrbs()
+    this.startGameTimer()
+    this.gameLoop()
   },
 
   updateGame() {
@@ -687,6 +753,7 @@ Page({
       score: 0,
       remainingTime: 60,
       gameOver: false,
+      paused: false,
       showInstructions: true,
       gameStarted: false,
       stars: [],

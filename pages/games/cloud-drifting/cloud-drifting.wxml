@@ -26,10 +26,19 @@
       </view>
     </view>
 
+    <view class="play-hint" wx:if="{{gameStatus === 'playing' && score === 0}}">
+      按住拖动白云，收集气泡并避开乌云
+    </view>
+
     <view class="game-status" wx:if="{{gameStatus !== 'playing'}}">
       <view class="status-overlay">
         <text class="status-title">{{statusTitle}}</text>
         <text class="status-message">{{statusMessage}}</text>
+        <view class="status-tips" wx:if="{{gameStatus === 'ready' || gameStatus === 'paused'}}">
+          <view class="tip-item">拖动白云：控制移动方向</view>
+          <view class="tip-item">透明气泡：获得分数和连击</view>
+          <view class="tip-item">乌云障碍：碰到会扣分</view>
+        </view>
         <button class="game-btn primary-btn" bindtap="startGame" disabled="{{gameStatus === 'loading'}}">
           <text wx:if="{{gameStatus === 'loading'}}">加载中...</text>
           <text wx:else>{{gameButtonText}}</text>

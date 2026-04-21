@@ -6,6 +6,7 @@ Page({
     matches: 0,
     attempts: 0,
     timeLeft: 180, // 3分钟
+    timeLeftText: '3分0秒',
 
     // 卡片数据
     cards: [],
@@ -41,7 +42,10 @@ Page({
     // 完成状态
     isCompleted: false,
     completionTime: 0,
+    completionTimeText: '0分0秒',
+    accuracyRate: 0,
     bestTime: null,
+    bestTimeText: '',
     bestScore: null,
 
     // 动画状态
@@ -84,6 +88,12 @@ Page({
     }
   },
 
+  onHide: function () {
+    if (this.data.gameStatus === 'playing') {
+      this.pauseGame();
+    }
+  },
+
   // 初始化游戏
   initGame: function () {
     const gridSize = this.data.gridSize;
@@ -102,6 +112,7 @@ Page({
         content: content,
         isFlipped: false,
         isMatched: false,
+        isAnimating: false,
         canFlip: true
       });
       cardData.push({
@@ -109,6 +120,7 @@ Page({
         content: content,
         isFlipped: false,
         isMatched: false,
+        isAnimating: false,
         canFlip: true
       });
     });
@@ -133,6 +145,7 @@ Page({
       attempts: 0,
       matches: 0,
       score: 0,
+      timeLeftText: this.formatTime(this.data.timeLeft),
       comboCount: 0,
       maxCombo: 0,
       comboMultiplier: 1,
@@ -155,6 +168,7 @@ Page({
     this.setData({
       gameStatus: 'playing',
       timeLeft: 180,
+      timeLeftText: this.formatTime(180),
       isCompleted: false
     });
 
@@ -331,13 +345,21 @@ Page({
     const key = `${row}-${col}`;
 
     if (!animatingCards.includes(key)) {
+      const cards = this.data.cards;
+      if (cards[row] && cards[row][col]) {
+        cards[row][col].isAnimating = true;
+      }
       animatingCards.push(key);
-      this.setData({ animatingCards });
+      this.setData({ animatingCards, cards });
 
       // 移除动画类
       setTimeout(() => {
         const newAnimatingCards = this.data.animatingCards.filter(item => item !== key);
-        this.setData({ animatingCards: newAnimatingCards });
+        const latestCards = this.data.cards;
+        if (latestCards[row] && latestCards[row][col]) {
+          latestCards[row][col].isAnimating = false;
+        }
+        this.setData({ animatingCards: newAnimatingCards, cards: latestCards });
       }, 600);
     }
   },
@@ -356,6 +378,7 @@ Page({
     this.stopTimer();
 
     const completionTime = 180 - this.data.timeLeft;
+    const accuracyRate = this.getAccuracyRate(this.data.matches, this.data.attempts);
 
     // 计算最终得分
     const timeBonus = Math.max(0, this.data.timeLeft * 2);
@@ -369,6 +392,8 @@ Page({
       gameStatus: 'completed',
       isCompleted: true,
       completionTime,
+      completionTimeText: this.formatTime(completionTime),
+      accuracyRate,
       score: finalScore
     });
 
@@ -378,8 +403,10 @@ Page({
     // 播放完成音效
     this.playCompleteSound();
 
-    // 显示完成提示
-    this.showCompletionMessage();
+    wx.showToast({
+      title: '完成挑战',
+      icon: 'success'
+    });
   },
 
   // 显示完成消息
@@ -407,8 +434,10 @@ Page({
   startTimer: function () {
     const timerId = setInterval(() => {
       if (this.data.timeLeft > 0) {
+        const nextTime = this.data.timeLeft - 1;
         this.setData({
-          timeLeft: this.data.timeLeft - 1
+          timeLeft: nextTime,
+          timeLeftText: this.formatTime(nextTime)
         });
       } else {
         this.timeUp();
@@ -428,18 +457,9 @@ Page({
     this.stopTimer();
     this.setData({ gameStatus: 'ended' });
 
-    wx.showModal({
-      title: '时间到！',
-      content: `时间用完了！\n匹配数：${this.data.matches}\n得分：${this.data.score}\n要再试一次吗？`,
-      confirmText: '重新开始',
-      cancelText: '返回',
-      success: (res) => {
-        if (res.confirm) {
-          this.restartGame();
-        } else {
-          wx.navigateBack();
-        }
-      }
+    wx.showToast({
+      title: '时间到',
+      icon: 'none'
     });
   },
 
@@ -450,6 +470,10 @@ Page({
     return `${minutes}分${remainingSeconds}秒`;
   },
 
+  getAccuracyRate: function (matches, attempts) {
+    return attempts > 0 ? Math.floor((matches / attempts) * 100) : 0;
+  },
+
   // 最佳成绩管理
   loadBestScores: function () {
     try {
@@ -458,6 +482,7 @@ Page({
 
       this.setData({
         bestTime: bestTime || null,
+        bestTimeText: bestTime ? this.formatTime(bestTime) : '',
         bestScore: bestScore || null
       });
     } catch (error) {
@@ -469,7 +494,10 @@ Page({
     let updated = false;
 
     if (!this.data.bestTime || time < this.data.bestTime) {
-      this.setData({ bestTime: time });
+      this.setData({
+        bestTime: time,
+        bestTimeText: this.formatTime(time)
+      });
       wx.setStorageSync('memoryCardBestTime', time);
       updated = true;
     }
@@ -637,13 +665,22 @@ Page({
   // 高亮卡片
   highlightCard: function (row, col) {
     const key = `${row}-${col}`;
+    const cards = this.data.cards;
+    if (cards[row] && cards[row][col]) {
+      cards[row][col].isAnimating = true;
+    }
     this.setData({
-      animatingCards: [...this.data.animatingCards, key]
+      animatingCards: [...this.data.animatingCards, key],
+      cards
     });
 
     setTimeout(() => {
       const newAnimatingCards = this.data.animatingCards.filter(item => item !== key);
-      this.setData({ animatingCards: newAnimatingCards });
+      const latestCards = this.data.cards;
+      if (latestCards[row] && latestCards[row][col]) {
+        latestCards[row][col].isAnimating = false;
+      }
+      this.setData({ animatingCards: newAnimatingCards, cards: latestCards });
     }, 1000);
   },
 

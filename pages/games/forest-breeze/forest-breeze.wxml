@@ -23,11 +23,25 @@
     </view>
   </view>
 
+  <view class="quick-controls" wx:if="{{gameStarted && !gameOver}}">
+    <button class="quick-btn" wx:if="{{!paused}}" bindtap="pauseGame">暂停</button>
+    <button class="quick-btn primary" wx:if="{{paused}}" bindtap="resumeGame">继续</button>
+    <button class="quick-btn" bindtap="restartGame">重开</button>
+  </view>
+
+  <view class="pause-overlay" wx:if="{{paused}}">
+    <view class="pause-card">
+      <view class="pause-title">森林暂时安静了</view>
+      <view class="pause-text">准备好后继续吹起微风。</view>
+      <button class="start-btn" bindtap="resumeGame">继续游戏</button>
+    </view>
+  </view>
+
   <!-- Instructions -->
   <view class="instructions" wx:if="{{showInstructions}}">
     <view class="instructions-title">森林微风</view>
     <view class="instructions-text">
-      滑动屏幕创造微风，帮助树叶飘落
+      滑动屏幕创造微风，轻轻托起树叶，也可能遇到森林里的小惊喜
     </view>
     <button class="start-btn" bindtap="startGame">开始游戏</button>
   </view>
