@@ -189,11 +189,13 @@ Page({
   // 选择答案
   selectOption(e) {
     const optionIndex = e.currentTarget.dataset.index
+    const hasChangedSelection = this.data.selectedOption !== optionIndex
+
     this.setData({
       selectedOption: optionIndex
     })
 
-    if (wx.vibrateShort) {
+    if (hasChangedSelection && wx.vibrateShort) {
       wx.vibrateShort({ type: 'light' })
     }
   },

@@ -200,7 +200,7 @@
   border: 2rpx solid var(--border-color);
   border-radius: 26rpx;
   background: rgba(255, 255, 255, 0.78);
-  transition: all 0.3s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
   box-shadow: 0 8rpx 24rpx rgba(103, 90, 74, 0.06);
   -webkit-tap-highlight-color: transparent;
@@ -211,13 +211,13 @@
 .option-item:hover,
 .option-item:active {
   background: rgba(255, 255, 255, 0.92);
-  transform: translateY(-2rpx) scale(0.995);
+  border-color: rgba(143, 118, 91, 0.28);
+  box-shadow: 0 10rpx 26rpx rgba(103, 90, 74, 0.08);
 }
 
 .option-item.selected {
   border-color: rgba(130, 161, 139, 0.8);
   background: linear-gradient(135deg, rgba(231, 242, 233, 0.98), rgba(255, 252, 245, 0.98));
-  transform: translateY(-2rpx);
   box-shadow: 0 16rpx 40rpx rgba(104, 139, 112, 0.18);
 }
 
@@ -274,7 +274,7 @@
   border-radius: 50%;
   border: 2rpx solid rgba(143, 118, 91, 0.22);
   background: rgba(255, 255, 255, 0.72);
-  transition: all 0.3s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -284,7 +284,6 @@
 .option-item.selected .option-indicator {
   border-color: #7FA489;
   background: #7FA489;
-  transform: scale(1.08);
 }
 
 .option-check {
@@ -292,13 +291,11 @@
   font-size: 24rpx;
   font-weight: 800;
   opacity: 0;
-  transform: scale(0.5);
-  transition: all 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 .option-item.selected .option-check {
   opacity: 1;
-  transform: scale(1);
 }
 
 .navigation-buttons {
@@ -373,11 +370,11 @@
 }
 
 .nav-btn:not(.disabled):hover {
-  transform: translateY(-3rpx);
+  box-shadow: 0 10rpx 28rpx rgba(127, 164, 137, 0.18);
 }
 
 .nav-btn:not(.disabled):active {
-  transform: translateY(1rpx) scale(0.99);
+  opacity: 0.88;
 }
 
 .results-container {
