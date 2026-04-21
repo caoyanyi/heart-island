@@ -32,6 +32,7 @@
           wx:key="index"
           data-index="{{index}}"
           bindtap="selectOption"
+          hover-class="none"
         >
           <view class="option-copy">
             <text class="option-index">{{index + 1}}</text>
