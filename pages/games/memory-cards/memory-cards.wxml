@@ -37,7 +37,7 @@
   </view>
 
   <!-- 游戏区域 -->
-  <view class="game-area" wx:if="{{gameStatus !== 'ready'}}">
+  <view class="game-area" wx:if="{{gameStatus === 'playing' || gameStatus === 'paused'}}">
     <!-- 卡片网格 -->
     <view class="cards-grid" style="--grid-size: {{gridSize}};">
       <block wx:for="{{cards}}" wx:for-item="row" wx:for-index="rowIndex" wx:key="rowIndex">
@@ -176,7 +176,7 @@
   </view>
 
   <!-- 设置面板 -->
-  <view class="settings-panel">
+  <view class="settings-panel" wx:if="{{gameStatus === 'ready' || gameStatus === 'playing' || gameStatus === 'paused'}}">
     <view class="settings-item">
       <text class="settings-label">音效</text>
       <switch class="settings-switch" checked="{{soundEnabled}}" bindchange="toggleSound"></switch>

@@ -6,6 +6,7 @@
   padding: 20rpx;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 /* 游戏头部 */
@@ -128,6 +129,7 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 30rpx;
+  min-height: 0;
 }
 
 /* 卡片网格 */
@@ -141,8 +143,11 @@
   border-radius: 20rpx;
   backdrop-filter: blur(10rpx);
   border: 1rpx solid rgba(255, 255, 255, 0.2);
-  width: 600rpx;
-  height: 600rpx;
+  width: 82vw;
+  height: 82vw;
+  max-width: 600rpx;
+  max-height: 600rpx;
+  box-sizing: border-box;
 }
 
 /* 记忆卡片 */
@@ -243,7 +248,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40rpx;
+  padding: 24rpx 24rpx 32rpx;
+  min-height: 0;
+  box-sizing: border-box;
 }
 
 .start-content {
@@ -254,6 +261,9 @@
   box-shadow: 0 20rpx 40rpx rgba(0, 0, 0, 0.2);
   max-width: 600rpx;
   width: 100%;
+  max-height: calc(100vh - 260rpx);
+  overflow-y: auto;
+  box-sizing: border-box;
   backdrop-filter: blur(10rpx);
 }
 
@@ -370,6 +380,8 @@
   font-weight: bold;
   box-shadow: 0 6rpx 20rpx rgba(102, 126, 234, 0.3);
   transition: all 0.3s ease;
+  width: 100%;
+  max-width: 420rpx;
 }
 
 .start-btn:hover {
@@ -529,6 +541,10 @@
   padding: 30rpx;
   backdrop-filter: blur(10rpx);
   border: 1rpx solid rgba(255, 255, 255, 0.2);
+  width: 100%;
+  max-width: 640rpx;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .settings-item {

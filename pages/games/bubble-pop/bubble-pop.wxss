@@ -117,11 +117,11 @@ page {
 /* 游戏画布 */
 .game-canvas-container {
   position: absolute;
-  top: 100rpx;
-  left: 30rpx;
-  right: 30rpx;
-  bottom: 140rpx;
-  border-radius: 30rpx;
+  top: 24rpx;
+  left: 24rpx;
+  right: 24rpx;
+  bottom: 156rpx;
+  border-radius: 34rpx;
   overflow: hidden;
   box-shadow: 0 20rpx 40rpx rgba(0, 0, 0, 0.15);
   background: rgba(255, 255, 255, 0.1);
@@ -273,13 +273,15 @@ page {
   transform: translate(-50%, -50%);
   background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
   border-radius: 40rpx;
-  padding: 80rpx 60rpx;
+  padding: 64rpx 44rpx;
   text-align: center;
   box-shadow: 0 30rpx 60rpx rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(20px);
-  width: 90%;
-  max-width: 600rpx;
-  min-width: 500rpx;
+  width: calc(100% - 64rpx);
+  max-width: 620rpx;
+  max-height: calc(100% - 80rpx);
+  box-sizing: border-box;
+  overflow-y: auto;
   animation: slideUp 0.5s ease-out;
   pointer-events: auto;
   z-index: 100;
@@ -319,7 +321,7 @@ page {
   line-height: 1.6;
   display: block;
   text-align: center;
-  white-space: nowrap;
+  white-space: normal;
   overflow: visible;
   width: 100%;
   padding: 10rpx 0;
@@ -353,8 +355,10 @@ page {
   transition: all 0.3s ease;
   box-shadow: 0 12rpx 24rpx rgba(78, 205, 196, 0.3);
   pointer-events: auto;
-  min-width: 250rpx;
+  min-width: 240rpx;
+  max-width: 100%;
   margin-top: 20rpx;
+  box-sizing: border-box;
 }
 
 .game-btn::after,
@@ -582,10 +586,10 @@ page {
   }
 
   .game-canvas-container {
-    top: 80rpx;
-    left: 20rpx;
-    right: 20rpx;
-    bottom: 120rpx;
+    top: 18rpx;
+    left: 18rpx;
+    right: 18rpx;
+    bottom: 128rpx;
   }
 
   .game-controls {
@@ -619,10 +623,9 @@ page {
   }
 
   .status-overlay {
-    padding: 50rpx 30rpx;
-    width: 95%;
+    padding: 44rpx 28rpx;
+    width: calc(100% - 40rpx);
     max-width: 400rpx;
-    min-width: 350rpx;
   }
 
   .status-title {
@@ -707,7 +710,7 @@ page {
   }
 
   .game-canvas-container {
-    top: 160rpx;
+    top: 48rpx;
     left: 60rpx;
     right: 60rpx;
     bottom: 200rpx;
@@ -737,10 +740,9 @@ page {
   }
 
   .status-overlay {
-    padding: 100rpx 80rpx;
+    padding: 84rpx 72rpx;
     width: 85%;
     max-width: 700rpx;
-    min-width: 600rpx;
   }
 
   .status-title {
