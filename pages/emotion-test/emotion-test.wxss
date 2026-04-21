@@ -26,7 +26,7 @@
   --text-secondary: #8A7A67;
   --border-color: rgba(143, 118, 91, 0.16);
   --surface-shadow: rgba(85, 66, 47, 0.12);
-  padding: 42rpx 30rpx 56rpx;
+  padding: 38rpx 28rpx 56rpx;
   background:
     radial-gradient(circle at 14% 8%, rgba(194, 221, 210, 0.64), transparent 30%),
     radial-gradient(circle at 86% 2%, rgba(230, 190, 160, 0.42), transparent 34%),
@@ -43,7 +43,7 @@
 
 .test-title {
   display: block;
-  font-size: 50rpx;
+  font-size: 46rpx;
   font-weight: 800;
   color: var(--text-primary);
   margin-bottom: 14rpx;
@@ -52,18 +52,18 @@
 
 .test-subtitle {
   display: block;
-  font-size: 27rpx;
+  font-size: 26rpx;
   color: var(--text-secondary);
   margin-bottom: 30rpx;
   line-height: 1.5;
 }
 
 .progress-panel {
-  padding: 26rpx;
-  border-radius: 28rpx;
-  background: rgba(255, 255, 255, 0.64);
-  border: 1rpx solid rgba(255, 255, 255, 0.72);
-  box-shadow: 0 12rpx 40rpx rgba(103, 90, 74, 0.08);
+  padding: 24rpx;
+  border-radius: 26rpx;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1rpx solid rgba(143, 118, 91, 0.08);
+  box-shadow: 0 10rpx 34rpx rgba(103, 90, 74, 0.07);
   backdrop-filter: blur(16rpx);
 }
 
@@ -106,15 +106,15 @@
 .question-container {
   display: flex;
   flex-direction: column;
-  gap: 28rpx;
+  gap: 24rpx;
 }
 
 .question-card {
   background: var(--card-background);
   border: 1rpx solid rgba(255, 255, 255, 0.78);
-  border-radius: 38rpx;
-  padding: 38rpx 32rpx 34rpx;
-  box-shadow: 0 22rpx 70rpx var(--surface-shadow);
+  border-radius: 34rpx;
+  padding: 34rpx 30rpx 32rpx;
+  box-shadow: 0 18rpx 54rpx rgba(85, 66, 47, 0.1);
   animation: cardEnter 0.35s ease-out;
   backdrop-filter: blur(18rpx);
   overflow: hidden;
@@ -137,38 +137,49 @@
   align-items: center;
   justify-content: space-between;
   gap: 20rpx;
-  margin-bottom: 24rpx;
+  margin-bottom: 26rpx;
   position: relative;
   z-index: 1;
+}
+
+.question-number-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.question-kicker {
+  font-size: 20rpx;
+  color: rgba(103, 90, 74, 0.55);
+  font-weight: 700;
+  letter-spacing: 2rpx;
+  text-transform: uppercase;
 }
 
 .question-number {
   display: inline-flex;
   align-items: center;
-  min-height: 48rpx;
-  padding: 0 22rpx;
-  border-radius: 999rpx;
-  background: rgba(164, 191, 174, 0.2);
-  font-size: 24rpx;
-  color: #667A68;
-  font-weight: bold;
+  font-size: 30rpx;
+  color: #4f624f;
+  font-weight: 800;
 }
 
 .question-tip {
-  font-size: 24rpx;
-  color: var(--text-secondary);
-  padding: 8rpx 18rpx;
+  font-size: 25rpx;
+  color: #6f835f;
+  padding: 10rpx 20rpx;
   border-radius: 999rpx;
-  background: rgba(143, 118, 91, 0.08);
+  background: rgba(164, 191, 174, 0.18);
+  font-weight: 800;
 }
 
 .question-text {
   display: block;
-  font-size: 38rpx;
+  font-size: 36rpx;
   color: var(--text-primary);
-  margin-bottom: 16rpx;
-  line-height: 1.42;
-  font-weight: 750;
+  margin-bottom: 18rpx;
+  line-height: 1.46;
+  font-weight: 800;
   position: relative;
   z-index: 1;
 }
@@ -176,9 +187,9 @@
 .question-helper {
   display: block;
   color: var(--text-secondary);
-  font-size: 26rpx;
+  font-size: 25rpx;
   line-height: 1.5;
-  margin-bottom: 34rpx;
+  margin-bottom: 30rpx;
   position: relative;
   z-index: 1;
 }
@@ -186,7 +197,7 @@
 .options-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 18rpx;
+  gap: 16rpx;
   position: relative;
   z-index: 1;
 }
@@ -195,11 +206,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 22rpx;
-  padding: 28rpx 28rpx;
+  gap: 20rpx;
+  padding: 26rpx 24rpx;
   border: 2rpx solid var(--border-color);
-  border-radius: 26rpx;
-  background: rgba(255, 255, 255, 0.78);
+  border-radius: 24rpx;
+  background: rgba(255, 255, 255, 0.82);
   transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
   box-shadow: 0 8rpx 24rpx rgba(103, 90, 74, 0.06);
@@ -218,7 +229,7 @@
 .option-item.selected {
   border-color: rgba(130, 161, 139, 0.8);
   background: linear-gradient(135deg, rgba(231, 242, 233, 0.98), rgba(255, 252, 245, 0.98));
-  box-shadow: 0 16rpx 40rpx rgba(104, 139, 112, 0.18);
+  box-shadow: 0 12rpx 34rpx rgba(104, 139, 112, 0.15);
 }
 
 .option-item.selected::before {
@@ -235,18 +246,18 @@
 .option-copy {
   display: flex;
   align-items: center;
-  gap: 20rpx;
+  gap: 18rpx;
   flex: 1;
   min-width: 0;
 }
 
 .option-index {
-  width: 48rpx;
-  height: 48rpx;
-  border-radius: 50%;
-  background: rgba(143, 118, 91, 0.1);
-  color: #8F765B;
-  font-size: 24rpx;
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 16rpx;
+  background: rgba(143, 118, 91, 0.08);
+  color: rgba(103, 90, 74, 0.72);
+  font-size: 23rpx;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -257,11 +268,11 @@
 .option-item.selected .option-index {
   background: #7FA489;
   color: #fff;
-  box-shadow: 0 8rpx 18rpx rgba(127, 164, 137, 0.28);
+  box-shadow: 0 6rpx 14rpx rgba(127, 164, 137, 0.22);
 }
 
 .option-text {
-  font-size: 29rpx;
+  font-size: 28rpx;
   color: var(--text-primary);
   flex: 1;
   line-height: 1.48;
@@ -269,8 +280,8 @@
 }
 
 .option-indicator {
-  width: 42rpx;
-  height: 42rpx;
+  width: 40rpx;
+  height: 40rpx;
   border-radius: 50%;
   border: 2rpx solid rgba(143, 118, 91, 0.22);
   background: rgba(255, 255, 255, 0.72);
@@ -300,22 +311,23 @@
 
 .navigation-buttons {
   display: flex;
-  gap: 22rpx;
+  gap: 18rpx;
   justify-content: space-between;
   margin-top: 8rpx;
 }
 
 .nav-btn {
   flex: 1;
-  padding: 0 34rpx;
-  border-radius: 999rpx;
-  font-size: 30rpx;
-  font-weight: 700;
+  gap: 10rpx;
+  padding: 0 30rpx;
+  border-radius: 28rpx;
+  font-size: 29rpx;
+  font-weight: 800;
   border: none;
   transition: all 0.3s ease;
   box-shadow: none;
   text-shadow: none;
-  min-height: 92rpx;
+  min-height: 88rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -329,27 +341,33 @@
 
 .prev-btn {
   flex: 0.78;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.78);
   color: var(--accent-color);
-  border: 2rpx solid rgba(143, 118, 91, 0.18);
+  border: 2rpx solid rgba(143, 118, 91, 0.14);
 }
 
 .next-btn {
   flex: 1.22;
   background: linear-gradient(135deg, #7FA489 0%, #C49B75 100%);
   color: #fff;
-  box-shadow: 0 14rpx 34rpx rgba(127, 164, 137, 0.28);
+  box-shadow: 0 12rpx 30rpx rgba(127, 164, 137, 0.25);
+}
+
+.btn-minor {
+  font-size: 26rpx;
+  opacity: 0.75;
 }
 
 .early-submit-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 62rpx;
-  padding: 0 26rpx;
+  min-height: 64rpx;
+  padding: 0 28rpx;
   border: none;
-  background: transparent;
-  color: var(--text-secondary);
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.42);
+  color: rgba(103, 90, 74, 0.72);
   font-size: 26rpx;
   line-height: 1;
 }
@@ -599,7 +617,7 @@
   .navigation-buttons {
     justify-content: center;
     max-width: 600rpx;
-    margin: 40rpx auto 0;
+    margin: 8rpx auto 0;
   }
 
   .action-buttons {
@@ -611,25 +629,45 @@
 
 @media (max-width: 480px) {
   .emotion-test {
-    padding: 20rpx;
+    padding: 24rpx 22rpx 44rpx;
   }
 
-  .question-card {
-    padding: 30rpx;
+  .test-title {
+    font-size: 42rpx;
   }
 
+  .progress-copy,
   .question-meta {
     align-items: flex-start;
     flex-direction: column;
     gap: 12rpx;
   }
 
+  .question-card {
+    padding: 30rpx 24rpx;
+  }
+
+  .question-text {
+    font-size: 34rpx;
+  }
+
   .option-item {
-    padding: 25rpx;
+    padding: 24rpx 22rpx;
+    gap: 16rpx;
+  }
+
+  .option-text {
+    font-size: 27rpx;
   }
 
   .navigation-buttons {
-    flex-direction: column;
+    gap: 14rpx;
+  }
+
+  .nav-btn {
+    min-height: 82rpx;
+    padding: 0 22rpx;
+    font-size: 27rpx;
   }
 
   .action-buttons {

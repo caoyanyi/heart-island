@@ -16,11 +16,14 @@
   <view class="question-container" wx:if="{{!showResults}}">
     <view class="question-card">
       <view class="question-meta">
-        <text class="question-number">问题 {{currentQuestion}}</text>
-        <text class="question-tip">没有标准答案</text>
+        <view class="question-number-group">
+          <text class="question-kicker">Question</text>
+          <text class="question-number">问题 {{currentQuestion}}</text>
+        </view>
+        <text class="question-tip">{{currentQuestion}} / {{totalQuestions}}</text>
       </view>
       <text class="question-text">{{questions[currentQuestion-1].text}}</text>
-      <text class="question-helper">选择最接近你最近一周真实感受的一项即可。</text>
+      <text class="question-helper">没有标准答案，选择最接近你最近一周真实感受的一项即可。</text>
 
       <view class="options-grid">
         <view
@@ -47,7 +50,8 @@
         bindtap="previousQuestion"
         disabled="{{currentQuestion === 1}}"
       >
-        上一题
+        <text class="btn-minor">←</text>
+        <text>上一题</text>
       </button>
 
       <button
@@ -55,7 +59,8 @@
         bindtap="nextQuestion"
         disabled="{{selectedOption === null}}"
       >
-        {{currentQuestion === totalQuestions ? '完成测试' : '下一题'}}
+        <text>{{currentQuestion === totalQuestions ? '完成测试' : '下一题'}}</text>
+        <text class="btn-minor">→</text>
       </button>
     </view>
 
