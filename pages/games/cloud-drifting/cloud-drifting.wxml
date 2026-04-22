@@ -7,10 +7,10 @@
       bindtouchstart="onTouchStart"
       bindtouchmove="onTouchMove"
       bindtouchend="onTouchEnd"
-      style="pointer-events: {{gameStatus === 'playing' ? 'auto' : 'none'}}"
+      style="pointer-events: {{gameStatus === 'playing' ? 'auto' : 'none'}}; visibility: {{gameStatus === 'playing' ? 'visible' : 'hidden'}};"
     ></canvas>
 
-    <view class="game-ui">
+    <view class="game-ui" wx:if="{{gameStatus === 'playing'}}">
       <view class="score-display">
         <text class="score-label">得分</text>
         <text class="score-value">{{score}}</text>
@@ -30,24 +30,35 @@
       按住拖动白云，收集气泡并避开乌云
     </view>
 
-    <view class="game-status" wx:if="{{gameStatus !== 'playing'}}">
-      <view class="status-overlay">
-        <text class="status-title">{{statusTitle}}</text>
-        <text class="status-message">{{statusMessage}}</text>
-        <view class="status-tips" wx:if="{{gameStatus === 'ready' || gameStatus === 'paused'}}">
-          <view class="tip-item">拖动白云：控制移动方向</view>
-          <view class="tip-item">透明气泡：获得分数和连击</view>
-          <view class="tip-item">乌云障碍：碰到会扣分</view>
-        </view>
-        <button class="game-btn primary-btn" bindtap="startGame" disabled="{{gameStatus === 'loading'}}">
-          <text wx:if="{{gameStatus === 'loading'}}">加载中...</text>
-          <text wx:else>{{gameButtonText}}</text>
-        </button>
+  </view>
+
+  <view class="entry-panel" wx:if="{{gameStatus !== 'playing'}}">
+    <view class="entry-card">
+      <view class="entry-visual">
+        <text class="entry-cloud cloud-main">☁</text>
+        <text class="entry-bubble bubble-one"></text>
+        <text class="entry-bubble bubble-two"></text>
+        <text class="entry-bubble bubble-three"></text>
       </view>
+      <text class="status-title">{{statusTitle}}</text>
+      <text class="status-message">{{statusMessage}}</text>
+      <view class="status-tips" wx:if="{{gameStatus === 'ready' || gameStatus === 'paused'}}">
+        <view class="tip-item">拖动白云：控制移动方向</view>
+        <view class="tip-item">透明气泡：获得分数和连击</view>
+        <view class="tip-item">乌云障碍：碰到会扣分</view>
+      </view>
+      <button class="game-btn primary-btn" wx:if="{{gameStatus === 'paused'}}" bindtap="resumeGame">
+        继续游戏
+      </button>
+      <button class="game-btn primary-btn" wx:elif="{{gameStatus === 'loading'}}" disabled="{{true}}">
+        加载中...
+      </button>
+      <button class="game-btn primary-btn" wx:else bindtap="startGame">{{gameButtonText}}</button>
+      <button class="entry-secondary-btn" bindtap="openSettings">游戏设置</button>
     </view>
   </view>
 
-  <view class="game-controls">
+  <view class="game-controls" wx:if="{{gameStatus === 'playing' || gameStatus === 'paused'}}">
     <button class="control-btn pause-btn" bindtap="pauseGame" wx:if="{{gameStatus === 'playing'}}">
       <text class="btn-icon">⏸️</text>
       暂停

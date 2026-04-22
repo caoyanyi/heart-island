@@ -6,10 +6,10 @@
       class="game-canvas"
       bindtouchstart="onCanvasTouch"
       type="2d"
-      style="pointer-events: {{gameStatus === 'playing' ? 'auto' : 'none'}}"
+      style="pointer-events: {{gameStatus === 'playing' ? 'auto' : 'none'}}; visibility: {{gameStatus === 'playing' ? 'visible' : 'hidden'}};"
     ></canvas>
 
-    <view class="game-ui">
+    <view class="game-ui" wx:if="{{gameStatus === 'playing'}}">
       <view class="score-display">
         <text class="score-label">分数</text>
         <text class="score-value">{{score}}</text>
@@ -34,26 +34,40 @@
       点击亮色泡泡，避开黑色泡泡
     </view>
 
-    <view class="game-status" wx:if="{{gameStatus !== 'playing'}}">
-      <view class="status-overlay">
-        <text class="status-title">{{statusTitle}}</text>
-        <view class="status-message-container" wx:if="{{gameStatus === 'ended'}}">
-          <text class="status-message-line">最终得分: {{score}}</text>
-          <text class="status-message-line">最高连击: {{maxCombo}}</text>
-          <text class="status-message-line">最高等级: {{level}}</text>
-        </view>
-        <text class="status-message" wx:else>{{statusMessage}}</text>
-        <view class="status-tips" wx:if="{{gameStatus === 'ready' || gameStatus === 'paused'}}">
-          <view class="tip-item">彩色泡泡：获得分数</view>
-          <view class="tip-item">连续命中：提升连击奖励</view>
-          <view class="tip-item">黑色泡泡：尽量避开</view>
-        </view>
-        <button class="game-btn primary-btn" bindtap="startGame">{{gameButtonText}}</button>
+  </view>
+
+  <view class="entry-panel" wx:if="{{gameStatus !== 'playing'}}">
+    <view class="entry-card">
+      <view class="entry-visual">
+        <text class="entry-pop pop-one"></text>
+        <text class="entry-pop pop-two"></text>
+        <text class="entry-pop pop-three"></text>
+        <text class="entry-pop pop-four"></text>
       </view>
+      <text class="status-title">{{statusTitle}}</text>
+      <view class="status-message-container" wx:if="{{gameStatus === 'ended'}}">
+        <text class="status-message-line">最终得分: {{score}}</text>
+        <text class="status-message-line">最高连击: {{maxCombo}}</text>
+        <text class="status-message-line">最高等级: {{level}}</text>
+      </view>
+      <text class="status-message" wx:else>{{statusMessage}}</text>
+      <view class="status-tips" wx:if="{{gameStatus === 'ready' || gameStatus === 'paused'}}">
+        <view class="tip-item">彩色泡泡：获得分数</view>
+        <view class="tip-item">连续命中：提升连击奖励</view>
+        <view class="tip-item">黑色泡泡：尽量避开</view>
+      </view>
+      <button class="game-btn primary-btn" wx:if="{{gameStatus === 'paused'}}" bindtap="resumeGame">
+        继续游戏
+      </button>
+      <button class="game-btn primary-btn" wx:elif="{{gameStatus === 'loading' || gameStatus === 'initializing' || gameStatus === 'restarting'}}" disabled="{{true}}">
+        {{gameButtonText}}
+      </button>
+      <button class="game-btn primary-btn" wx:else bindtap="startGame">{{gameButtonText}}</button>
+      <button class="entry-secondary-btn" bindtap="openSettings">游戏设置</button>
     </view>
   </view>
 
-  <view class="game-controls">
+  <view class="game-controls" wx:if="{{gameStatus === 'playing' || gameStatus === 'paused'}}">
     <button class="control-btn pause-btn" bindtap="pauseGame" wx:if="{{gameStatus === 'playing'}}">
       <text class="btn-icon">⏸️</text>
       暂停
