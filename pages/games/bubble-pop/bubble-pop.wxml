@@ -36,36 +36,36 @@
 
   </view>
 
-  <view class="entry-panel" wx:if="{{gameStatus !== 'playing'}}">
-    <view class="entry-card">
-      <view class="entry-visual">
-        <text class="entry-pop pop-one"></text>
-        <text class="entry-pop pop-two"></text>
-        <text class="entry-pop pop-three"></text>
-        <text class="entry-pop pop-four"></text>
-      </view>
-      <text class="status-title">{{statusTitle}}</text>
-      <view class="status-message-container" wx:if="{{gameStatus === 'ended'}}">
-        <text class="status-message-line">最终得分: {{score}}</text>
-        <text class="status-message-line">最高连击: {{maxCombo}}</text>
-        <text class="status-message-line">最高等级: {{level}}</text>
-      </view>
-      <text class="status-message" wx:else>{{statusMessage}}</text>
-      <view class="status-tips" wx:if="{{gameStatus === 'ready' || gameStatus === 'paused'}}">
-        <view class="tip-item">彩色泡泡：获得分数</view>
-        <view class="tip-item">连续命中：提升连击奖励</view>
-        <view class="tip-item">黑色泡泡：尽量避开</view>
-      </view>
-      <button class="game-btn primary-btn" wx:if="{{gameStatus === 'paused'}}" bindtap="resumeGame">
+  <cover-view class="entry-panel" wx:if="{{gameStatus !== 'playing'}}">
+    <cover-view class="entry-card">
+      <cover-view class="entry-visual">
+        <cover-view class="entry-pop pop-one"></cover-view>
+        <cover-view class="entry-pop pop-two"></cover-view>
+        <cover-view class="entry-pop pop-three"></cover-view>
+        <cover-view class="entry-pop pop-four"></cover-view>
+      </cover-view>
+      <cover-view class="status-title">{{statusTitle}}</cover-view>
+      <cover-view class="status-message-container" wx:if="{{gameStatus === 'ended'}}">
+        <cover-view class="status-message-line">最终得分: {{score}}</cover-view>
+        <cover-view class="status-message-line">最高连击: {{maxCombo}}</cover-view>
+        <cover-view class="status-message-line">最高等级: {{level}}</cover-view>
+      </cover-view>
+      <cover-view class="status-message" wx:else>{{statusMessage}}</cover-view>
+      <cover-view class="status-tips" wx:if="{{gameStatus === 'ready' || gameStatus === 'paused'}}">
+        <cover-view class="tip-item">彩色泡泡：获得分数</cover-view>
+        <cover-view class="tip-item">连续命中：提升连击奖励</cover-view>
+        <cover-view class="tip-item">黑色泡泡：尽量避开</cover-view>
+      </cover-view>
+      <cover-view class="game-btn primary-btn" wx:if="{{gameStatus === 'paused'}}" bindtap="resumeGame">
         继续游戏
-      </button>
-      <button class="game-btn primary-btn" wx:elif="{{gameStatus === 'loading' || gameStatus === 'initializing' || gameStatus === 'restarting'}}" disabled="{{true}}">
+      </cover-view>
+      <cover-view class="game-btn primary-btn disabled-btn" wx:elif="{{gameStatus === 'loading' || gameStatus === 'initializing' || gameStatus === 'restarting'}}">
         {{gameButtonText}}
-      </button>
-      <button class="game-btn primary-btn" wx:else bindtap="startGame">{{gameButtonText}}</button>
-      <button class="entry-secondary-btn" bindtap="openSettings">游戏设置</button>
-    </view>
-  </view>
+      </cover-view>
+      <cover-view class="game-btn primary-btn" wx:else bindtap="startGame">{{gameButtonText}}</cover-view>
+      <cover-view class="entry-secondary-btn" bindtap="openSettings">游戏设置</cover-view>
+    </cover-view>
+  </cover-view>
 
   <view class="game-controls" wx:if="{{gameStatus === 'playing' || gameStatus === 'paused'}}">
     <button class="control-btn pause-btn" bindtap="pauseGame" wx:if="{{gameStatus === 'playing'}}">

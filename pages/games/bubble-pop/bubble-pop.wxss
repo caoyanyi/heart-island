@@ -446,6 +446,12 @@ page {
   box-shadow: 0 6rpx 18rpx rgba(78, 205, 196, 0.18);
 }
 
+.disabled-btn {
+  opacity: 0.66;
+  transform: none;
+  box-shadow: 0 6rpx 18rpx rgba(78, 205, 196, 0.18);
+}
+
 .entry-secondary-btn {
   margin-top: 18rpx;
   padding: 22rpx 44rpx;

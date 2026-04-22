@@ -300,6 +300,12 @@
   box-shadow: 0 4rpx 12rpx rgba(120, 113, 108, 0.3) !important;
 }
 
+.disabled-btn {
+  opacity: 0.7;
+  transform: none !important;
+  box-shadow: 0 4rpx 12rpx rgba(120, 113, 108, 0.3) !important;
+}
+
 .game-btn[disabled] .btn-text {
   opacity: 0.8;
 }
