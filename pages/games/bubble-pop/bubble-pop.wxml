@@ -6,10 +6,10 @@
       class="game-canvas"
       bindtouchstart="onCanvasTouch"
       type="2d"
-      style="pointer-events: {{gameStatus === 'playing' ? 'auto' : 'none'}}; visibility: {{gameStatus === 'playing' ? 'visible' : 'hidden'}};"
+      style="pointer-events: {{isPlaying ? 'auto' : 'none'}}; visibility: {{canvasVisible ? 'visible' : 'hidden'}};"
     ></canvas>
 
-    <view class="game-ui" wx:if="{{gameStatus === 'playing'}}">
+    <view class="game-ui" wx:if="{{isPlaying}}">
       <view class="score-display">
         <text class="score-label">分数</text>
         <text class="score-value">{{score}}</text>
@@ -30,13 +30,13 @@
       </view>
     </view>
 
-    <view class="play-hint" wx:if="{{gameStatus === 'playing' && score === 0}}">
+    <view class="play-hint" wx:if="{{isPlaying && score === 0}}">
       点击亮色泡泡，避开黑色泡泡
     </view>
 
   </view>
 
-  <cover-view class="entry-panel" wx:if="{{gameStatus !== 'playing'}}">
+  <cover-view class="entry-panel" wx:if="{{showEntryPanel}}">
     <cover-view class="entry-card">
       <cover-view class="entry-visual">
         <cover-view class="entry-pop pop-one"></cover-view>
@@ -51,15 +51,15 @@
         <cover-view class="status-message-line">最高等级: {{level}}</cover-view>
       </cover-view>
       <cover-view class="status-message" wx:else>{{statusMessage}}</cover-view>
-      <cover-view class="status-tips" wx:if="{{gameStatus === 'ready' || gameStatus === 'paused'}}">
+      <cover-view class="status-tips" wx:if="{{showEntryTips}}">
         <cover-view class="tip-item">彩色泡泡：获得分数</cover-view>
         <cover-view class="tip-item">连续命中：提升连击奖励</cover-view>
         <cover-view class="tip-item">黑色泡泡：尽量避开</cover-view>
       </cover-view>
-      <cover-view class="game-btn primary-btn" wx:if="{{gameStatus === 'paused'}}" bindtap="resumeGame">
+      <cover-view class="game-btn primary-btn" wx:if="{{isPaused}}" bindtap="resumeGame">
         继续游戏
       </cover-view>
-      <cover-view class="game-btn primary-btn disabled-btn" wx:elif="{{gameStatus === 'loading' || gameStatus === 'initializing' || gameStatus === 'restarting'}}">
+      <cover-view class="game-btn primary-btn disabled-btn" wx:elif="{{isBusy}}">
         {{gameButtonText}}
       </cover-view>
       <cover-view class="game-btn primary-btn" wx:else bindtap="startGame">{{gameButtonText}}</cover-view>
@@ -67,13 +67,13 @@
     </cover-view>
   </cover-view>
 
-  <view class="game-controls" wx:if="{{gameStatus === 'playing' || gameStatus === 'paused'}}">
-    <button class="control-btn pause-btn" bindtap="pauseGame" wx:if="{{gameStatus === 'playing'}}">
+  <view class="game-controls" wx:if="{{showGameControls}}">
+    <button class="control-btn pause-btn" bindtap="pauseGame" wx:if="{{isPlaying}}">
       <text class="btn-icon">⏸️</text>
       暂停
     </button>
 
-    <button class="control-btn resume-btn" bindtap="resumeGame" wx:if="{{gameStatus === 'paused'}}">
+    <button class="control-btn resume-btn" bindtap="resumeGame" wx:if="{{isPaused}}">
       <text class="btn-icon">▶️</text>
       继续
     </button>

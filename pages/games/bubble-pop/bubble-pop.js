@@ -6,6 +6,13 @@ Page({
 
     // 游戏状态
     gameStatus: 'ready', // ready, playing, paused, ended
+    isPlaying: false,
+    isPaused: false,
+    isBusy: false,
+    showEntryPanel: true,
+    showEntryTips: true,
+    showGameControls: false,
+    canvasVisible: false,
     score: 0,
     timeLeft: 60,
     combo: 0,
@@ -56,12 +63,36 @@ Page({
   onLoad: function () {
     this.initGame();
     this.loadAudio();
-    this.setData({
+    this.setData(this.withStatusViewState({
       gameStatus: 'loading',
       statusTitle: '气泡爆破',
       statusMessage: '游戏加载中...',
       gameButtonText: '准备中'
-    });
+    }));
+  },
+
+  getStatusViewState: function (status) {
+    const isPlaying = status === 'playing';
+    const isPaused = status === 'paused';
+    return {
+      isPlaying,
+      isPaused,
+      isBusy: status === 'loading' || status === 'initializing' || status === 'restarting',
+      showEntryPanel: !isPlaying,
+      showEntryTips: status === 'ready' || isPaused,
+      showGameControls: isPlaying || isPaused,
+      canvasVisible: isPlaying
+    };
+  },
+
+  withStatusViewState: function (data) {
+    if (data && Object.prototype.hasOwnProperty.call(data, 'gameStatus')) {
+      return {
+        ...data,
+        ...this.getStatusViewState(data.gameStatus)
+      };
+    }
+    return data;
   },
 
   onReady: function () {
@@ -69,6 +100,12 @@ Page({
     setTimeout(() => {
       this.initCanvas();
     }, 150);
+  },
+
+  onShow: function () {
+    if (this.data.gameStatus !== 'playing') {
+      this.setData(this.getStatusViewState(this.data.gameStatus || 'ready'));
+    }
   },
 
   onUnload: function () {
@@ -92,12 +129,12 @@ Page({
   showCanvasError: function (message) {
     console.error('画布错误:', message);
 
-    this.setData({
+    this.setData(this.withStatusViewState({
       gameStatus: 'error',
       statusTitle: '画布初始化失败',
       statusMessage: message + '，请尝试重新进入游戏',
       gameButtonText: '重试'
-    });
+    }));
   },
 
   // 初始化游戏
@@ -134,7 +171,7 @@ Page({
     }
 
     // 设置为初始化状态
-    this.setData({ gameStatus: 'initializing' });
+    this.setData(this.withStatusViewState({ gameStatus: 'initializing' }));
 
     // 确保页面已经渲染完成
     setTimeout(() => {
@@ -183,12 +220,12 @@ Page({
             console.log('画布初始化完成，切换到就绪状态');
 
             // Canvas初始化成功，切换到就绪状态
-            this.setData({
+            this.setData(this.withStatusViewState({
               gameStatus: 'ready',
               statusTitle: '气泡爆破',
               statusMessage: '点击泡泡获得分数，避开黑色泡泡！',
               gameButtonText: '开始游戏'
-            });
+            }));
 
           } else {
             console.error('画布初始化失败，未找到Canvas节点');
@@ -600,7 +637,7 @@ Page({
 
   // 继续开始游戏
   continueStartGame: function () {
-    this.setData({
+    this.setData(this.withStatusViewState({
       gameStatus: 'playing',
       score: 0,
       timeLeft: this.data.gameDuration,
@@ -613,7 +650,7 @@ Page({
       lastBubblePop: 0,
       animationFrame: null,
       gameTimer: null
-    });
+    }));
 
     this.startGameLoop();
     this.startTimer();
@@ -621,19 +658,19 @@ Page({
 
   // 暂停游戏
   pauseGame: function () {
-    this.setData({
+    this.setData(this.withStatusViewState({
       gameStatus: 'paused',
       statusTitle: '游戏暂停',
       statusMessage: '点击继续按钮恢复游戏',
       gameButtonText: '继续游戏'
-    });
+    }));
     this.stopGameLoop();
     this.stopTimer();
   },
 
   // 继续游戏
   resumeGame: function () {
-    this.setData({ gameStatus: 'playing' });
+    this.setData(this.withStatusViewState({ gameStatus: 'playing' }));
     this.startGameLoop();
     this.startTimer();
   },
@@ -652,17 +689,17 @@ Page({
     this.stopTimer();
 
     // 重置游戏数据
-    this.setData({
+    this.setData(this.withStatusViewState({
       gameStatus: 'restarting',
       statusTitle: '重新开始',
       statusMessage: '正在准备新游戏...',
       gameButtonText: '请稍等'
-    });
+    }));
 
     // 如果是错误状态，先清除错误，然后重新初始化
     if (this.data.gameStatus === 'error') {
       console.log('清除错误状态并重新初始化Canvas...');
-      this.setData({ gameStatus: 'ready' });
+      this.setData(this.withStatusViewState({ gameStatus: 'ready' }));
     }
 
     // 确保Canvas已初始化
@@ -674,12 +711,12 @@ Page({
       setTimeout(() => {
         if (this.canvas && this.ctx) {
           console.log('Canvas初始化成功，开始新游戏');
-          this.setData({
+          this.setData(this.withStatusViewState({
             gameStatus: 'ready',
             statusTitle: '气泡爆破',
             statusMessage: '点击泡泡获得分数，避开黑色泡泡！',
             gameButtonText: '开始游戏'
-          });
+          }));
           this.startGame();
         } else {
           console.error('Canvas初始化失败，显示错误信息');
@@ -691,12 +728,12 @@ Page({
 
     // Canvas已初始化，直接开始新游戏
     console.log('Canvas已初始化，直接开始新游戏');
-    this.setData({
+    this.setData(this.withStatusViewState({
       gameStatus: 'ready',
       statusTitle: '气泡爆破',
       statusMessage: '点击泡泡获得分数，避开黑色泡泡！',
       gameButtonText: '开始游戏'
-    });
+    }));
     this.startGame();
   },
 
@@ -1017,12 +1054,12 @@ Page({
     this.stopGameLoop();
     this.stopTimer();
 
-    this.setData({
+    this.setData(this.withStatusViewState({
       gameStatus: 'ended',
       statusTitle: '游戏结束',
       statusMessage: `最终得分: ${this.data.score}  最高连击: ${this.data.maxCombo}  最高等级: ${this.data.level}`,
       gameButtonText: '再玩一次'
-    });
+    }));
 
     this.saveGameProgress();
   },

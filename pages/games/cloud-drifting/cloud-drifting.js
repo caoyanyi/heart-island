@@ -6,6 +6,13 @@ Page({
 
     // 游戏状态
     gameStatus: 'ready', // ready, playing, paused, ended
+    isPlaying: false,
+    isPaused: false,
+    isBusy: false,
+    showEntryPanel: true,
+    showEntryTips: true,
+    showGameControls: false,
+    canvasVisible: false,
     score: 0,
     timeLeft: 60,
     combo: 0,
@@ -59,6 +66,7 @@ Page({
     setTimeout(() => {
       this.setData({
         gameStatus: 'loading',
+        ...this.getStatusViewState('loading'),
         statusTitle: '云朵漂流',
         statusMessage: '游戏加载中...',
         gameButtonText: '准备中'
@@ -69,8 +77,33 @@ Page({
     }, 50);
   },
 
+  getStatusViewState: function (status) {
+    const isPlaying = status === 'playing';
+    const isPaused = status === 'paused';
+    return {
+      isPlaying,
+      isPaused,
+      isBusy: status === 'loading' || status === 'initializing' || status === 'restarting',
+      showEntryPanel: !isPlaying,
+      showEntryTips: status === 'ready' || isPaused,
+      showGameControls: isPlaying || isPaused,
+      canvasVisible: isPlaying
+    };
+  },
+
+  withStatusViewState: function (data) {
+    if (data && Object.prototype.hasOwnProperty.call(data, 'gameStatus')) {
+      return {
+        ...data,
+        ...this.getStatusViewState(data.gameStatus)
+      };
+    }
+    return data;
+  },
+
   // 安全的setData包装方法
   safeSetData: function (data, callback) {
+    data = this.withStatusViewState(data);
     if (!this.$ready) {
       console.warn('页面未准备好，缓存数据更新:', data);
       this.$pendingDataUpdates.push({ data, callback });
@@ -111,6 +144,12 @@ Page({
     setTimeout(() => {
       this.initCanvas();
     }, 150);
+  },
+
+  onShow: function () {
+    if (this.data.gameStatus !== 'playing') {
+      this.setData(this.getStatusViewState(this.data.gameStatus || 'ready'));
+    }
   },
 
   onUnload: function () {
