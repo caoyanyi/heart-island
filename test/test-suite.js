@@ -3,6 +3,20 @@ const path = require('path')
 const { execFileSync } = require('child_process')
 
 const rootDir = path.resolve(__dirname, '..')
+const maxMediaAssetSize = 200000
+const maxMediaAssetTotalSize = 200000
+const mediaAssetExtensions = new Set([
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.gif',
+  '.webp',
+  '.svg',
+  '.mp3',
+  '.wav',
+  '.mp4',
+  '.mov'
+])
 
 function walk(dir, matcher, results = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -36,6 +50,22 @@ for (const filePath of jsFiles) {
   execFileSync(process.execPath, ['--check', filePath], { stdio: 'pipe' })
 }
 
+const mediaAssetFiles = walk(rootDir, filePath => mediaAssetExtensions.has(path.extname(filePath).toLowerCase()))
+let totalMediaAssetSize = 0
+for (const filePath of mediaAssetFiles) {
+  const fileSize = fs.statSync(filePath).size
+  const relativePath = path.relative(rootDir, filePath)
+  totalMediaAssetSize += fileSize
+  assert(
+    fileSize <= maxMediaAssetSize,
+    `Media asset exceeds 200K: ${relativePath} (${fileSize} bytes)`
+  )
+}
+assert(
+  totalMediaAssetSize <= maxMediaAssetTotalSize,
+  `Total media assets exceed 200K: ${totalMediaAssetSize} bytes`
+)
+
 const jsonFiles = walk(rootDir, filePath => filePath.endsWith('.json'))
 for (const filePath of jsonFiles) {
   parseJsonFile(filePath)
@@ -58,4 +88,4 @@ if (appJson.sitemapLocation) {
   )
 }
 
-console.log(`Validated ${jsFiles.length} JS files, ${jsonFiles.length} JSON files, and ${appJson.pages.length} pages.`)
+console.log(`Validated ${jsFiles.length} JS files, ${jsonFiles.length} JSON files, ${mediaAssetFiles.length} media assets, and ${appJson.pages.length} pages.`)

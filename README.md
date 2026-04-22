@@ -60,9 +60,6 @@ app/
 
 ## 📱 小程序体验
 
-### 扫码体验
-![Heart Island 小程序二维码](assets/images/qrcode.png)
-
 ### 体验说明
 - 无需注册即可体验核心功能
 - 支持所有微信版本

@@ -8,10 +8,11 @@
     "test": "node test/test-suite.js",
     "test:performance": "node test/performance-test.js",
     "test:all": "npm run test && npm run test:performance",
+    "check:release": "node test/release-check.js",
     "dev": "echo '请使用微信开发者工具进行开发'",
     "preview": "echo '请使用微信开发者工具预览小程序'",
     "lint": "echo '代码检查通过'",
-    "validate": "echo '项目验证完成'",
+    "validate": "node test/release-check.js",
     "deploy": "echo '请使用微信开发者工具上传发布'"
   },
   "keywords": [
