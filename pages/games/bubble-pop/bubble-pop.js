@@ -1,3 +1,5 @@
+const { recordGameSession } = require('../../../utils/game-progress.js');
+
 Page({
   data: {
     // 画布尺寸
@@ -13,6 +15,7 @@ Page({
     showEntryTips: true,
     showGameControls: false,
     canvasVisible: false,
+    canvasMounted: false,
     score: 0,
     timeLeft: 60,
     combo: 0,
@@ -64,10 +67,10 @@ Page({
     this.initGame();
     this.loadAudio();
     this.setData(this.withStatusViewState({
-      gameStatus: 'loading',
+      gameStatus: 'ready',
       statusTitle: '气泡爆破',
-      statusMessage: '游戏加载中...',
-      gameButtonText: '准备中'
+      statusMessage: '点击彩色气泡释放压力，获得连击奖励',
+      gameButtonText: '开始游戏'
     }));
   },
 
@@ -78,28 +81,25 @@ Page({
       isPlaying,
       isPaused,
       isBusy: status === 'loading' || status === 'initializing' || status === 'restarting',
-      showEntryPanel: !isPlaying,
+      showEntryPanel: !isPlaying && !isPaused,
       showEntryTips: status === 'ready' || isPaused,
       showGameControls: isPlaying || isPaused,
-      canvasVisible: isPlaying
+      canvasVisible: isPlaying || isPaused
     };
   },
 
   withStatusViewState: function (data) {
     if (data && Object.prototype.hasOwnProperty.call(data, 'gameStatus')) {
       return {
-        ...data,
-        ...this.getStatusViewState(data.gameStatus)
+        ...this.getStatusViewState(data.gameStatus),
+        ...data
       };
     }
     return data;
   },
 
   onReady: function () {
-    // 延迟初始化以确保DOM完全加载
-    setTimeout(() => {
-      this.initCanvas();
-    }, 150);
+    // Canvas 是原生组件，首屏不主动挂载，避免遮住入口面板。
   },
 
   onShow: function () {
@@ -131,6 +131,7 @@ Page({
 
     this.setData(this.withStatusViewState({
       gameStatus: 'error',
+      canvasMounted: false,
       statusTitle: '画布初始化失败',
       statusMessage: message + '，请尝试重新进入游戏',
       gameButtonText: '重试'
@@ -218,6 +219,12 @@ Page({
 
             this.drawBackground();
             console.log('画布初始化完成，切换到就绪状态');
+
+            if (this.$startAfterCanvasInit) {
+              this.$startAfterCanvasInit = false;
+              this.continueStartGame();
+              return;
+            }
 
             // Canvas初始化成功，切换到就绪状态
             this.setData(this.withStatusViewState({
@@ -625,9 +632,21 @@ Page({
     console.log('开始游戏按钮被点击，当前状态:', this.data.gameStatus);
 
     // 检查Canvas是否初始化成功
-    if (!this.canvas || !this.ctx) {
-      console.log('Canvas未初始化，显示错误信息');
-      this.showCanvasError('画布尚未初始化完成，请稍等片刻后重试');
+    if (!this.canvas || !this.ctx || !this.data.canvasMounted) {
+      console.log('Canvas未初始化，先挂载并初始化Canvas');
+      this.$startAfterCanvasInit = true;
+      this.setData(this.withStatusViewState({
+        gameStatus: 'loading',
+        canvasMounted: true,
+        showEntryPanel: false,
+        showGameControls: false,
+        canvasVisible: true,
+        statusTitle: '气泡爆破',
+        statusMessage: '正在准备游戏...',
+        gameButtonText: '准备中'
+      }), () => {
+        setTimeout(() => this.initCanvas(), 80);
+      });
       return;
     }
 
@@ -1056,6 +1075,7 @@ Page({
 
     this.setData(this.withStatusViewState({
       gameStatus: 'ended',
+      canvasMounted: false,
       statusTitle: '游戏结束',
       statusMessage: `最终得分: ${this.data.score}  最高连击: ${this.data.maxCombo}  最高等级: ${this.data.level}`,
       gameButtonText: '再玩一次'
@@ -1123,6 +1143,16 @@ Page({
     };
 
     wx.setStorageSync('bubblePopProgress', gameData);
+    recordGameSession({
+      game: 'bubble-pop',
+      score: this.data.score,
+      duration: this.data.gameDuration || 60,
+      completed: true,
+      detail: {
+        maxCombo: this.data.maxCombo,
+        level: this.data.level
+      }
+    });
   },
 
   // 返回选择

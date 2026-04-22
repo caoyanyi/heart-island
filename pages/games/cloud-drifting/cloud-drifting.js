@@ -1,3 +1,5 @@
+const { recordGameSession } = require('../../../utils/game-progress.js');
+
 Page({
   data: {
     // 画布尺寸
@@ -13,6 +15,7 @@ Page({
     showEntryTips: true,
     showGameControls: false,
     canvasVisible: false,
+    canvasMounted: false,
     score: 0,
     timeLeft: 60,
     combo: 0,
@@ -65,11 +68,11 @@ Page({
     this.$pendingDataUpdates = [];
     setTimeout(() => {
       this.setData({
-        gameStatus: 'loading',
-        ...this.getStatusViewState('loading'),
+        gameStatus: 'ready',
+        ...this.getStatusViewState('ready'),
         statusTitle: '云朵漂流',
-        statusMessage: '游戏加载中...',
-        gameButtonText: '准备中'
+        statusMessage: '拖拽云朵收集气泡，避开乌云',
+        gameButtonText: '开始游戏'
       });
       this.$ready = true;
       // 处理pending的数据更新
@@ -84,18 +87,18 @@ Page({
       isPlaying,
       isPaused,
       isBusy: status === 'loading' || status === 'initializing' || status === 'restarting',
-      showEntryPanel: !isPlaying,
+      showEntryPanel: !isPlaying && !isPaused,
       showEntryTips: status === 'ready' || isPaused,
       showGameControls: isPlaying || isPaused,
-      canvasVisible: isPlaying
+      canvasVisible: isPlaying || isPaused
     };
   },
 
   withStatusViewState: function (data) {
     if (data && Object.prototype.hasOwnProperty.call(data, 'gameStatus')) {
       return {
-        ...data,
-        ...this.getStatusViewState(data.gameStatus)
+        ...this.getStatusViewState(data.gameStatus),
+        ...data
       };
     }
     return data;
@@ -140,10 +143,7 @@ Page({
   },
 
   onReady: function () {
-    // 延迟初始化以确保DOM完全加载
-    setTimeout(() => {
-      this.initCanvas();
-    }, 150);
+    // Canvas 是原生组件，首屏不主动挂载，避免遮住入口面板。
   },
 
   onShow: function () {
@@ -245,6 +245,11 @@ Page({
               this.drawBackground();
               // Canvas初始化成功，切换到就绪状态 - 确保页面准备好再更新状态
               setTimeout(() => {
+                if (this.$startAfterCanvasInit) {
+                  this.$startAfterCanvasInit = false;
+                  this.proceedWithGameStart();
+                  return;
+                }
                 this.safeSetData({
                   gameStatus: 'ready',
                   statusTitle: '云朵漂流',
@@ -259,6 +264,11 @@ Page({
               this.ctx = wx.createCanvasContext('cloudCanvas', this);
               // 确保页面准备好再更新状态
               setTimeout(() => {
+                if (this.$startAfterCanvasInit) {
+                  this.$startAfterCanvasInit = false;
+                  this.proceedWithGameStart();
+                  return;
+                }
                 this.safeSetData({
                   gameStatus: 'ready',
                   statusTitle: '云朵漂流',
@@ -274,6 +284,11 @@ Page({
         this.ctx = wx.createCanvasContext('cloudCanvas', this);
         // 确保页面准备好再更新状态
         setTimeout(() => {
+          if (this.$startAfterCanvasInit) {
+            this.$startAfterCanvasInit = false;
+            this.proceedWithGameStart();
+            return;
+          }
           this.safeSetData({
             gameStatus: 'ready',
             statusTitle: '云朵漂流',
@@ -544,24 +559,21 @@ Page({
     }
 
     // 确保画布已初始化
-    if (!this.ctx) {
+    if (!this.ctx || !this.data.canvasMounted) {
       console.log('画布未初始化，先初始化画布');
-      this.initCanvas();
-
-      // 延迟开始以确保Canvas初始化完成
-      setTimeout(() => {
-        if (!this.ctx) {
-          console.error('Canvas initialization failed, cannot start game');
-          this.safeSetData({
-            gameStatus: 'ready',
-            gameButtonText: '开始游戏',
-            statusTitle: '初始化失败',
-            statusMessage: '画布初始化失败，请重试'
-          });
-          return;
-        }
-        this.proceedWithGameStart();
-      }, 1000);
+      this.$startAfterCanvasInit = true;
+      this.safeSetData({
+        gameStatus: 'loading',
+        canvasMounted: true,
+        showEntryPanel: false,
+        showGameControls: false,
+        canvasVisible: true,
+        statusTitle: '云朵漂流',
+        statusMessage: '正在准备游戏...',
+        gameButtonText: '准备中'
+      }, () => {
+        setTimeout(() => this.initCanvas(), 80);
+      });
     } else {
       this.proceedWithGameStart();
     }
@@ -1122,6 +1134,7 @@ Page({
     // 使用safeSetData确保数据更新安全
     this.safeSetData({
       gameStatus: 'ended',
+      canvasMounted: false,
       statusTitle: '游戏结束',
       statusMessage: `最终得分: ${this.data.score}\n最高连击: ${this.data.maxCombo}`,
       gameButtonText: '再玩一次'
@@ -1182,6 +1195,15 @@ Page({
     };
 
     wx.setStorageSync('cloudDriftingProgress', gameData);
+    recordGameSession({
+      game: 'cloud-drifting',
+      score: this.data.score,
+      duration: this.data.gameDuration || 60,
+      completed: true,
+      detail: {
+        maxCombo: this.data.maxCombo
+      }
+    });
   },
 
   // 返回选择

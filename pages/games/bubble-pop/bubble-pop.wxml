@@ -1,6 +1,7 @@
 <view class="bubble-pop-game">
   <view class="game-canvas-container">
     <canvas
+      wx:if="{{canvasMounted}}"
       id="bubbleCanvas"
       canvas-id="bubbleCanvas"
       class="game-canvas"
@@ -67,27 +68,27 @@
     </cover-view>
   </cover-view>
 
-  <view class="game-controls" wx:if="{{showGameControls}}">
-    <button class="control-btn pause-btn" bindtap="pauseGame" wx:if="{{isPlaying}}">
-      <text class="btn-icon">⏸️</text>
+  <cover-view class="game-controls" wx:if="{{showGameControls}}">
+    <cover-view class="control-btn pause-btn" bindtap="pauseGame" wx:if="{{isPlaying}}">
+      <cover-view class="btn-icon">⏸️</cover-view>
       暂停
-    </button>
+    </cover-view>
 
-    <button class="control-btn resume-btn" bindtap="resumeGame" wx:if="{{isPaused}}">
-      <text class="btn-icon">▶️</text>
+    <cover-view class="control-btn resume-btn" bindtap="resumeGame" wx:if="{{isPaused}}">
+      <cover-view class="btn-icon">▶️</cover-view>
       继续
-    </button>
+    </cover-view>
 
-    <button class="control-btn restart-btn" bindtap="restartGame">
-      <text class="btn-icon">🔄</text>
+    <cover-view class="control-btn restart-btn" bindtap="restartGame">
+      <cover-view class="btn-icon">🔄</cover-view>
       重新开始
-    </button>
+    </cover-view>
 
-    <button class="control-btn settings-btn" bindtap="openSettings">
-      <text class="btn-icon">⚙️</text>
+    <cover-view class="control-btn settings-btn" bindtap="openSettings">
+      <cover-view class="btn-icon">⚙️</cover-view>
       设置
-    </button>
-  </view>
+    </cover-view>
+  </cover-view>
 
   <view class="game-settings" wx:if="{{showSettings}}">
     <view class="settings-panel">
