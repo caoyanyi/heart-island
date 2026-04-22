@@ -353,6 +353,15 @@ Page({
 
     // 更新最佳成绩
     this.updateBestScores(completionTime, this.data.moves);
+    getApp().recordGameSession({
+      game: 'zen-puzzle',
+      score,
+      duration: completionTime,
+      completed: true,
+      detail: {
+        moves: this.data.moves
+      }
+    });
 
     // 播放完成音效
     this.playCompleteSound();
@@ -409,6 +418,15 @@ Page({
   timeUp: function () {
     this.stopTimer();
     this.setData({ gameStatus: 'ended' });
+    getApp().recordGameSession({
+      game: 'zen-puzzle',
+      score: this.data.score,
+      duration: 300,
+      completed: false,
+      detail: {
+        moves: this.data.moves
+      }
+    });
 
     wx.showToast({
       title: '时间到',

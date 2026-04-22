@@ -95,6 +95,104 @@
   margin-bottom: 50rpx;
 }
 
+.daily-section {
+  margin-bottom: 34rpx;
+  padding: 28rpx;
+  border-radius: 24rpx;
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 8rpx 26rpx rgba(79, 70, 56, 0.1);
+  animation: sectionEnter 0.45s ease-out;
+}
+
+.daily-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18rpx;
+  margin-bottom: 24rpx;
+}
+
+.daily-title {
+  color: var(--text-primary);
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.daily-subtitle {
+  margin-top: 6rpx;
+  color: var(--text-secondary);
+  font-size: 24rpx;
+}
+
+.daily-streak {
+  flex: 0 0 auto;
+  padding: 8rpx 18rpx;
+  border-radius: 999rpx;
+  background: rgba(215, 166, 160, 0.18);
+  color: #A56F68;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.daily-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx;
+}
+
+.daily-metric {
+  min-width: 0;
+  padding: 18rpx 10rpx;
+  border-radius: 18rpx;
+  background: rgba(247, 239, 228, 0.82);
+  text-align: center;
+}
+
+.metric-value {
+  color: var(--text-primary);
+  font-size: 34rpx;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.metric-label {
+  margin-top: 8rpx;
+  color: var(--text-secondary);
+  font-size: 21rpx;
+  line-height: 1.2;
+}
+
+.continue-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin-top: 20rpx;
+  padding: 20rpx 24rpx;
+  border-radius: 18rpx;
+  background: rgba(141, 183, 199, 0.14);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.continue-label {
+  color: var(--text-secondary);
+  font-size: 22rpx;
+}
+
+.continue-name {
+  margin-top: 4rpx;
+  color: var(--text-primary);
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.continue-arrow {
+  color: var(--primary-blue);
+  font-size: 42rpx;
+  min-width: 36rpx;
+  text-align: right;
+}
+
 .game-card {
   display: flex;
   align-items: center;
@@ -196,6 +294,17 @@
   font-size: 22rpx;
   color: var(--primary-blue);
   font-weight: 500;
+}
+
+.game-progress {
+  display: inline-flex;
+  margin-top: 12rpx;
+  padding: 6rpx 14rpx;
+  border-radius: 999rpx;
+  background: rgba(232, 213, 196, 0.45);
+  color: #8A7466;
+  font-size: 20rpx;
+  line-height: 1.2;
 }
 
 .game-arrow {
@@ -347,6 +456,10 @@
   .game-effect {
     font-size: 20rpx;
   }
+
+  .daily-section {
+    padding: 24rpx;
+  }
 }
 
 @media (max-width: 600rpx) {
@@ -375,5 +488,18 @@
   .game-description,
   .recommendation-text {
     font-size: 22rpx;
+  }
+
+  .daily-metrics {
+    gap: 10rpx;
+  }
+
+  .metric-value {
+    font-size: 30rpx;
+  }
+
+  .metric-label,
+  .game-progress {
+    font-size: 20rpx;
   }
 }

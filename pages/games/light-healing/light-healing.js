@@ -745,6 +745,15 @@ Page({
       timestamp: new Date().toISOString()
     }
     app.saveUserData()
+    app.recordGameSession({
+      game: 'light-healing',
+      score: this.data.score,
+      duration: 60,
+      completed: true,
+      detail: {
+        litStars
+      }
+    })
   },
 
   playAgain() {

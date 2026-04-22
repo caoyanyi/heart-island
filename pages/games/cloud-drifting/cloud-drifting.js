@@ -1,5 +1,3 @@
-const { recordGameSession } = require('../../../utils/game-progress.js');
-
 Page({
   data: {
     // 画布尺寸
@@ -1195,7 +1193,7 @@ Page({
     };
 
     wx.setStorageSync('cloudDriftingProgress', gameData);
-    recordGameSession({
+    getApp().recordGameSession({
       game: 'cloud-drifting',
       score: this.data.score,
       duration: this.data.gameDuration || 60,

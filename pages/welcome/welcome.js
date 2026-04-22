@@ -1,6 +1,18 @@
 Page({
   data: {
-    hasShownContinueModal: false
+    hasShownContinueModal: false,
+    moodOptions: [
+      { key: 'calm', icon: '🌿', label: '平静' },
+      { key: 'happy', icon: '☀️', label: '轻松' },
+      { key: 'tired', icon: '🌙', label: '疲惫' },
+      { key: 'anxious', icon: '🌧️', label: '焦虑' },
+      { key: 'low', icon: '🍂', label: '低落' }
+    ],
+    selectedMood: '',
+    moodNote: '',
+    todayMoodLabel: '',
+    todayMoodNote: '',
+    hasTodayMood: false
   },
 
   onLoad() {
@@ -9,6 +21,8 @@ Page({
   },
 
   onShow() {
+    this.loadTodayMood()
+
     // Check if user has completed emotion test before
     const app = getApp()
     if (app.globalData.emotionTestResults && !this.data.hasShownContinueModal) {
@@ -28,6 +42,58 @@ Page({
     } catch (error) {
 
     }
+  },
+
+  loadTodayMood() {
+    const summary = getApp().getMoodSummary()
+    const todayMood = summary.todayCheckin
+
+    this.setData({
+      selectedMood: todayMood ? todayMood.mood : '',
+      moodNote: todayMood ? todayMood.note : '',
+      todayMoodLabel: todayMood ? todayMood.moodLabel : '',
+      todayMoodNote: todayMood ? todayMood.note : '',
+      hasTodayMood: !!todayMood
+    })
+  },
+
+  selectMood(e) {
+    const mood = e.currentTarget.dataset.mood
+    this.setData({ selectedMood: mood })
+
+    if (wx.vibrateShort) {
+      wx.vibrateShort({ type: 'light' })
+    }
+  },
+
+  onMoodNoteInput(e) {
+    this.setData({ moodNote: e.detail.value })
+  },
+
+  saveMoodCheckin() {
+    if (!this.data.selectedMood) {
+      wx.showToast({
+        title: '先选择一个心情',
+        icon: 'none'
+      })
+      return
+    }
+
+    const checkin = getApp().recordMoodCheckin({
+      mood: this.data.selectedMood,
+      note: this.data.moodNote
+    })
+
+    this.setData({
+      todayMoodLabel: checkin.moodLabel,
+      todayMoodNote: checkin.note,
+      hasTodayMood: true
+    })
+
+    wx.showToast({
+      title: '已记录',
+      icon: 'success'
+    })
   },
 
   showContinueOption() {

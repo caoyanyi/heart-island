@@ -4,16 +4,33 @@ Page({
     recommendationIcon: '',
     recommendationTitle: '',
     recommendationText: '',
-    navigatingGame: ''
+    navigatingGame: '',
+    hasProgress: false,
+    todayCount: 0,
+    todayMinutes: 0,
+    streakDays: 0,
+    weeklyProgress: 0,
+    weeklyGoal: 7,
+    lastGameName: '',
+    lastGamePath: '',
+    recentGames: [],
+    cloudProgressText: '',
+    bubbleProgressText: '',
+    forestProgressText: '',
+    lightProgressText: '',
+    puzzleProgressText: '',
+    memoryProgressText: ''
   },
 
   onLoad() {
     this.loadRecommendation()
+    this.loadProgressSummary()
   },
 
   onShow() {
     // Refresh recommendation when page shows
     this.loadRecommendation()
+    this.loadProgressSummary()
   },
 
   loadRecommendation() {
@@ -28,6 +45,43 @@ Page({
         recommendationText: this.getRecommendationText(emotionResult.recommendedGame, emotionResult.emotionType)
       })
     }
+  },
+
+  loadProgressSummary() {
+    const summary = getApp().getProgressSummary()
+    const stats = summary.gameStats || {}
+    const lastSession = summary.lastSession
+
+    this.setData({
+      hasProgress: summary.sessions.length > 0,
+      todayCount: summary.todayCount,
+      todayMinutes: summary.todayMinutes,
+      streakDays: summary.streakDays,
+      weeklyProgress: summary.progress.weeklyProgress || 0,
+      weeklyGoal: summary.progress.weeklyGoal || 7,
+      lastGameName: lastSession ? lastSession.gameName : '',
+      lastGamePath: lastSession ? lastSession.game : '',
+      recentGames: summary.recentGames,
+      cloudProgressText: this.getGameProgressText(stats['cloud-drifting']),
+      bubbleProgressText: this.getGameProgressText(stats['bubble-pop']),
+      forestProgressText: this.getGameProgressText(stats['forest-breeze']),
+      lightProgressText: this.getGameProgressText(stats['light-healing']),
+      puzzleProgressText: this.getGameProgressText(stats['zen-puzzle']),
+      memoryProgressText: this.getGameProgressText(stats['memory-cards'])
+    })
+  },
+
+  getGameProgressText(stat) {
+    if (!stat || !stat.count) {
+      return '尚未练习'
+    }
+
+    const minutes = Math.max(1, Math.floor(stat.totalDuration / 60))
+    if (stat.bestScore > 0) {
+      return `${stat.count}次 · ${minutes}分钟 · 最高${stat.bestScore}分`
+    }
+
+    return `${stat.count}次 · ${minutes}分钟`
   },
 
   getGameIcon(game) {

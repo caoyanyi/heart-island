@@ -24,6 +24,13 @@ Page({
     // 图表数据
     emotionChartData: [],
     gameUsageData: [],
+    gameSessions: [],
+    moodSummary: {
+      totalCheckins: 0,
+      dominantMood: '',
+      dominantMoodLabel: '',
+      recentCheckins: []
+    },
     
     // 成就列表
     achievements: [
@@ -56,22 +63,26 @@ Page({
       const savedProgress = wx.getStorageSync('userProgress') || {}
       const emotionHistory = wx.getStorageSync('emotionHistory') || []
       const gameSessions = wx.getStorageSync('gameSessions') || []
+      const currentProgress = getApp().buildUserProgress(gameSessions, savedProgress)
+      const moodSummary = getApp().getMoodSummary()
       
       // 新的测试历史数据
       const testHistory = wx.getStorageSync('emotionTestResults') || []
       const testStats = this.calculateTestStats(testHistory)
       
       this.setData({
-        'userProgress.totalSessions': savedProgress.totalSessions || 0,
-        'userProgress.totalPlayTime': savedProgress.totalPlayTime || 0,
-        'userProgress.favoriteGame': savedProgress.favoriteGame || '',
+        'userProgress.totalSessions': currentProgress.totalSessions || 0,
+        'userProgress.totalPlayTime': currentProgress.totalPlayTime || 0,
+        'userProgress.favoriteGame': currentProgress.favoriteGame || '',
         'userProgress.emotionHistory': emotionHistory,
-        'userProgress.weeklyProgress': savedProgress.weeklyProgress || 0,
-        'userProgress.weeklyGoal': savedProgress.weeklyGoal || 7,
+        'userProgress.weeklyProgress': currentProgress.weeklyProgress || 0,
+        'userProgress.weeklyGoal': currentProgress.weeklyGoal || 7,
         testHistory: testHistory,
         testStats: testStats,
         emotionChartData: this.processEmotionHistory(emotionHistory),
         gameUsageData: this.processGameUsage(gameSessions),
+        gameSessions: gameSessions,
+        moodSummary: moodSummary,
         loading: false
       })
       
@@ -289,7 +300,7 @@ Page({
     }
     
     // 检查是否尝试了所有游戏
-    const playedGames = [...new Set(progress.emotionHistory.map(h => h.game))]
+    const playedGames = [...new Set(this.data.gameSessions.map(session => session.game).filter(Boolean))]
     if (playedGames.length >= 6) {
       achievements.find(a => a.id === 'all_games').unlocked = true
     }
@@ -329,6 +340,20 @@ Page({
           content: '最近情绪状态需要关注，建议多尝试森林微风和光之治愈游戏。'
         })
       }
+    }
+
+    if (this.data.moodSummary.totalCheckins === 0) {
+      recommendations.push({
+        type: 'mood',
+        title: '心情速记',
+        content: '可以在首页每天记录一次心情，几秒钟也能帮助你看见自己的状态变化。'
+      })
+    } else if (this.data.moodSummary.dominantMood === 'anxious' || this.data.moodSummary.dominantMood === 'low') {
+      recommendations.push({
+        type: 'mood',
+        title: '状态提醒',
+        content: '最近速记里焦虑或低落较多，建议优先选择森林微风、光之治愈这类慢节奏练习。'
+      })
     }
     
     // 基于游戏偏好的推荐
@@ -377,6 +402,7 @@ Page({
       userProgress: this.data.userProgress,
       emotionHistory: wx.getStorageSync('emotionHistory') || [],
       gameSessions: wx.getStorageSync('gameSessions') || [],
+      moodCheckins: wx.getStorageSync('moodCheckins') || [],
       testHistory: this.data.testHistory,
       testStats: this.data.testStats,
       exportDate: new Date().toISOString()
@@ -418,6 +444,7 @@ Page({
           wx.removeStorageSync('userProgress')
           wx.removeStorageSync('emotionHistory')
           wx.removeStorageSync('gameSessions')
+          wx.removeStorageSync('moodCheckins')
           wx.removeStorageSync('emotionTestResults')
           
           // 重置数据
@@ -441,6 +468,13 @@ Page({
             },
             emotionChartData: [],
             gameUsageData: [],
+            gameSessions: [],
+            moodSummary: {
+              totalCheckins: 0,
+              dominantMood: '',
+              dominantMoodLabel: '',
+              recentCheckins: []
+            },
             recommendations: [],
             showTestHistory: false
           })

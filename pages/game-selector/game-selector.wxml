@@ -6,6 +6,37 @@
       <view class="welcome-prompt">先选一个轻松开始，随时可以切换</view>
     </view>
 
+    <view class="daily-section">
+      <view class="daily-header">
+        <view>
+          <view class="daily-title">今日练习</view>
+          <view class="daily-subtitle">{{hasProgress ? '保持一点点节奏就很好' : '从一局轻松的练习开始'}}</view>
+        </view>
+        <view class="daily-streak" wx:if="{{streakDays > 0}}">{{streakDays}}天</view>
+      </view>
+      <view class="daily-metrics">
+        <view class="daily-metric">
+          <view class="metric-value">{{todayCount}}</view>
+          <view class="metric-label">今日次数</view>
+        </view>
+        <view class="daily-metric">
+          <view class="metric-value">{{todayMinutes}}</view>
+          <view class="metric-label">今日分钟</view>
+        </view>
+        <view class="daily-metric">
+          <view class="metric-value">{{weeklyProgress}}/{{weeklyGoal}}</view>
+          <view class="metric-label">本周目标</view>
+        </view>
+      </view>
+      <view class="continue-card" wx:if="{{lastGamePath}}" bindtap="selectGame" data-game="{{lastGamePath}}">
+        <view class="continue-copy">
+          <view class="continue-label">继续上次</view>
+          <view class="continue-name">{{lastGameName}}</view>
+        </view>
+        <view class="continue-arrow">{{navigatingGame === lastGamePath ? '...' : '›'}}</view>
+      </view>
+    </view>
+
     <view class="recommendation-section" wx:if="{{recommendedGame}}">
       <view class="recommendation-title">根据你的状态优先推荐</view>
       <view class="recommendation-card {{navigatingGame === recommendedGame ? 'is-loading' : ''}}" bindtap="selectGame" data-game="{{recommendedGame}}">
@@ -27,6 +58,7 @@
           <view class="game-title">云端漂流</view>
           <view class="game-description">在云朵间自由漂浮，收集快乐泡泡</view>
           <view class="game-effect">缓解焦虑 • 放松心情</view>
+          <view class="game-progress">{{cloudProgressText}}</view>
         </view>
         <view class="game-arrow">{{navigatingGame === 'cloud-drifting' ? '...' : '›'}}</view>
       </view>
@@ -39,6 +71,7 @@
           <view class="game-title">泡泡爆破</view>
           <view class="game-description">点击泡泡释放压力，获得连击奖励</view>
           <view class="game-effect">释放压力 • 获得成就感</view>
+          <view class="game-progress">{{bubbleProgressText}}</view>
         </view>
         <view class="game-arrow">{{navigatingGame === 'bubble-pop' ? '...' : '›'}}</view>
       </view>
@@ -51,6 +84,7 @@
           <view class="game-title">森林微风</view>
           <view class="game-description">滑动创造微风，帮助树叶飘落</view>
           <view class="game-effect">平静内心 • 感受自然</view>
+          <view class="game-progress">{{forestProgressText}}</view>
         </view>
         <view class="game-arrow">{{navigatingGame === 'forest-breeze' ? '...' : '›'}}</view>
       </view>
@@ -63,6 +97,7 @@
           <view class="game-title">光之治愈</view>
           <view class="game-description">释放光能点亮星星，驱散黑暗</view>
           <view class="game-effect">带来希望 • 点亮内心</view>
+          <view class="game-progress">{{lightProgressText}}</view>
         </view>
         <view class="game-arrow">{{navigatingGame === 'light-healing' ? '...' : '›'}}</view>
       </view>
@@ -75,6 +110,7 @@
           <view class="game-title">禅意拼图</view>
           <view class="game-description">静心拼图，找回内心的平静与专注</view>
           <view class="game-effect">培养耐心 • 提升专注</view>
+          <view class="game-progress">{{puzzleProgressText}}</view>
         </view>
         <view class="game-arrow">{{navigatingGame === 'zen-puzzle' ? '...' : '›'}}</view>
       </view>
@@ -87,6 +123,7 @@
           <view class="game-title">记忆卡片</view>
           <view class="game-description">翻牌配对，挑战你的记忆力极限</view>
           <view class="game-effect">锻炼记忆 • 提升认知</view>
+          <view class="game-progress">{{memoryProgressText}}</view>
         </view>
         <view class="game-arrow">{{navigatingGame === 'memory-cards' ? '...' : '›'}}</view>
       </view>

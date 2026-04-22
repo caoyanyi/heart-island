@@ -118,6 +118,99 @@
   text-align: center;
 }
 
+/* 心情速记 */
+.mood-section {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.mood-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 24rpx;
+}
+
+.mood-section-header .section-title {
+  margin-bottom: 0;
+}
+
+.mood-total {
+  flex-shrink: 0;
+  font-size: 24rpx;
+  color: #A8A29E;
+}
+
+.mood-summary-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  border-radius: 15rpx;
+  background: #F9FAFB;
+  margin-bottom: 18rpx;
+}
+
+.mood-summary-label {
+  font-size: 24rpx;
+  color: #A8A29E;
+}
+
+.mood-summary-value {
+  font-size: 28rpx;
+  color: #78716C;
+  font-weight: 700;
+}
+
+.mood-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14rpx;
+}
+
+.mood-history-item {
+  padding: 20rpx;
+  border-radius: 15rpx;
+  background: #F9FAFB;
+}
+
+.mood-history-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+}
+
+.mood-history-date {
+  color: #A8A29E;
+  font-size: 22rpx;
+}
+
+.mood-history-label {
+  color: #78716C;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.mood-history-note {
+  display: block;
+  margin-top: 12rpx;
+  color: #78716C;
+  font-size: 24rpx;
+  line-height: 1.45;
+}
+
+.empty-mood {
+  text-align: center;
+  padding: 40rpx 20rpx;
+  background: #F9FAFB;
+  border-radius: 15rpx;
+}
+
 /* 图表部分 */
 .chart-section {
   background: rgba(255, 255, 255, 0.8);

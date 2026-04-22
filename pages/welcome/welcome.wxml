@@ -6,6 +6,39 @@
   </view>
   
   <view class="welcome-content">
+    <view class="mood-checkin">
+      <view class="checkin-header">
+        <view>
+          <view class="checkin-title">今日心情速记</view>
+          <view class="checkin-subtitle" wx:if="{{hasTodayMood}}">今天已记录：{{todayMoodLabel}}</view>
+          <view class="checkin-subtitle" wx:else>用十秒钟给自己一个温柔标记</view>
+        </view>
+      </view>
+
+      <view class="mood-options">
+        <view
+          wx:for="{{moodOptions}}"
+          wx:key="key"
+          class="mood-option {{selectedMood === item.key ? 'active' : ''}}"
+          bindtap="selectMood"
+          data-mood="{{item.key}}"
+        >
+          <view class="mood-icon">{{item.icon}}</view>
+          <view class="mood-label">{{item.label}}</view>
+        </view>
+      </view>
+
+      <input
+        class="mood-note-input"
+        value="{{moodNote}}"
+        maxlength="60"
+        placeholder="写一句此刻想法，可留空"
+        bindinput="onMoodNoteInput"
+      />
+
+      <button class="checkin-button" bindtap="saveMoodCheckin">{{hasTodayMood ? '更新速记' : '保存速记'}}</button>
+    </view>
+
     <view class="feature-cards">
       <view class="feature-card" bindtap="navigateToAssessment">
         <view class="card-icon assessment-icon">🧠</view>

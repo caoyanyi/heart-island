@@ -771,6 +771,15 @@ Page({
       timestamp: new Date().toISOString()
     }
     app.saveUserData()
+    app.recordGameSession({
+      game: 'forest-breeze',
+      score: this.data.score,
+      duration: 60,
+      completed: true,
+      detail: {
+        windPower: this.data.windPower
+      }
+    })
   },
 
   playAgain() {

@@ -399,6 +399,17 @@ Page({
 
     // 更新最佳成绩
     this.updateBestScores(completionTime, finalScore);
+    getApp().recordGameSession({
+      game: 'memory-cards',
+      score: finalScore,
+      duration: completionTime,
+      completed: true,
+      detail: {
+        attempts: this.data.attempts,
+        accuracyRate,
+        maxCombo: this.data.maxCombo
+      }
+    });
 
     // 播放完成音效
     this.playCompleteSound();
@@ -456,6 +467,16 @@ Page({
   timeUp: function () {
     this.stopTimer();
     this.setData({ gameStatus: 'ended' });
+    getApp().recordGameSession({
+      game: 'memory-cards',
+      score: this.data.score,
+      duration: 180,
+      completed: false,
+      detail: {
+        matches: this.data.matches,
+        attempts: this.data.attempts
+      }
+    });
 
     wx.showToast({
       title: '时间到',

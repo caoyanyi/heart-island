@@ -41,6 +41,33 @@
       <text class="goal-description">每天使用应用，保持情绪健康</text>
     </view>
 
+    <!-- 心情速记 -->
+    <view class="mood-section">
+      <view class="mood-section-header">
+        <text class="section-title">心情速记</text>
+        <text class="mood-total">{{moodSummary.totalCheckins}}次记录</text>
+      </view>
+      <view wx:if="{{moodSummary.totalCheckins > 0}}">
+        <view class="mood-summary-line" wx:if="{{moodSummary.dominantMoodLabel}}">
+          <text class="mood-summary-label">常见状态</text>
+          <text class="mood-summary-value">{{moodSummary.dominantMoodLabel}}</text>
+        </view>
+        <view class="mood-list">
+          <view wx:for="{{moodSummary.recentCheckins}}" wx:key="id" class="mood-history-item">
+            <view class="mood-history-main">
+              <text class="mood-history-date">{{item.dateKey}}</text>
+              <text class="mood-history-label">{{item.moodLabel}}</text>
+            </view>
+            <text wx:if="{{item.note}}" class="mood-history-note">{{item.note}}</text>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="empty-mood">
+        <text class="empty-text">还没有心情速记</text>
+        <text class="empty-desc">回到首页记录一次今天的状态，这里会保留最近记录</text>
+      </view>
+    </view>
+
     <!-- 情绪趋势图表 -->
     <view wx:if="{{emotionChartData.length > 0}}" class="chart-section">
       <text class="section-title">情绪趋势</text>
