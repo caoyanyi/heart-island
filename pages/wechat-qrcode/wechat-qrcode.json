@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "QR Code",
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#ffffff",
+  "enablePullDownRefresh": false
+}

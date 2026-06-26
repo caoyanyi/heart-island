@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/welcome/welcome",
+    "pages/wechat-qrcode/wechat-qrcode",
     "pages/emotion-test/emotion-test",
     "pages/results/results",
     "pages/finish/finish",

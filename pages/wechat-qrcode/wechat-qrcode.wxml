@@ -1,0 +1,9 @@
+<view class="qrcode-page">
+  <image
+    class="qrcode-image"
+    src="{{qrCodeImageUrl}}"
+    mode="widthFix"
+    show-menu-by-longpress="{{true}}"
+    bindtap="previewQrCode"
+  />
+</view>

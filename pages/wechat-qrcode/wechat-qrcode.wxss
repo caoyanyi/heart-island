@@ -1,0 +1,19 @@
+page {
+  background: #ffffff;
+}
+
+.qrcode-page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.qrcode-image {
+  width: 100%;
+  max-width: 620rpx;
+  display: block;
+}
